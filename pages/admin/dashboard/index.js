@@ -3,9 +3,7 @@ import { connect } from "react-redux";
 import { Row, Col, Progress } from "reactstrap";
 import dynamic from "next/dynamic";
 import { withRouter } from "next/router";
-const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-import { chartData, splineArea } from "./chartsMock";
 import SimpleLine from "./widget";
 import Head from "next/head";
 import HomePageWidget from "../widgets/HomePageWidget";

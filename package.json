@@ -10,7 +10,6 @@
   "dependencies": {
     "@stripe/react-stripe-js": "1.9.0",
     "@stripe/stripe-js": "1.32.0",
-    "apexcharts": "3.54.1",
     "awesome-bootstrap-checkbox": "1.0.1",
     "axios": "0.27.2",
     "bootstrap": "4.6.1",
@@ -48,7 +47,6 @@
     "rc-slider": "9.7.5",
     "react": "16.14.0",
     "react-animate-height": "2.1.2",
-    "react-apexcharts": "1.6.0",
     "react-async-script-loader": "0.3.0",
     "react-autosize-textarea": "7.1.0",
     "react-bootstrap": "1.6.8",
@@ -100,7 +98,7 @@
     "prettier": "2.8.8"
   },
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
   "//": "NOTE: Node 16 is deprecated on Vercel. For long-term support, consider upgrading to Node 18 or 20 and updating dependencies accordingly in the future."
 }
