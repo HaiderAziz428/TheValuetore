@@ -512,8 +512,8 @@ const Index = ({ products: serverSideProducts }) => {
                 <div>
                   <Link href={`/category/${item.categories[0].id}`}>
                     <a className={"mt-3 text-muted mb-0 d-inline-block"}>
-                      {item.categories[0].title[0].toUpperCase() +
-                        item.categories[0].title.slice(1)}
+                    {item.categories[0].title[0].toUpperCase() +
+                      item.categories[0].title.slice(1)}
                     </a>
                   </Link>
                   <Link href={`/products/${item.id}`}>
@@ -595,14 +595,14 @@ const Index = ({ products: serverSideProducts }) => {
           <Col xs={12} md={6}>
             <Link href={"/products/afaf98d5-4060-4408-967b-c4f4af3d1869"}>
               <a>
-                <section className={`${s.top_first} img-fluid`}>
+                  <section className={`${s.top_first} img-fluid`}>
                   <h6 className={"text-uppercase text-primary fw-bold"}>
                     All new
                   </h6>
-                  <h2 className={"fw-bold"}>SPRING THINGS</h2>
-                  <div className={s.stroke} />
-                  <h6 className={"text-muted mt-4"}>Save up to 30%</h6>
-                </section>
+                    <h2 className={"fw-bold"}>SPRING THINGS</h2>
+                    <div className={s.stroke} />
+                    <h6 className={"text-muted mt-4"}>Save up to 30%</h6>
+                  </section>
               </a>
             </Link>
           </Col>
