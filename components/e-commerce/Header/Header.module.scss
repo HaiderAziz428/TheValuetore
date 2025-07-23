@@ -218,3 +218,26 @@
     background: rgba(#000, 0.1);
   }
 }
+
+.userDropdownMenu {
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(38, 38, 38, 0.08);
+  border: none;
+  min-width: 200px;
+  padding: 16px 0;
+  position: absolute;
+  top: 48px;
+  right: 0;
+  z-index: 1000;
+  text-align: left;
+  .dropdown-item {
+    padding: 10px 24px;
+    color: #444;
+    background: transparent;
+    &:hover, &:focus {
+      color: #ff6f3c;
+      background: #f8f8f8;
+      font-weight: bold;
+    }
+  }
+}

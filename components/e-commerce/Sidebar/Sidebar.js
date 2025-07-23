@@ -37,126 +37,102 @@ class Sidebar extends React.Component {
   }
 
   handleClickOutside = (event) => {
-    if (this.wrapperRef && !this.wrapperRef.current.contains(event.target) && this.props.sidebarOpened) {
+    if (
+      this.wrapperRef &&
+      !this.wrapperRef.current.contains(event.target) &&
+      this.props.sidebarOpened
+    ) {
       this.props.dispatch(closeSidebar());
       this.props.dispatch(changeActiveSidebarItem(null));
     }
-  }
+  };
 
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
+    document.addEventListener("mousedown", this.handleClickOutside);
   }
 
   componentWillUnmount() {
-      document.removeEventListener('mousedown', this.handleClickOutside);
+    document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
   render() {
     return (
-        <div ref={this.wrapperRef}
-            className={`${
-                !this.props.sidebarOpened && !this.props.sidebarStatic
-                    ? s.sidebarClose
-                    : ""
-            } ${s.sidebarWrapper}`}
-        >
-          <nav className={s.root}>
-            <header className={s.logo}>
+      <div
+        ref={this.wrapperRef}
+        className={`${
+          !this.props.sidebarOpened && !this.props.sidebarStatic
+            ? s.sidebarClose
+            : ""
+        } ${s.sidebarWrapper}`}
+      >
+        <nav className={s.root}>
+          <header className={s.logo}>
             <span className={`${s.logoStyle} mx-1`}>
               Flatlogic<i>.</i>
             </span>
-            </header>
-            <ul className={s.nav}>
-              <LinksGroup
-                  onActiveSidebarItemChange={activeItem => this.props.dispatch(changeActiveSidebarItem(activeItem))}
-                  activeItem={this.props.activeItem}
-                  header="Home"
-                  link="/"
-                  isHeader
-              />
-              <LinksGroup
-                  onActiveSidebarItemChange={(activeItem) =>
-                      this.props.dispatch(changeActiveSidebarItem(activeItem))
-                  }
-                  activeItem={this.props.activeItem}
-                  header="Pages"
-                  link="/pages"
-                  index="pages"
-                  isHeader
-                  exact={false}
-                  childrenLinks={[
-                    {
-                      header: 'About Us', link: '/about',
-                    },
-                    {
-                      header: 'About Team', link: '/about-team',
-                    },
-                    {
-                      header: 'Contact Us', link: '/contact',
-                    },
-                    {
-                      header: 'FAQ', link: '/faq',
-                    },
-                    {
-                      header: '404', link: '/error',
-                    },
-                    {
-                      header: 'Wishlist', link: '/wishlist',
-                    },
-                    {
-                      header: 'Login', link: '/login',
-                    },
-                  ]}
-              />
-              <LinksGroup
-                  onActiveSidebarItemChange={(activeItem) =>
-                      this.props.dispatch(changeActiveSidebarItem(activeItem))
-                  }
-                  activeItem={this.props.activeItem}
-                  header="Shop"
-                  link="/shop"
-                  index="shop"
-                  isHeader
-                  exact={false}
-                  childrenLinks={[
-                    {
-                      header: 'Shop', link: '/shop',
-                    },
-                    {
-                      header: 'Categories', link: '/categories',
-                    },
-                    {
-                      header: 'Account', link: '/account',
-                    },
-                  ]}
-              />
-              <LinksGroup
-                  onActiveSidebarItemChange={(activeItem) =>
-                      this.props.dispatch(changeActiveSidebarItem(activeItem))
-                  }
-                  activeItem={this.props.activeItem}
-                  header="Blog"
-                  link="/blog"
-                  index="blog"
-                  isHeader
-                  exact={false}
-                  childrenLinks={[
-                    {
-                      header: 'Blog', link: '/blog',
-                    },
-                    {
-                      header: 'Article', link: '/blog/article',
-                    },
-                  ]}
-              />
-            </ul>
-            <div className={s.accountBtn}>
-              <Link href={"/account  "}>
-                My Account
-              </Link>
-            </div>
-          </nav>
-        </div>
+          </header>
+          <ul className={s.nav}>
+            <LinksGroup
+              onActiveSidebarItemChange={(activeItem) =>
+                this.props.dispatch(changeActiveSidebarItem(activeItem))
+              }
+              activeItem={this.props.activeItem}
+              header="Home"
+              link="/"
+              isHeader
+            />
+            <LinksGroup
+              onActiveSidebarItemChange={(activeItem) =>
+                this.props.dispatch(changeActiveSidebarItem(activeItem))
+              }
+              activeItem={this.props.activeItem}
+              header="About Us"
+              link="/about"
+              isHeader
+            />
+            <LinksGroup
+              onActiveSidebarItemChange={(activeItem) =>
+                this.props.dispatch(changeActiveSidebarItem(activeItem))
+              }
+              activeItem={this.props.activeItem}
+              header="About Team"
+              link="/about-team"
+              isHeader
+            />
+            <LinksGroup
+              onActiveSidebarItemChange={(activeItem) =>
+                this.props.dispatch(changeActiveSidebarItem(activeItem))
+              }
+              activeItem={this.props.activeItem}
+              header="Contact Us"
+              link="/contact"
+              isHeader
+            />
+
+            <LinksGroup
+              onActiveSidebarItemChange={(activeItem) =>
+                this.props.dispatch(changeActiveSidebarItem(activeItem))
+              }
+              activeItem={this.props.activeItem}
+              header="Shop"
+              link="/shop"
+              index="shop"
+              isHeader
+              exact={false}
+              childrenLinks={[
+                {
+                  header: "Shop",
+                  link: "/shop",
+                },
+                {
+                  header: "Categories",
+                  link: "/categories",
+                },
+              ]}
+            />
+          </ul>
+        </nav>
+      </div>
     );
   }
 }

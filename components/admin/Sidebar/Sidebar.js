@@ -89,123 +89,95 @@ class Sidebar extends React.Component {
           </header>
           <ul className={s.nav}>
             <LinksGroup
-                onActiveSidebarItemChange={(activeItem) =>
-                    this.props.dispatch(changeActiveSidebarItem(activeItem))
-                }
-                activeItem={this.props.activeItem}
-                header="Home"
-                link={`${this.props.currentUser ? '/admin/dashboard' : '/'}`}
-                isHeader
-                iconType="node"
-                iconName={<HomeIcon />}
+              onActiveSidebarItemChange={(activeItem) =>
+                this.props.dispatch(changeActiveSidebarItem(activeItem))
+              }
+              activeItem={this.props.activeItem}
+              header="Home"
+              link={`${this.props.currentUser ? "/admin/dashboard" : "/"}`}
+              isHeader
+              iconType="node"
+              iconName={<HomeIcon />}
             />
 
             {this.props.currentUser &&
-            this.props.currentUser.role === "admin" && (
+              this.props.currentUser.role === "admin" && (
                 <LinksGroup
-                    onActiveSidebarItemChange={(activeItem) =>
-                        this.props.dispatch(changeActiveSidebarItem(activeItem))
-                    }
-                    activeItem={this.props.activeItem}
-                    header="Orders"
-                    link="/admin/orders"
-                    isHeader
-                    iconType="node"
-                    iconName={<DownloadIcon />}
-                />
-            )}
-
-            {this.props.currentUser &&
-            this.props.currentUser.role === "admin" && (
-                <LinksGroup
-                    onActiveSidebarItemChange={(activeItem) =>
-                        this.props.dispatch(changeActiveSidebarItem(activeItem))
-                    }
-                    activeItem={this.props.activeItem}
-                    header="Feedback"
-                    link="/admin/feedback"
-                    isHeader
-                    iconType="node"
-                    iconName={<DownloadIcon />}
-                />
-            )}
-
-            {this.props.currentUser &&
-            this.props.currentUser.role === "admin" && (
-                <LinksGroup
-                    onActiveSidebarItemChange={(activeItem) =>
-                        this.props.dispatch(changeActiveSidebarItem(activeItem))
-                    }
-                    activeItem={this.props.activeItem}
-                    header="Blog"
-                    link="/admin/blogs"
-                    isHeader
-                    iconType="node"
-                    iconName={<DownloadIcon />}
-                />
-            )}
-
-            {this.props.currentUser &&
-            this.props.currentUser.role === "admin" && (
-                <LinksGroup
-                    onActiveSidebarItemChange={(activeItem) =>
-                        this.props.dispatch(changeActiveSidebarItem(activeItem))
-                    }
-                    activeItem={this.props.activeItem}
-                    header="Products"
-                    link="/admin/products"
-                    isHeader
-                    iconType="node"
-                    iconName={<PricetagIcon />}
-                />
-            )}
-
-            {this.props.currentUser &&
-            this.props.currentUser.role === "admin" && (
-                <LinksGroup
-                    onActiveSidebarItemChange={(activeItem) =>
-                        this.props.dispatch(changeActiveSidebarItem(activeItem))
-                    }
-                    activeItem={this.props.activeItem}
-                    header="Users"
-                    link="/admin/users"
-                    isHeader
-                    iconType="node"
-                    iconName={<PersonIcon />}
-                />
-            )}
-
-            {this.props.currentUser &&
-            this.props.currentUser.role === "admin" && (
-                <LinksGroup
-                    onActiveSidebarItemChange={(activeItem) =>
-                        this.props.dispatch(changeActiveSidebarItem(activeItem))
-                    }
-                    activeItem={this.props.activeItem}
-                    header="Categories"
-                    link="/admin/categories"
-                    isHeader
-                    iconType="node"
-                    iconName={<BarIcon />}
-                />
-            )}
-            {this.props.currentUser && (
-            <LinksGroup
-                onActiveSidebarItemChange={(activeItem) =>
+                  onActiveSidebarItemChange={(activeItem) =>
                     this.props.dispatch(changeActiveSidebarItem(activeItem))
+                  }
+                  activeItem={this.props.activeItem}
+                  header="Orders"
+                  link="/admin/orders"
+                  isHeader
+                  iconType="node"
+                  iconName={<DownloadIcon />}
+                />
+              )}
+
+            {this.props.currentUser &&
+              this.props.currentUser.role === "admin" && (
+                <LinksGroup
+                  onActiveSidebarItemChange={(activeItem) =>
+                    this.props.dispatch(changeActiveSidebarItem(activeItem))
+                  }
+                  activeItem={this.props.activeItem}
+                  header="Products"
+                  link="/admin/products"
+                  isHeader
+                  iconType="node"
+                  iconName={<PricetagIcon />}
+                />
+              )}
+
+            {this.props.currentUser &&
+              this.props.currentUser.role === "admin" && (
+                <LinksGroup
+                  onActiveSidebarItemChange={(activeItem) =>
+                    this.props.dispatch(changeActiveSidebarItem(activeItem))
+                  }
+                  activeItem={this.props.activeItem}
+                  header="Users"
+                  link="/admin/users"
+                  isHeader
+                  iconType="node"
+                  iconName={<PersonIcon />}
+                />
+              )}
+
+            {this.props.currentUser &&
+              this.props.currentUser.role === "admin" && (
+                <LinksGroup
+                  onActiveSidebarItemChange={(activeItem) =>
+                    this.props.dispatch(changeActiveSidebarItem(activeItem))
+                  }
+                  activeItem={this.props.activeItem}
+                  header="Categories"
+                  link="/admin/categories"
+                  isHeader
+                  iconType="node"
+                  iconName={<BarIcon />}
+                />
+              )}
+            {this.props.currentUser && (
+              <LinksGroup
+                onActiveSidebarItemChange={(activeItem) =>
+                  this.props.dispatch(changeActiveSidebarItem(activeItem))
                 }
                 activeItem={this.props.activeItem}
                 header="My Profile"
-                link={`/admin/users/edit/${this.props.currentUser && this.props.currentUser.id}`}
+                link={`/admin/users/edit/${
+                  this.props.currentUser && this.props.currentUser.id
+                }`}
                 isHeader
                 iconType="node"
                 iconName={<FileIcon />}
-            />
+              />
             )}
             {this.props.currentUser && (
-            <LinksGroup
+              <LinksGroup
                 onActiveSidebarItemChange={(activeItem) =>
-                    this.props.dispatch(changeActiveSidebarItem(activeItem))
+                  this.props.dispatch(changeActiveSidebarItem(activeItem))
                 }
                 activeItem={this.props.activeItem}
                 header="Change Password"
@@ -213,36 +185,8 @@ class Sidebar extends React.Component {
                 isHeader
                 iconType="node"
                 iconName={<SettingsIcon />}
-            />
+              />
             )}
-            <LinksGroup
-                onActiveSidebarItemChange={(activeItem) =>
-                    this.props.dispatch(changeActiveSidebarItem(activeItem))
-                }
-                activeItem={this.props.activeItem}
-                header="Documentation"
-                link="/admin/documentation/overview"
-                isHeader
-                iconType="node"
-                iconName={<GiftIcon />}
-                index="documentation"
-                labelColor="success"
-                target="_blank"
-                childrenLinks={[
-                  {
-                    header: 'Overview', link: '/admin/documentation/overview',
-                  },
-                  {
-                    header: 'Quick Start', link: '/admin/documentation/quick-start',
-                  },
-                  {
-                    header: 'What is inside', link: '/admin/documentation/whats-inside',
-                  },
-                  {
-                    header: 'Licences', link: '/admin/documentation/licences',
-                  },
-                ]}
-            />
           </ul>
         </nav>
       </div>

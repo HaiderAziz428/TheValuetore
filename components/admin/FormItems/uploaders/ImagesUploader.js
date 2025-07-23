@@ -44,22 +44,24 @@ class ImagesUploader extends Component {
         return;
       }
 
-      let file = files[0];
-
-      FileUploader.validate(file, this.props.schema);
-
       this.setState({ loading: true });
-
-      file = await FileUploader.upload(
-        this.props.path,
-        file,
-        this.props.schema
-      );
+      
+      const uploadedFiles = [];
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        FileUploader.validate(file, this.props.schema);
+        
+        const uploadedFile = await FileUploader.upload(
+          this.props.path,
+          file,
+          this.props.schema
+        );
+        uploadedFiles.push(uploadedFile);
+      }
 
       this.input.current.value = "";
-
       this.setState({ loading: false });
-      this.props.onChange([...this.value(), file]);
+      this.props.onChange([...this.value(), ...uploadedFiles]);
     } catch (error) {
       this.input.current.value = "";
       console.log("error", error);
@@ -91,12 +93,13 @@ class ImagesUploader extends Component {
         className="btn btn-outline-secondary px-4 mb-2"
         style={{ cursor: "pointer" }}
       >
-        {"Upload an image"}
+        {"Upload images"}
         <input
           style={{ display: "none" }}
           disabled={loading || readonly}
           accept="image/*"
           type="file"
+          multiple
           onChange={this.handleChange}
           ref={this.input}
         />
@@ -120,7 +123,7 @@ class ImagesUploader extends Component {
                 >
                   <img
                     alt={item.name}
-                    src={item.publicUrl}
+                    src={`${item.publicUrl}${item.publicUrl.includes('?') ? '&' : '?'}refresh=${Date.now()}`}
                     className="img-thumbnail"
                     style={{
                       width: "100px",

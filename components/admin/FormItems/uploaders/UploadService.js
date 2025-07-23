@@ -63,14 +63,24 @@ export default class FileUploader {
     formData.append("file", file);
     formData.append("filename", filename);
     const uri = `${config.baseURLApi}/file/upload/${path}`;
-    await Axios.post(uri, formData, {
-      headers: {
-        "Content-Type": "multipart/new-data",
-      },
-    });
-
-    const privateUrl = `${path}/${filename}`;
-
-    return `${config.baseURLApi}/file/download?privateUrl=${privateUrl}`;
-  }
+    
+    try {
+        const response = await Axios.post(uri, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            },
+        });
+        
+        if (response.data && response.data.error) {
+            throw new Error(response.data.error);
+        }
+        
+        const privateUrl = `${path}/${filename}`;
+        // Add timestamp to prevent caching
+        return `${config.baseURLApi}/file/download?privateUrl=${privateUrl}&t=${Date.now()}`;
+    } catch (error) {
+        console.error('Upload error:', error);
+        throw error;
+    }
+}
 }

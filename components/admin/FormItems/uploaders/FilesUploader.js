@@ -107,10 +107,10 @@ class FilesUploader extends Component {
         {this.value() && this.value().length ? (
           <div>
             {this.value().map((item) => {
+              // Always show only the filename (as a link), never a video preview
               return (
-                <div key={item.id}>
+                <div key={item.id} style={{ marginBottom: 8 }}>
                   <i className="la la-link text-muted mr-2"></i>
-
                   <a
                     href={item.publicUrl}
                     target="_blank"
@@ -119,7 +119,6 @@ class FilesUploader extends Component {
                   >
                     {item.name}
                   </a>
-
                   {!readonly && (
                     <button
                       className="btn btn-link"

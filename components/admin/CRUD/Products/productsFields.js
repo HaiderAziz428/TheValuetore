@@ -1,6 +1,7 @@
 const productsFields = {
   id: { type: "id", label: "ID" },
-  image: { type: "images", label: "Image" },
+  image: { type: "images", label: "Images" },
+  video: { type: "files", label: "Video" },
   title: { type: "string", label: "Title" },
   price: { type: "decimal", label: "Price" },
   discount: { type: "decimal", label: "Discount" },
@@ -10,7 +11,10 @@ const productsFields = {
   rating: { type: "int", label: "Rating" },
   meta_description: { type: "string", label: "Meta description" },
 
-  keywords: { type: "string", label: "Keywords (comma separated values e.g. new,cool,fancy)" },
+  keywords: {
+    type: "string",
+    label: "Keywords (comma separated values e.g. new,cool,fancy)",
+  },
 
   meta_author: { type: "string", label: "Meta Author" },
 

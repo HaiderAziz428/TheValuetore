@@ -8,15 +8,14 @@ import Head from "next/head";
 
 import arrowRight from "public/images/e-commerce/home/arrow-right.svg";
 
-import InfoBlock from 'components/e-commerce/InfoBlock';
-import InstagramWidget from 'components/e-commerce/Instagram';
+import InfoBlock from "components/e-commerce/InfoBlock";
+import InstagramWidget from "components/e-commerce/Instagram";
 import article1 from "public/images/e-commerce/home/article1.jpg";
 import article2 from "public/images/e-commerce/home/article2.jpg";
 import article3 from "public/images/e-commerce/home/article3.jpg";
 
-
 import { toast, ToastContainer } from "react-toastify";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Countdown from "./home/Countdown";
 import rating from "../public/images/e-commerce/details/stars.svg";
@@ -123,7 +122,7 @@ const Index = ({ products: serverSideProducts }) => {
     });
     typeof window !== "undefined" &&
       localStorage.setItem("products", JSON.stringify(localProducts));
-    dispatchStore(productsListActions.doAdd(localProducts))
+    dispatchStore(productsListActions.doAdd(localProducts));
   };
 
   const addToWishlist = (id) => {
@@ -164,22 +163,36 @@ const Index = ({ products: serverSideProducts }) => {
         <title>Home</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
-        <meta name="description" content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development" />
+        <meta
+          name="description"
+          content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
+        />
         <meta name="keywords" content="flatlogic, react templates" />
         <meta name="author" content="Flatlogic LLC." />
         <meta charSet="utf-8" />
 
-
-        <meta property="og:title" content="Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:url" content="https://flatlogic-ecommerce.herokuapp.com/"/>
-        <meta property="og:image" content="https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"/>
-        <meta property="og:description" content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"/>
+        <meta
+          property="og:title"
+          content="Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://flatlogic-ecommerce.herokuapp.com/"
+        />
+        <meta
+          property="og:image"
+          content="https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"
+        />
+        <meta
+          property="og:description"
+          content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
+        />
         <meta name="twitter:card" content="summary_large_image" />
 
         <meta property="fb:app_id" content="712557339116053" />
 
-        <meta property="og:site_name" content="Flatlogic"/>
+        <meta property="og:site_name" content="Flatlogic" />
         <meta name="twitter:site" content="@flatlogic" />
       </Head>
       <ToastContainer />
@@ -316,7 +329,9 @@ const Index = ({ products: serverSideProducts }) => {
         <Row className={"justify-content-center mb-2"}>
           <Col sm={8}>
             <p className={"text-center text-muted mb-4"}>
-            Check out our new furniture collection! Cozy sofa, fancy chair, wooden casket, and many more. The new collection brings an informal elegance to your home.
+              Check out our new furniture collection! Cozy sofa, fancy chair,
+              wooden casket, and many more. The new collection brings an
+              informal elegance to your home.
             </p>
           </Col>
         </Row>
@@ -361,7 +376,7 @@ const Index = ({ products: serverSideProducts }) => {
                     </h6>
                     <h4 className={"fw-bold"}>{item.title}</h4>
                     <div className={"d-flex align-items-center"}>
-                      <img src={rating} alt={'rating'} />
+                      <img src={rating} alt={"rating"} />
                       <p className={"text-primary ml-3 mb-0"}>12 reviews</p>
                     </div>
                     <p>
@@ -496,9 +511,9 @@ const Index = ({ products: serverSideProducts }) => {
               <div className={s.productInfo}>
                 <div>
                   <Link href={`/category/${item.categories[0].id}`}>
-                    <a className={"mt-3 text-muted mb-0 d-inline-block"} >
-                    {item.categories[0].title[0].toUpperCase() +
-                      item.categories[0].title.slice(1)}
+                    <a className={"mt-3 text-muted mb-0 d-inline-block"}>
+                      {item.categories[0].title[0].toUpperCase() +
+                        item.categories[0].title.slice(1)}
                     </a>
                   </Link>
                   <Link href={`/products/${item.id}`}>
@@ -570,7 +585,9 @@ const Index = ({ products: serverSideProducts }) => {
         <Row className={"justify-content-center mb-2"}>
           <Col sm={8}>
             <p className={"text-center text-muted mb-4"}>
-            These furniture sets will become an essential part of an ecosystem of elements in your home. Your domestic space will easily embrace these tables, chairs, and bookshelves.
+              These furniture sets will become an essential part of an ecosystem
+              of elements in your home. Your domestic space will easily embrace
+              these tables, chairs, and bookshelves.
             </p>
           </Col>
         </Row>
@@ -578,12 +595,14 @@ const Index = ({ products: serverSideProducts }) => {
           <Col xs={12} md={6}>
             <Link href={"/products/afaf98d5-4060-4408-967b-c4f4af3d1869"}>
               <a>
-                  <section className={`${s.top_first} img-fluid`}>
-                    <h6 className={"text-uppercase text-primary fw-bold"}>All new</h6>
-                    <h2 className={"fw-bold"}>SPRING THINGS</h2>
-                    <div className={s.stroke} />
-                    <h6 className={"text-muted mt-4"}>Save up to 30%</h6>
-                  </section>
+                <section className={`${s.top_first} img-fluid`}>
+                  <h6 className={"text-uppercase text-primary fw-bold"}>
+                    All new
+                  </h6>
+                  <h2 className={"fw-bold"}>SPRING THINGS</h2>
+                  <div className={s.stroke} />
+                  <h6 className={"text-muted mt-4"}>Save up to 30%</h6>
+                </section>
               </a>
             </Link>
           </Col>
@@ -594,7 +613,9 @@ const Index = ({ products: serverSideProducts }) => {
                   <a>
                     <div className={`${s.top2} img-fluid`}>
                       <div>
-                        <h6 className={"text-primary fw-bold"}>Online Exclusive</h6>
+                        <h6 className={"text-primary fw-bold"}>
+                          Online Exclusive
+                        </h6>
                         <p>
                           <u>shop now</u>
                         </p>
@@ -606,7 +627,9 @@ const Index = ({ products: serverSideProducts }) => {
                   <a>
                     <div className={`${s.top4} img-fluid`}>
                       <div className={`${s.label}`}>
-                        <h6 className={"fw-bold text-uppercase mb-0 text-white"}>
+                        <h6
+                          className={"fw-bold text-uppercase mb-0 text-white"}
+                        >
                           spring sale
                         </h6>
                       </div>
@@ -644,87 +667,6 @@ const Index = ({ products: serverSideProducts }) => {
         </Row>
       </Container>
       <InfoBlock />
-      <Container style={{ marginTop: 80, marginBottom: 80 }}>
-        <h3 className={"text-center fw-bold mb-4"}>From Our Blogs</h3>
-        <Row className={"justify-content-center mb-2"}>
-          <Col sm={8}>
-            <p className={"text-center text-muted mb-4"}>
-            Design your home interior story! Here are the latest trends, tips, and design tricks to help you out. 
-            </p>
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            xs={12}
-            md={4}
-            className={"mb-4 d-flex flex-column align-items-center"}
-          >
-            <div className={s.imgAnimation}>
-              <Link href="/blog/article/07aeff53-31e5-4276-8307-f855b22b6436"><img src={article1} className={"img-fluid"} /></Link>
-            </div>
-            <p className={"mt-3 text-muted mb-0"}>March 12, 2020</p>
-            <h6
-              className={"fw-bold font-size-base mt-1"}
-              style={{ fontSize: 16 }}
-            >
-              
-What is Shabby Chic?
-            </h6>
-            <h6 style={{ fontSize: 16 }} className={"fw-bold text-primary"}>
-            <Link href="/blog/article/07aeff53-31e5-4276-8307-f855b22b6436">Read More</Link>
-            </h6>
-          </Col>
-          <Col
-            xs={12}
-            md={4}
-            className={"mb-4 d-flex flex-column align-items-center"}
-          >
-            <div className={s.imgAnimation}>
-            <Link href="/blog/article/c4245ff9-6a53-4b13-8539-0b69b442cfd1"><img src={article2} className={"img-fluid"} /></Link>
-            </div>
-            <p className={"mt-3 text-muted mb-0"}>March 12, 2020</p>
-            <h6
-              className={"fw-bold font-size-base mt-1"}
-              style={{ fontSize: 16 }}
-            >
-              Best Examples of Maximalism
-            </h6>
-            <h6 style={{ fontSize: 16 }} className={"fw-bold text-primary"}>
-            <Link href="/blog/article/c4245ff9-6a53-4b13-8539-0b69b442cfd1">Read More</Link>
-            </h6>
-          </Col>
-          <Col
-            xs={12}
-            md={4}
-            className={"mb-4 d-flex flex-column align-items-center"}
-          >
-            <div className={s.imgAnimation}>
-            <Link href="/blog/article/57fbad3f-528a-43b2-83e8-32ba30708194"><img src={article3} className={"img-fluid"} /></Link>
-            </div>
-            <p className={"mt-3 text-muted mb-0"}>March 12, 2020</p>
-            <h6
-              className={"fw-bold font-size-base mt-1"}
-              style={{ fontSize: 16 }}
-            >
-              What is Lorem Ipsum?
-            </h6>
-            <h6 style={{ fontSize: 16 }} className={"fw-bold text-primary"}>
-            <Link href="/blog/article/57fbad3f-528a-43b2-83e8-32ba30708194">Read More</Link>
-            </h6>
-          </Col>
-        </Row>
-        <Row className={"d-flex justify-content-center"}>
-          <Link href={"/blog"}>
-            <Button
-              outline
-              color="primary"
-              className={"text-uppercase mx-auto mt-5 fw-bold"}
-            >
-              view more
-            </Button>
-          </Link>
-        </Row>
-      </Container>
       <InstagramWidget />
     </>
   );

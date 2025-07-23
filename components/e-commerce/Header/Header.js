@@ -22,6 +22,7 @@ import {
   openSidebar,
 } from "redux/actions/navigation";
 import axios from "axios";
+import { logoutUser } from "redux/actions/auth";
 
 class Header extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class Header extends React.Component {
       heightFour: 0,
       innerWidth: typeof window !== "undefined" && window.innerWidth,
       count: 0,
+      userDropdownOpen: false,
     };
   }
 
@@ -63,7 +65,7 @@ class Header extends React.Component {
             count: res.data.count,
           });
         })
-        .catch(e => console.log(e));
+        .catch((e) => console.log(e));
       return;
     } else if (localStorage.getItem("products") && !this.props.currentUser) {
       this.setState({
@@ -125,18 +127,19 @@ class Header extends React.Component {
     return (
       <Navbar className={s.header}>
         <Container>
-
           {this.state.innerWidth <= 768 && (
-                <Button
-                    className={"bg-transparent border-0 p-0"}
-                    onClick={() => this.switchSidebar()}
-                >
-                  <img src={menuImg} alt={'menu'} />
-                </Button>
+            <Button
+              className={"bg-transparent border-0 p-0"}
+              onClick={() => this.switchSidebar()}
+            >
+              <img src={menuImg} alt={"menu"} />
+            </Button>
           )}
 
           <NavbarBrand>
-            <Link href={"/"}><span className={s.logoStyle}>Flatlogic</span></Link>
+            <Link href={"/"}>
+              <span className={s.logoStyle}>Flatlogic</span>
+            </Link>
           </NavbarBrand>
 
           {this.state.innerWidth >= 768 && (
@@ -148,7 +151,7 @@ class Header extends React.Component {
                     onMouseOver={this.toggleHeightOne}
                     href={"/"}
                   >
-                    <span className={s.dropdownItem}>Home</span>
+                    <span>Home</span>
                   </ActiveLink>
                 </li>
                 <li className={s.nav__menuItem}>
@@ -156,7 +159,7 @@ class Header extends React.Component {
                     className={s.dropdownItem}
                     onMouseOver={this.toggleHeightTwo}
                   >
-                    Pages <div className={s.dropdownItemImg} />
+                    About <div className={s.dropdownItemImg} />
                   </span>
                   <AnimateHeight
                     duration={500}
@@ -174,34 +177,15 @@ class Header extends React.Component {
                           <a>About Team</a>
                         </ActiveLink>
                       </DropdownItem>
-                      <DropdownItem className={s.dropdownMenuItem}>
-                        <ActiveLink href={"/contact"}>
-                          <a>Contact Us</a>
-                        </ActiveLink>
-                      </DropdownItem>
-                      <DropdownItem className={s.dropdownMenuItem}>
-                        <ActiveLink href={"/faq"}>
-                          <a>FAQ</a>
-                        </ActiveLink>
-                      </DropdownItem>
-                      <DropdownItem className={s.dropdownMenuItem}>
-                        <ActiveLink href={"/error"}>
-                          <a>404</a>
-                        </ActiveLink>
-                      </DropdownItem>
-                      <DropdownItem className={s.dropdownMenuItem}>
-                        <ActiveLink href={"/wishlist"}>
-                          <a>Wishlist</a>
-                        </ActiveLink>
-                      </DropdownItem>
-                      <DropdownItem className={s.dropdownMenuItem}>
-                        <ActiveLink href={"/login"}>
-                          <a>Login</a>
-                        </ActiveLink>
-                      </DropdownItem>
                     </UncontrolledDropdown>
                   </AnimateHeight>
                 </li>
+                <li className={s.nav__menuItem} style={{ width: 90 }}>
+                  <ActiveLink className={s.navLink} href={"/contact"}>
+                    <span>Contact</span>
+                  </ActiveLink>
+                </li>
+
                 <li className={s.nav__menuItem}>
                   <span
                     className={s.dropdownItem}
@@ -233,63 +217,69 @@ class Header extends React.Component {
                     </UncontrolledDropdown>
                   </AnimateHeight>
                 </li>
-                <li className={s.nav__menuItem}>
-                  <span
-                    className={s.dropdownItem}
-                    onMouseOver={this.toggleHeightFour}
-                  >
-                    Blog <div className={s.dropdownItemImg} />
-                  </span>
-                  <AnimateHeight
-                    duration={500}
-                    className={`${s.nav__submenu}`}
-                    height={heightFour}
-                  >
-                    <UncontrolledDropdown>
-                      <DropdownItem className={s.dropdownMenuItem}>
-                        <ActiveLink href={"/blog"}>
-                          <a>Blog</a>
-                        </ActiveLink>
-                      </DropdownItem>
-                      <DropdownItem className={s.dropdownMenuItem}>
-                        <ActiveLink href={"/blog/article"}>
-                          <a>Blog Article</a>
-                        </ActiveLink>
-                      </DropdownItem>
-                    </UncontrolledDropdown>
-                  </AnimateHeight>
-                </li>
               </ul>
             </nav>
           )}
 
           <Nav>
             <NavItem className={"d-flex align-items-center"}>
-              {this.state.innerWidth >= 768 && (
-                <>
-                  <Link href={"/search"}>
-                    <a>
-                      <Button className={`bg-transparent border-0 p-3`}>
-                        {this.props.router.pathname.includes("search") ? (
-                            <div className={s.headerSearchIconActive} />
-                        ) : (
-                            <div className={s.headerSearchIcon} />
-                        )}
-                      </Button>
-                    </a>
-                  </Link>
-                  <Link href={"/login"}>
-                    <a>
-                      <Button className={`bg-transparent border-0 p-3`}>
-                        {this.props.router.pathname.includes("account") ? (
-                            <div className={s.headerLoginIconActive} />
-                        ) : (
-                            <div className={s.headerLoginIcon} />
-                        )}
-                      </Button>
-                    </a>
-                  </Link>
-                </>
+              {this.props.currentUser ? (
+                <div
+                  className={s.userDropdown}
+                  style={{ position: "relative", display: "inline-block" }}
+                  onMouseEnter={
+                    this.state.innerWidth >= 768
+                      ? () => this.setState({ userDropdownOpen: true })
+                      : undefined
+                  }
+                  onMouseLeave={
+                    this.state.innerWidth >= 768
+                      ? () => this.setState({ userDropdownOpen: false })
+                      : undefined
+                  }
+                >
+                  <Button
+                    className={`bg-transparent border-0 p-3`}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      boxShadow: "none",
+                    }}
+                    onClick={
+                      this.state.innerWidth < 768
+                        ? () =>
+                            this.setState({
+                              userDropdownOpen: !this.state.userDropdownOpen,
+                            })
+                        : undefined
+                    }
+                  >
+                    <div className={s.headerLoginIcon} />
+                  </Button>
+                  {this.state.userDropdownOpen && (
+                    <div className={s.userDropdownMenu}>
+                      <DropdownItem header>
+                        {this.props.currentUser.email}
+                      </DropdownItem>
+                      <DropdownItem
+                        onClick={() => {
+                          this.props.dispatch(logoutUser());
+                          window.location.href = "/";
+                        }}
+                      >
+                        Log out
+                      </DropdownItem>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link href={"/login"}>
+                  <a>
+                    <Button className={`bg-transparent border-0 p-3`}>
+                      <div className={s.headerLoginIcon} />
+                    </Button>
+                  </a>
+                </Link>
               )}
               <Link href={"/cart"}>
                 <a>
@@ -330,7 +320,7 @@ function mapStateToProps(store) {
     currentUser: store.auth.currentUser,
     navbarType: store.layout.navbarType,
     navbarColor: store.layout.navbarColor,
-    products: store.products.list
+    products: store.products.list,
   };
 }
 

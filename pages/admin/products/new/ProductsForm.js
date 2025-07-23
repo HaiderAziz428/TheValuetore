@@ -67,6 +67,18 @@ class ProductsForm extends Component {
                   max={undefined}
                 />
 
+                {/* Video upload field */}
+                <FilesFormItem
+                  name={"video"}
+                  schema={productsFields}
+                  path={"products/video"}
+                  fileProps={{
+                    size: undefined,
+                    formats: ["mp4", "webm", "ogg"],
+                  }}
+                  max={1}
+                />
+
                 <InputFormItem name={"title"} schema={productsFields} />
 
                 <InputFormItem name={"price"} schema={productsFields} />
@@ -92,7 +104,10 @@ class ProductsForm extends Component {
                   mode="multiple"
                 />
 
-                <InputFormItem name={"meta_description"} schema={productsFields} />
+                <InputFormItem
+                  name={"meta_description"}
+                  schema={productsFields}
+                />
 
                 <InputFormItem name={"keywords"} schema={productsFields} />
 
@@ -106,7 +121,10 @@ class ProductsForm extends Component {
 
                 <InputFormItem name={"meta_fb_id"} schema={productsFields} />
 
-                <InputFormItem name={"meta_og_sitename"} schema={productsFields} />
+                <InputFormItem
+                  name={"meta_og_sitename"}
+                  schema={productsFields}
+                />
 
                 <InputFormItem name={"post_twitter"} schema={productsFields} />
 
@@ -164,12 +182,12 @@ class ProductsForm extends Component {
 }
 
 export async function getServerSideProps(context) {
-    // const res = await axios.get("/products");
-    // const products = res.data.rows;
+  // const res = await axios.get("/products");
+  // const products = res.data.rows;
 
-    return {
-        props: {  }, // will be passed to the page component as props
-    };
+  return {
+    props: {}, // will be passed to the page component as props
+  };
 }
 
 export default ProductsForm;

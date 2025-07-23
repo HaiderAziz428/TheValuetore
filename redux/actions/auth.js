@@ -3,7 +3,7 @@ import config from "constants/config";
 import jwt from "jsonwebtoken";
 import { toast } from "react-toastify";
 import Errors from "components/admin/FormItems/error/errors";
-import Router from 'next/router';
+import Router from "next/router";
 
 export const AUTH_FAILURE = "AUTH_FAILURE";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -35,7 +35,8 @@ export function doInit() {
   return async (dispatch) => {
     try {
       let currentUser = null;
-      let token = typeof window !== 'undefined' && localStorage.getItem("token");
+      let token =
+        typeof window !== "undefined" && localStorage.getItem("token");
       if (token) {
         currentUser = await findMe();
       }
@@ -61,8 +62,8 @@ export function logoutUser() {
     dispatch({
       type: LOGOUT_REQUEST,
     });
-    typeof window !== 'undefined' && localStorage.removeItem("token");
-    typeof window !== 'undefined' && localStorage.removeItem("user");
+    typeof window !== "undefined" && localStorage.removeItem("token");
+    typeof window !== "undefined" && localStorage.removeItem("user");
     axios.defaults.headers.common["Authorization"] = "";
     dispatch({
       type: LOGOUT_SUCCESS,
@@ -72,15 +73,32 @@ export function logoutUser() {
 
 export function receiveToken(token) {
   return (dispatch) => {
-    let user = jwt.decode(token);
+    let decodedData = jwt.decode(token);
 
-    typeof window !== 'undefined' && localStorage.setItem("token", token);
-    typeof window !== 'undefined' && localStorage.setItem("user", JSON.stringify(user));
+    typeof window !== "undefined" && localStorage.setItem("token", token);
+    typeof window !== "undefined" &&
+      localStorage.setItem("user", JSON.stringify(decodedData.user));
     axios.defaults.headers.common["Authorization"] = "Bearer " + token;
     dispatch({
       type: LOGIN_SUCCESS,
     });
-    if (typeof window !== 'undefined') { window.location.href = "/admin/dashboard" } 
+
+    // Show success toast and redirect based on user email
+    if (typeof window !== "undefined") {
+      import("react-toastify").then(({ toast }) => {
+        toast.success("Login successful!");
+        setTimeout(() => {
+          // Get redirect path from JWT payload or determine based on email
+          const redirectPath =
+            decodedData.redirectPath ||
+            (decodedData.user.email === "admin@flatlogic.com"
+              ? "/admin/dashboard"
+              : "/");
+
+          window.location.href = redirectPath;
+        }, 1200);
+      });
+    }
   };
 }
 
@@ -98,13 +116,17 @@ export function loginUser(creds) {
           const token = res.data;
           dispatch(receiveToken(token));
           dispatch(doInit());
-          if (typeof window !== 'undefined') { window.location.href = "/admin/dashboard" } 
         })
         .catch((err) => {
-          console.log(err.response);
+          import("react-toastify").then(({ toast }) => {
+            toast.error("Invalid credentials. Please try again.");
+          });
           dispatch(authError(err.response));
         });
     } else {
+      import("react-toastify").then(({ toast }) => {
+        toast.error("Something was wrong. Try again");
+      });
       dispatch(authError("Something was wrong. Try again"));
     }
   };
@@ -112,7 +134,7 @@ export function loginUser(creds) {
 
 export function verifyEmail(token) {
   return (dispatch) => {
-    console.log(token, 'TIOKEN')
+    console.log(token, "TIOKEN");
     axios
       .put("/auth/verify-email", { token })
       .then((verified) => {
@@ -124,7 +146,9 @@ export function verifyEmail(token) {
         toast.error(err.response.data);
       })
       .finally(() => {
-         if (typeof window !== 'undefined') { window.location.href = "/login" }
+        if (typeof window !== "undefined") {
+          window.location.href = "/login";
+        }
       });
   };
 }
@@ -141,7 +165,9 @@ export function resetPassword(token, password) {
           type: RESET_SUCCESS,
         });
         toast.success("Password has been updated");
-         if (typeof window !== 'undefined') { window.location.href = "/login" }
+        if (typeof window !== "undefined") {
+          window.location.href = "/login";
+        }
       })
       .catch((err) => {
         dispatch(authError(err.response.data));
@@ -161,7 +187,9 @@ export function sendPasswordResetEmail(email) {
           type: PASSWORD_RESET_EMAIL_SUCCESS,
         });
         toast.success("Email with resetting instructions has been sent");
-         if (typeof window !== 'undefined') { window.location.href = "/login" }
+        if (typeof window !== "undefined") {
+          window.location.href = "/login";
+        }
       })
       .catch((err) => {
         dispatch(authError(err.response.data));
@@ -174,18 +202,34 @@ export function registerUser(creds) {
     dispatch({
       type: REGISTER_REQUEST,
     });
-    console.log('sdf')
+    console.log("sdf");
     if (creds.email.length > 0 && creds.password.length > 0) {
       axios
         .post("/auth/signup", creds)
         .then((res) => {
+          const token = res.data;
+          // Handle redirect for registration too
+          const decodedData = jwt.decode(token);
+
           dispatch({
             type: REGISTER_SUCCESS,
           });
           toast.success(
             "You've been registered successfully. Please check your email for verification link"
           );
-           if (typeof window !== 'undefined') { window.location.href = "/login" }
+
+          if (typeof window !== "undefined") {
+            setTimeout(() => {
+              // Redirect based on email for registration
+              const redirectPath =
+                decodedData.redirectPath ||
+                (decodedData.user.email === "admin@flatlogic.com"
+                  ? "/admin/dashboard"
+                  : "/login");
+
+              window.location.href = redirectPath;
+            }, 1500);
+          }
         })
         .catch((err) => {
           dispatch(authError(err.response.data));
