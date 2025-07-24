@@ -7,4 +7,80 @@ async function list() {
   return response.data;
 }
 
-export default { list };
+const actions = {
+  doAdd: (product) => async (dispatch) => {
+    dispatch({
+      type: "PRODUCTS_LIST_DO_ADD",
+      payload: { product },
+    });
+  },
+
+  doFetch:
+    (filter, keepPagination = false) =>
+    async (dispatch, getState) => {
+      try {
+        dispatch({
+          type: "PRODUCTS_LIST_FETCH_STARTED",
+          payload: { filter, keepPagination },
+        });
+
+        const response = await list();
+
+        dispatch({
+          type: "PRODUCTS_LIST_FETCH_SUCCESS",
+          payload: {
+            rows: response.rows,
+            count: response.count,
+          },
+        });
+      } catch (error) {
+        Errors.handle(error);
+        dispatch({
+          type: "PRODUCTS_LIST_FETCH_ERROR",
+        });
+      }
+    },
+
+  doDelete: (id) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "PRODUCTS_LIST_DELETE_STARTED",
+      });
+
+      await axios.delete(`/products/${id}`);
+
+      dispatch({
+        type: "PRODUCTS_LIST_DELETE_SUCCESS",
+      });
+
+      const response = await list();
+      dispatch({
+        type: "PRODUCTS_LIST_FETCH_SUCCESS",
+        payload: {
+          rows: response.rows,
+          count: response.count,
+        },
+      });
+    } catch (error) {
+      Errors.handle(error);
+      dispatch({
+        type: "PRODUCTS_LIST_DELETE_ERROR",
+      });
+    }
+  },
+
+  doOpenConfirm: (id) => async (dispatch) => {
+    dispatch({
+      type: "PRODUCTS_LIST_OPEN_CONFIRM",
+      payload: { id },
+    });
+  },
+
+  doCloseConfirm: () => async (dispatch) => {
+    dispatch({
+      type: "PRODUCTS_LIST_CLOSE_CONFIRM",
+    });
+  },
+};
+
+export default actions;
