@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Button } from "reactstrap";
-import Link from 'next/link'
+import Link from "next/link";
 
 import s from "./HomePageWidget.module.scss";
-import StoreImg from "public/images/e-commerce/admin/store_icon.png";
 import MoreHorizontal from "public/images/e-commerce/admin/widgets/moreHorizontal";
 import Brush from "public/images/e-commerce/admin/widgets/brush";
 import Globe from "public/images/e-commerce/admin/widgets/globe";
@@ -14,7 +13,7 @@ const tabItems = [
   {
     id: 1,
     tabTitle: "Add products",
-    tabImage: StoreImg,
+    tabImage: "/images/e-commerce/admin/store_icon.png",
     icon: <PriceTag />,
     tabHeading: "Add your first products",
     tabTextContent:
@@ -141,7 +140,7 @@ export async function getServerSideProps(context) {
   // const products = res.data.rows;
 
   return {
-    props: {  }, // will be passed to the page component as props
+    props: {}, // will be passed to the page component as props
   };
 }
 
