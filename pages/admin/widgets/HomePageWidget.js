@@ -3,7 +3,7 @@ import { Button } from "reactstrap";
 import Link from "next/link";
 
 import s from "./HomePageWidget.module.scss";
-import MoreHorizontal from "public/images/e-commerce/admin/widgets/moreHorizontal";
+// These are JS component files, not images, so they should be imported as components
 import Brush from "public/images/e-commerce/admin/widgets/brush";
 import Globe from "public/images/e-commerce/admin/widgets/globe";
 import PriceTag from "public/images/e-commerce/admin/widgets/pricetag";

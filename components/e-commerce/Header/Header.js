@@ -13,7 +13,6 @@ import AnimateHeight from "react-animate-height";
 import ActiveLink from "components/admin/ActiveLink/ActiveLink";
 import Link from "next/link";
 import s from "./Header.module.scss";
-import menuImg from "public/images/e-commerce/header/menu.svg";
 import { withRouter } from "next/router";
 import { connect } from "react-redux";
 import {
@@ -132,7 +131,7 @@ class Header extends React.Component {
               className={"bg-transparent border-0 p-0"}
               onClick={() => this.switchSidebar()}
             >
-              <img src={menuImg} alt={"menu"} />
+              <img src={"/images/e-commerce/header/menu.svg"} alt={"menu"} />
             </Button>
           )}
 

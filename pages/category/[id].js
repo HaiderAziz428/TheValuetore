@@ -194,24 +194,24 @@ const Index = ({ categoryId, categoryData }) => {
         <meta
           name="description"
           content={`${
-            categoryData.meta_description ||
+            categoryData?.meta_description ||
             "Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
           }`}
         />
         <meta
           name="keywords"
-          content={`${categoryData.keywords || "flatlogic, react templates"}`}
+          content={`${categoryData?.keywords || "flatlogic, react templates"}`}
         />
         <meta
           name="author"
-          content={`${categoryData.meta_author || "Flatlogic LLC."}`}
+          content={`${categoryData?.meta_author || "Flatlogic LLC."}`}
         />
         <meta charSet="utf-8" />
 
         <meta
           property="og:title"
           content={`${
-            categoryData.meta_og_title ||
+            categoryData?.meta_og_title ||
             "Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"
           }`}
         />
@@ -219,21 +219,21 @@ const Index = ({ categoryId, categoryData }) => {
         <meta
           property="og:url"
           content={`${
-            categoryData.meta_og_url ||
+            categoryData?.meta_og_url ||
             "https://flatlogic-ecommerce.herokuapp.com/"
           }`}
         />
         <meta
           property="og:image"
           content={`${
-            categoryData.meta_og_image ||
+            categoryData?.meta_og_image ||
             "https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"
           }`}
         />
         <meta
           property="og:description"
           content={`${
-            categoryData.meta_description ||
+            categoryData?.meta_description ||
             "Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
           }`}
         />
@@ -241,16 +241,16 @@ const Index = ({ categoryId, categoryData }) => {
 
         <meta
           property="fb:app_id"
-          content={`${categoryData.meta_fb_id || "712557339116053"}`}
+          content={`${categoryData?.meta_fb_id || "712557339116053"}`}
         />
 
         <meta
           property="og:site_name"
-          content={`${categoryData.meta_og_sitename || "Flatlogic"}`}
+          content={`${categoryData?.meta_og_sitename || "Flatlogic"}`}
         />
         <meta
           name="twitter:site"
-          content={`${categoryData.post_twitter || "@flatlogic"}`}
+          content={`${categoryData?.post_twitter || "@flatlogic"}`}
         />
       </Head>
       <Container className={"mb-5"} style={{ marginTop: 21 }}>

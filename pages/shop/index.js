@@ -11,8 +11,6 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import Head from "next/head";
 import InstagramWidget from "components/e-commerce/Instagram";
-import arrowRight from "../../public/images/e-commerce/home/arrow-right.svg";
-import rating from "../../public/images/e-commerce/details/stars.svg";
 import productsListActions from "../../redux/actions/products/productsListActions";
 
 let categoriesList = [],
@@ -619,7 +617,7 @@ const Index = () => {
                           <a className={"fw-semi-bold"}>
                             More about product
                             <img
-                              src={arrowRight}
+                              src={"/images/e-commerce/home/arrow-right.svg"}
                               alt={"arrow"}
                               className={"ml-2"}
                             />
@@ -631,7 +629,7 @@ const Index = () => {
                         </h6>
                         <h4 className={"fw-bold"}>{item.title}</h4>
                         <div className={"d-flex align-items-center"}>
-                          <img src={rating} />
+                          <img src={"/images/e-commerce/details/stars.svg"} />
                           <p className={"text-primary ml-3 mb-0"}>12 reviews</p>
                         </div>
                         <p>

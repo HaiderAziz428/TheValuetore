@@ -12,16 +12,18 @@ import {
 import isScreen from "core/screenHelper";
 import { logoutUser } from "redux/actions/auth";
 
-import HomeIcon from "public/images/e-commerce/sidebar/home";
-import DownloadIcon from "public/images/e-commerce/sidebar/download";
-import BarIcon from "public/images/e-commerce/sidebar/bar";
-import FileIcon from "public/images/e-commerce/sidebar/file";
-import GiftIcon from "public/images/e-commerce/sidebar/gift";
-import GridIcon from "public/images/e-commerce/sidebar/grid";
-import PersonIcon from "public/images/e-commerce/sidebar/person";
-import PricetagIcon from "public/images/e-commerce/sidebar/pricetag";
-import SettingsIcon from "public/images/e-commerce/sidebar/settings";
-import ShoppingIcon from "public/images/e-commerce/sidebar/shopping";
+// These are JS component files, not images, so they should be imported as components
+// Import sidebar icons as components from their correct paths
+import HomeIcon from "../../../public/images/e-commerce/sidebar/home.js";
+import DownloadIcon from "../../../public/images/e-commerce/sidebar/download.js";
+import BarIcon from "../../../public/images/e-commerce/sidebar/bar.js";
+import FileIcon from "../../../public/images/e-commerce/sidebar/file.js";
+import GiftIcon from "../../../public/images/e-commerce/sidebar/gift.js";
+import GridIcon from "../../../public/images/e-commerce/sidebar/grid.js";
+import PersonIcon from "../../../public/images/e-commerce/sidebar/person.js";
+import PricetagIcon from "../../../public/images/e-commerce/sidebar/pricetag.js";
+import SettingsIcon from "../../../public/images/e-commerce/sidebar/settings.js";
+import ShoppingIcon from "../../../public/images/e-commerce/sidebar/shopping.js";
 
 class Sidebar extends React.Component {
   static propTypes = {
