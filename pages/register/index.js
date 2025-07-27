@@ -15,8 +15,6 @@ import {
 } from "reactstrap";
 import { registerUser, authError } from "redux/actions/auth";
 import { loginUser } from "redux/actions/auth";
-import microsoft from "public/images/microsoft.png";
-import img from "public/images/e-commerce/register/bg.png";
 import logo from "public/images/e-commerce/logo.svg";
 import Head from "next/head";
 

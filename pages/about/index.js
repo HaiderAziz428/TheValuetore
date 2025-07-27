@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
-import img2 from "public/images/e-commerce/about/img2.png";
 import s from "./About.module.scss";
 import Head from "next/head";
 
@@ -153,7 +152,11 @@ const Index = () => {
               alt="img1"
               className={`${s.aboutImg} mb-5`}
             />
-            <img src={img2} alt="img2" className={s.aboutImg} />
+            <img
+              src="/images/e-commerce/about/img2.png"
+              alt="img2"
+              className={s.aboutImg}
+            />
           </Col>
         </Row>
       </Container>

@@ -24,18 +24,6 @@ import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
-import product from "public/images/e-commerce/home/product5.png";
-import productRight from "public/images/e-commerce/details/1-right.png";
-import productCenter from "public/images/e-commerce/details/1-center.png";
-import productLeft from "public/images/e-commerce/details/1-left.png";
-import ratingImg from "public/images/e-commerce/details/stars.svg";
-import person1 from "public/images/e-commerce/details/person1.jpg";
-import person2 from "public/images/e-commerce/details/person2.jpg";
-import person3 from "public/images/e-commerce/details/person3.jpg";
-import product1 from "public/images/e-commerce/home/product1.png";
-import product2 from "public/images/e-commerce/home/product2.png";
-import product3 from "public/images/e-commerce/home/product3.png";
-import product4 from "public/images/e-commerce/home/product4.png";
 import s from "./Product.module.scss";
 
 import InfoBlock from "components/e-commerce/InfoBlock";
@@ -71,35 +59,35 @@ const Star = ({ selected = false, onClick = (f) => f }) => (
 const products = [
   {
     id: 0,
-    img: product1,
+    img: "/images/e-commerce/home/product1.png",
   },
   {
     id: 1,
-    img: product2,
+    img: "/images/e-commerce/home/product2.png",
   },
   {
     id: 2,
-    img: product3,
+    img: "/images/e-commerce/home/product3.png",
   },
   {
     id: 3,
-    img: product4,
+    img: "/images/e-commerce/home/product4.png",
   },
   {
     id: 7,
-    img: product1,
+    img: "/images/e-commerce/home/product1.png",
   },
   {
     id: 4,
-    img: product2,
+    img: "/images/e-commerce/home/product2.png",
   },
   {
     id: 5,
-    img: product3,
+    img: "/images/e-commerce/home/product3.png",
   },
   {
     id: 6,
-    img: product4,
+    img: "/images/e-commerce/home/product4.png",
   },
 ];
 

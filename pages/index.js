@@ -10,17 +10,13 @@ import arrowRight from "public/images/e-commerce/home/arrow-right.svg";
 
 import InfoBlock from "components/e-commerce/InfoBlock";
 import InstagramWidget from "components/e-commerce/Instagram";
-import article1 from "public/images/e-commerce/home/article1.jpg";
-import article2 from "public/images/e-commerce/home/article2.jpg";
-import article3 from "public/images/e-commerce/home/article3.jpg";
+import productsListActions from "../redux/actions/products/productsListActions";
+import Image from "next/image";
 
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 
 import Countdown from "./home/Countdown";
-import rating from "../public/images/e-commerce/details/stars.svg";
-import productsListActions from "../redux/actions/products/productsListActions";
-import Image from "next/image";
 
 const Index = ({ products: serverSideProducts }) => {
   const [quantity, setQuantity] = React.useState(1);
@@ -380,7 +376,10 @@ const Index = ({ products: serverSideProducts }) => {
                     </h6>
                     <h4 className={"fw-bold"}>{item.title}</h4>
                     <div className={"d-flex align-items-center"}>
-                      <img src={rating} alt={"rating"} />
+                      <img
+                        src="/images/e-commerce/details/stars.svg"
+                        alt={"rating"}
+                      />
                       <p className={"text-primary ml-3 mb-0"}>12 reviews</p>
                     </div>
                     <p>
