@@ -3,8 +3,6 @@ import { Container, Row, Col, Button, Table } from "reactstrap";
 import Head from "next/head";
 import { useSelector } from "react-redux";
 import s from "./Account.module.scss";
-import settings from "public/images/e-commerce/account/settings.svg";
-import visa from "public/images/e-commerce/account/visa.svg";
 
 const Index = () => {
   return (
@@ -163,7 +161,7 @@ const Index = () => {
             <section className={s.profile}>
               <Button className={"bg-transparent border-0 p-0"}>
                 <img
-                  src={settings}
+                  src={"/images/e-commerce/account/settings.svg"}
                   alt={"settings"}
                   className={s.settingsIcon}
                 />
@@ -215,7 +213,11 @@ const Index = () => {
                   <div style={{ width: 170 }}>
                     <h6 className={"fw-bold"}>Payment Method</h6>
                     <div className={"d-flex align-items-center mt-4 mb-3"}>
-                      <img src={visa} alt={"visa"} className={"mr-3"} />
+                      <img
+                        src={"/images/e-commerce/account/visa.svg"}
+                        alt={"visa"}
+                        className={"mr-3"}
+                      />
                       <p className={"mb-0"}>•••• •••• •••• 5632</p>
                     </div>
                   </div>

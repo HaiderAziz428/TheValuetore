@@ -3,16 +3,14 @@ import { Container, Row, Col, Input, Button, Modal } from "reactstrap";
 import Checkbox from "react-custom-checkbox";
 import InputRange from "react-input-range";
 import Link from "next/link";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import s from "./Shop.module.scss";
 
-import InfoBlock from 'components/e-commerce/InfoBlock';
-import filter from "public/images/e-commerce/filter.svg";
-import relevant from "public/images/e-commerce/relevant.svg";
+import InfoBlock from "components/e-commerce/InfoBlock";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import Head from "next/head";
-import InstagramWidget from 'components/e-commerce/Instagram';
+import InstagramWidget from "components/e-commerce/Instagram";
 import arrowRight from "../../public/images/e-commerce/home/arrow-right.svg";
 import rating from "../../public/images/e-commerce/details/stars.svg";
 import productsListActions from "../../redux/actions/products/productsListActions";
@@ -22,7 +20,7 @@ let categoriesList = [],
 
 const Index = () => {
   const [quantity, setQuantity] = React.useState(1);
-  const dispatchStore = useDispatch()
+  const dispatchStore = useDispatch();
   const [rangeValue, setRangeValue] = React.useState({
     min: 0,
     max: 1000,
@@ -135,7 +133,7 @@ const Index = () => {
     });
     typeof window !== "undefined" &&
       localStorage.setItem("products", JSON.stringify(localProducts));
-    dispatchStore(productsListActions.doAdd(localProducts))
+    dispatchStore(productsListActions.doAdd(localProducts));
   };
 
   const addToWishlist = (id) => {
@@ -202,29 +200,49 @@ const Index = () => {
         <title>Shop</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
-        <meta name="description" content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development" />
+        <meta
+          name="description"
+          content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
+        />
         <meta name="keywords" content="flatlogic, react templates" />
         <meta name="author" content="Flatlogic LLC." />
         <meta charSet="utf-8" />
 
-
-        <meta property="og:title" content="Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:url" content="https://flatlogic-ecommerce.herokuapp.com/"/>
-        <meta property="og:image" content="https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"/>
-        <meta property="og:description" content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"/>
+        <meta
+          property="og:title"
+          content="Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://flatlogic-ecommerce.herokuapp.com/"
+        />
+        <meta
+          property="og:image"
+          content="https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"
+        />
+        <meta
+          property="og:description"
+          content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
+        />
         <meta name="twitter:card" content="summary_large_image" />
 
         <meta property="fb:app_id" content="712557339116053" />
 
-        <meta property="og:site_name" content="Flatlogic"/>
+        <meta property="og:site_name" content="Flatlogic" />
         <meta name="twitter:site" content="@flatlogic" />
       </Head>
       <Container className={"mb-5"} style={{ marginTop: 32 }}>
         <Row>
           <ToastContainer />
-          <Col sm={3} className={`${s.filterColumn} ${showFilter ? s.showFilter : ''}`}>
-            <div className={s.filterTitle}><h5 className={"fw-bold mb-5 text-uppercase"}>Categories</h5><span onClick={() => setShowFilter(false)}>✕</span></div>
+          <Col
+            sm={3}
+            className={`${s.filterColumn} ${showFilter ? s.showFilter : ""}`}
+          >
+            <div className={s.filterTitle}>
+              <h5 className={"fw-bold mb-5 text-uppercase"}>Categories</h5>
+              <span onClick={() => setShowFilter(false)}>✕</span>
+            </div>
             <div className={"d-flex align-items-center"}>
               <Checkbox
                 borderColor={"#232323"}
@@ -240,157 +258,145 @@ const Index = () => {
                   />
                 }
                 size={16}
-                label={
-                  <p className={"d-inline-block ml-1 mb-0"}>Furniture</p>
-                }
+                label={<p className={"d-inline-block ml-1 mb-0"}>Furniture</p>}
                 onChange={() =>
                   filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc711")
                 }
-                style={{marginTop: -1}}
+                style={{ marginTop: -1 }}
               />
             </div>
             <div className={"d-flex align-items-center mt-2"}>
               <Checkbox
-                  borderColor={"#232323"}
-                  borderWidth={1}
-                  borderRadius={2}
-                  icon={
-                    <div
-                        style={{
-                          backgroundColor: "#bd744c",
-                          borderRadius: 2,
-                          padding: 4,
-                        }}
-                    />
-                  }
-                  size={16}
-                  label={
-                    <p className={"d-inline-block ml-1 mb-0"}>Lighting</p>
-                  }
-                  onChange={() =>
-                      filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc712")
-                  }
-                  style={{marginTop: -1}}
+                borderColor={"#232323"}
+                borderWidth={1}
+                borderRadius={2}
+                icon={
+                  <div
+                    style={{
+                      backgroundColor: "#bd744c",
+                      borderRadius: 2,
+                      padding: 4,
+                    }}
+                  />
+                }
+                size={16}
+                label={<p className={"d-inline-block ml-1 mb-0"}>Lighting</p>}
+                onChange={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc712")
+                }
+                style={{ marginTop: -1 }}
               />
             </div>
             <div className={"d-flex align-items-center mt-2"}>
               <Checkbox
-                  borderColor={"#232323"}
-                  borderWidth={1}
-                  borderRadius={2}
-                  icon={
-                    <div
-                        style={{
-                          backgroundColor: "#bd744c",
-                          borderRadius: 2,
-                          padding: 4,
-                        }}
-                    />
-                  }
-                  size={16}
-                  label={
-                    <p className={"d-inline-block ml-1 mb-0"}>Decoration</p>
-                  }
-                  onChange={() =>
-                      filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc713")
-                  }
-                  style={{marginTop: -1}}
+                borderColor={"#232323"}
+                borderWidth={1}
+                borderRadius={2}
+                icon={
+                  <div
+                    style={{
+                      backgroundColor: "#bd744c",
+                      borderRadius: 2,
+                      padding: 4,
+                    }}
+                  />
+                }
+                size={16}
+                label={<p className={"d-inline-block ml-1 mb-0"}>Decoration</p>}
+                onChange={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc713")
+                }
+                style={{ marginTop: -1 }}
               />
             </div>
             <div className={"d-flex align-items-center mt-2"}>
               <Checkbox
-                  borderColor={"#232323"}
-                  borderWidth={1}
-                  borderRadius={2}
-                  icon={
-                    <div
-                        style={{
-                          backgroundColor: "#bd744c",
-                          borderRadius: 2,
-                          padding: 4,
-                        }}
-                    />
-                  }
-                  size={16}
-                  label={
-                    <p className={"d-inline-block ml-1 mb-0"}>Bedding</p>
-                  }
-                  onChange={() =>
-                      filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc714")
-                  }
-                  style={{marginTop: -1}}
+                borderColor={"#232323"}
+                borderWidth={1}
+                borderRadius={2}
+                icon={
+                  <div
+                    style={{
+                      backgroundColor: "#bd744c",
+                      borderRadius: 2,
+                      padding: 4,
+                    }}
+                  />
+                }
+                size={16}
+                label={<p className={"d-inline-block ml-1 mb-0"}>Bedding</p>}
+                onChange={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc714")
+                }
+                style={{ marginTop: -1 }}
               />
             </div>
             <div className={"d-flex align-items-center mt-2"}>
               <Checkbox
-                  borderColor={"#232323"}
-                  borderWidth={1}
-                  borderRadius={2}
-                  icon={
-                    <div
-                        style={{
-                          backgroundColor: "#bd744c",
-                          borderRadius: 2,
-                          padding: 4,
-                        }}
-                    />
-                  }
-                  size={16}
-                  label={
-                    <p className={"d-inline-block ml-1 mb-0"}>Bath & Shower</p>
-                  }
-                  onChange={() =>
-                      filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc715")
-                  }
-                  style={{marginTop: -1}}
+                borderColor={"#232323"}
+                borderWidth={1}
+                borderRadius={2}
+                icon={
+                  <div
+                    style={{
+                      backgroundColor: "#bd744c",
+                      borderRadius: 2,
+                      padding: 4,
+                    }}
+                  />
+                }
+                size={16}
+                label={
+                  <p className={"d-inline-block ml-1 mb-0"}>Bath & Shower</p>
+                }
+                onChange={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc715")
+                }
+                style={{ marginTop: -1 }}
               />
             </div>
             <div className={"d-flex align-items-center mt-2"}>
               <Checkbox
-                  borderColor={"#232323"}
-                  borderWidth={1}
-                  borderRadius={2}
-                  icon={
-                    <div
-                        style={{
-                          backgroundColor: "#bd744c",
-                          borderRadius: 2,
-                          padding: 4,
-                        }}
-                    />
-                  }
-                  size={16}
-                  label={
-                    <p className={"d-inline-block ml-1 mb-0"}>Curtains</p>
-                  }
-                  onChange={() =>
-                      filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc716")
-                  }
-                  style={{marginTop: -1}}
+                borderColor={"#232323"}
+                borderWidth={1}
+                borderRadius={2}
+                icon={
+                  <div
+                    style={{
+                      backgroundColor: "#bd744c",
+                      borderRadius: 2,
+                      padding: 4,
+                    }}
+                  />
+                }
+                size={16}
+                label={<p className={"d-inline-block ml-1 mb-0"}>Curtains</p>}
+                onChange={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc716")
+                }
+                style={{ marginTop: -1 }}
               />
             </div>
             <div className={"d-flex align-items-center mt-2"}>
               <Checkbox
-                  borderColor={"#232323"}
-                  borderWidth={1}
-                  borderRadius={2}
-                  icon={
-                    <div
-                        style={{
-                          backgroundColor: "#bd744c",
-                          borderRadius: 2,
-                          padding: 4,
-                        }}
-                    />
-                  }
-                  size={16}
-                  label={
-                    <p className={"d-inline-block ml-1 mb-0"}>Toys</p>
-                  }
-                  onChange={() =>
-                      filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc717")
-                  }
-                  style={{marginTop: -1}}
+                borderColor={"#232323"}
+                borderWidth={1}
+                borderRadius={2}
+                icon={
+                  <div
+                    style={{
+                      backgroundColor: "#bd744c",
+                      borderRadius: 2,
+                      padding: 4,
+                    }}
+                  />
+                }
+                size={16}
+                label={<p className={"d-inline-block ml-1 mb-0"}>Toys</p>}
+                onChange={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc717")
+                }
+                style={{ marginTop: -1 }}
               />
             </div>
             <h5 className={"fw-bold mb-5 mt-5 text-uppercase"}>Price</h5>
@@ -406,149 +412,139 @@ const Index = () => {
             <h5 className={"fw-bold mb-5 mt-5 text-uppercase"}>Brands</h5>
             <div className={"d-flex align-items-center"}>
               <Checkbox
-                  borderColor={"#232323"}
-                  borderWidth={1}
-                  borderRadius={2}
-                  icon={
-                    <div
-                        style={{
-                          backgroundColor: "#bd744c",
-                          borderRadius: 2,
-                          padding: 4,
-                        }}
-                    />
-                  }
-                  size={16}
-                  label={
-                    <p className={"d-inline-block ml-1 mb-0"}>Poliform</p>
-                  }
-                  onChange={() =>
-                      filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc721", true)
-                  }
-                  style={{marginTop: -1}}
+                borderColor={"#232323"}
+                borderWidth={1}
+                borderRadius={2}
+                icon={
+                  <div
+                    style={{
+                      backgroundColor: "#bd744c",
+                      borderRadius: 2,
+                      padding: 4,
+                    }}
+                  />
+                }
+                size={16}
+                label={<p className={"d-inline-block ml-1 mb-0"}>Poliform</p>}
+                onChange={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc721", true)
+                }
+                style={{ marginTop: -1 }}
               />
             </div>
             <div className={"d-flex align-items-center mt-2"}>
               <Checkbox
-                  borderColor={"#232323"}
-                  borderWidth={1}
-                  borderRadius={2}
-                  icon={
-                    <div
-                        style={{
-                          backgroundColor: "#bd744c",
-                          borderRadius: 2,
-                          padding: 4,
-                        }}
-                    />
-                  }
-                  size={16}
-                  label={
-                    <p className={"d-inline-block ml-1 mb-0"}>Roche Bobois</p>
-                  }
-                  onChange={() =>
-                      filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc722", true)
-                  }
-                  style={{marginTop: -1}}
+                borderColor={"#232323"}
+                borderWidth={1}
+                borderRadius={2}
+                icon={
+                  <div
+                    style={{
+                      backgroundColor: "#bd744c",
+                      borderRadius: 2,
+                      padding: 4,
+                    }}
+                  />
+                }
+                size={16}
+                label={
+                  <p className={"d-inline-block ml-1 mb-0"}>Roche Bobois</p>
+                }
+                onChange={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc722", true)
+                }
+                style={{ marginTop: -1 }}
               />
             </div>
             <div className={"d-flex align-items-center mt-2"}>
               <Checkbox
-                  borderColor={"#232323"}
-                  borderWidth={1}
-                  borderRadius={2}
-                  icon={
-                    <div
-                        style={{
-                          backgroundColor: "#bd744c",
-                          borderRadius: 2,
-                          padding: 4,
-                        }}
-                    />
-                  }
-                  size={16}
-                  label={
-                    <p className={"d-inline-block ml-1 mb-0"}>Edra</p>
-                  }
-                  onChange={() =>
-                      filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc723", true)
-                  }
-                  style={{marginTop: -1}}
+                borderColor={"#232323"}
+                borderWidth={1}
+                borderRadius={2}
+                icon={
+                  <div
+                    style={{
+                      backgroundColor: "#bd744c",
+                      borderRadius: 2,
+                      padding: 4,
+                    }}
+                  />
+                }
+                size={16}
+                label={<p className={"d-inline-block ml-1 mb-0"}>Edra</p>}
+                onChange={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc723", true)
+                }
+                style={{ marginTop: -1 }}
               />
             </div>
             <div className={"d-flex align-items-center mt-2"}>
               <Checkbox
-                  borderColor={"#232323"}
-                  borderWidth={1}
-                  borderRadius={2}
-                  icon={
-                    <div
-                        style={{
-                          backgroundColor: "#bd744c",
-                          borderRadius: 2,
-                          padding: 4,
-                        }}
-                    />
-                  }
-                  size={16}
-                  label={
-                    <p className={"d-inline-block ml-1 mb-0"}>Kartell</p>
-                  }
-                  onChange={() =>
-                      filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc724", true)
-                  }
-                  style={{marginTop: -1}}
+                borderColor={"#232323"}
+                borderWidth={1}
+                borderRadius={2}
+                icon={
+                  <div
+                    style={{
+                      backgroundColor: "#bd744c",
+                      borderRadius: 2,
+                      padding: 4,
+                    }}
+                  />
+                }
+                size={16}
+                label={<p className={"d-inline-block ml-1 mb-0"}>Kartell</p>}
+                onChange={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc724", true)
+                }
+                style={{ marginTop: -1 }}
               />
             </div>
-            <h5 className={"fw-bold mb-5 mt-5 text-uppercase"}>
-              Availability
-            </h5>
+            <h5 className={"fw-bold mb-5 mt-5 text-uppercase"}>Availability</h5>
             <div className={"d-flex align-items-center"}>
               <Checkbox
-                  borderColor={"#232323"}
-                  borderWidth={1}
-                  borderRadius={2}
-                  icon={
-                    <div
-                        style={{
-                          backgroundColor: "#bd744c",
-                          borderRadius: 2,
-                          padding: 4,
-                        }}
-                    />
-                  }
-                  size={16}
-                  label={
-                    <p className={"d-inline-block ml-1 mb-0"}>On Stock</p>
-                  }
-                  onChange={() =>
-                      filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc724", true)
-                  }
-                  style={{marginTop: -1}}
+                borderColor={"#232323"}
+                borderWidth={1}
+                borderRadius={2}
+                icon={
+                  <div
+                    style={{
+                      backgroundColor: "#bd744c",
+                      borderRadius: 2,
+                      padding: 4,
+                    }}
+                  />
+                }
+                size={16}
+                label={<p className={"d-inline-block ml-1 mb-0"}>On Stock</p>}
+                onChange={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc724", true)
+                }
+                style={{ marginTop: -1 }}
               />
             </div>
             <div className={"d-flex align-items-center mt-2"}>
               <Checkbox
-                  borderColor={"#232323"}
-                  borderWidth={1}
-                  borderRadius={2}
-                  icon={
-                    <div
-                        style={{
-                          backgroundColor: "#bd744c",
-                          borderRadius: 2,
-                          padding: 4,
-                        }}
-                    />
-                  }
-                  size={16}
-                  label={
-                    <p className={"d-inline-block ml-1 mb-0"}>Out of Stock</p>
-                  }
-                  onChange={() =>
-                      filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc723", true)
-                  }
-                  style={{marginTop: -1}}
+                borderColor={"#232323"}
+                borderWidth={1}
+                borderRadius={2}
+                icon={
+                  <div
+                    style={{
+                      backgroundColor: "#bd744c",
+                      borderRadius: 2,
+                      padding: 4,
+                    }}
+                  />
+                }
+                size={16}
+                label={
+                  <p className={"d-inline-block ml-1 mb-0"}>Out of Stock</p>
+                }
+                onChange={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc723", true)
+                }
+                style={{ marginTop: -1 }}
               />
             </div>
           </Col>
@@ -583,13 +579,13 @@ const Index = () => {
                     style={{ padding: "14px 0 22px 0" }}
                     onClick={() => setShowFilter(true)}
                   >
-                    <img src={filter} /> Filters
+                    <img src={"/images/e-commerce/filter.svg"} /> Filters
                   </Button>
                   <Button
                     className={"text-dark bg-transparent border-0"}
                     style={{ padding: "14px 0 22px 0" }}
                   >
-                    <img src={relevant} /> Relevant
+                    <img src={"/images/e-commerce/relevant.svg"} /> Relevant
                   </Button>
                 </div>
                 <hr style={{ marginTop: 0, marginBottom: "2rem" }} />
@@ -597,7 +593,13 @@ const Index = () => {
             )}
             <Row>
               {products.map((item, index) => (
-                <Col md={6} lg={4} xs={12} className={`mb-4 ${s.product}`} key={index}>
+                <Col
+                  md={6}
+                  lg={4}
+                  xs={12}
+                  className={`mb-4 ${s.product}`}
+                  key={index}
+                >
                   <Modal
                     isOpen={openState[`open${index}`]}
                     toggle={() => dispatch({ type: `open${index}` })}
@@ -611,10 +613,7 @@ const Index = () => {
                         />
                       </div>
                       <div
-                        className={
-                          `${s.content} p-4 d-flex flex-column justify-content-between`
-                        }
-                      
+                        className={`${s.content} p-4 d-flex flex-column justify-content-between`}
                       >
                         <Link href={`/products/${item.id}`}>
                           <a className={"fw-semi-bold"}>
@@ -720,7 +719,7 @@ const Index = () => {
                       <a>
                         <div
                           style={{
-                            backgroundImage: `url(${item.image[0].publicUrl})`
+                            backgroundImage: `url(${item.image[0].publicUrl})`,
                           }}
                           className={s.productImage}
                         />
@@ -770,9 +769,9 @@ const Index = () => {
                   <div className={s.productInfo}>
                     <div>
                       <Link href={`/category/${item.categories[0].id}`}>
-                        <a className={"mt-3 text-muted mb-0  d-inline-block"} >
-                        {item.categories[0].title[0].toUpperCase() +
-                          item.categories[0].title.slice(1)}
+                        <a className={"mt-3 text-muted mb-0  d-inline-block"}>
+                          {item.categories[0].title[0].toUpperCase() +
+                            item.categories[0].title.slice(1)}
                         </a>
                       </Link>
                       <Link href={`/products/${item.id}`}>

@@ -16,9 +16,6 @@ import {
 import Head from "next/head";
 import { loginUser } from "redux/actions/auth";
 import jwt from "jsonwebtoken";
-import logo from "public/images/e-commerce/logo.svg";
-import eye from "public/images/e-commerce/login/eye.png";
-import eyeOff from "public/images/e-commerce/login/eye-off.png";
 
 import s from "./Login.module.scss";
 
@@ -153,7 +150,7 @@ class Login extends React.Component {
                 <Col lg={8} xs={"auto"}>
                   <Link href={"/"}>
                     <img
-                      src={logo}
+                      src={"/images/e-commerce/logo.svg"}
                       alt={"logo"}
                       style={{ marginBottom: 120 }}
                     />
@@ -189,7 +186,11 @@ class Login extends React.Component {
                       />
                       <img
                         className={s.viewPassword}
-                        src={this.state.viewPassword ? eye : eyeOff}
+                        src={
+                          this.state.viewPassword
+                            ? "/images/e-commerce/login/eye.png"
+                            : "/images/e-commerce/login/eye-off.png"
+                        }
                         onClick={() =>
                           this.setState({
                             viewPassword: !this.state.viewPassword,

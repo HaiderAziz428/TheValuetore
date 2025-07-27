@@ -2,7 +2,6 @@ import React from "react";
 import { Container, Row, Col, Table, Button } from "reactstrap";
 import Link from "next/link";
 import s from "./Cart.module.scss";
-import close from "public/images/e-commerce/close.svg";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Head from "next/head";
@@ -259,7 +258,10 @@ const Index = () => {
                             toast.info("product successfully removed");
                           }}
                         >
-                          <img src={close} alt={"close"} />
+                          <img
+                            src="/images/e-commerce/close.svg"
+                            alt={"close"}
+                          />
                         </Button>
                       </td>
                     </tr>

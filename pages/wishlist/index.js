@@ -1,13 +1,10 @@
 import React from "react";
 import { Container, Row, Col, Table, Button } from "reactstrap";
-import close from "public/images/e-commerce/close.svg";
-
-import InstagramWidget from 'components/e-commerce/Instagram';
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import s1 from "./Wishlist.module.scss";
 import Head from "next/head";
-import {toast, ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import productsListActions from "../../redux/actions/products/productsListActions";
 import InfoBlock from "components/e-commerce/InfoBlock";
 
@@ -15,7 +12,7 @@ const Cart = () => {
   const [test, setTest] = React.useState(false);
   const [products, setProducts] = React.useState([]);
   const currentUser = useSelector((store) => store.auth.currentUser);
-  const dispatchStore = useDispatch()
+  const dispatchStore = useDispatch();
   React.useEffect(() => {
     if (currentUser) {
       axios.get(`/users/${currentUser.id}`).then((res) => {
@@ -46,8 +43,8 @@ const Cart = () => {
       });
       setTest(true);
     } else {
-      typeof window !== 'undefined' && localStorage.removeItem("wishlist")
-      setProducts([])
+      typeof window !== "undefined" && localStorage.removeItem("wishlist");
+      setProducts([]);
     }
   };
 
@@ -65,9 +62,9 @@ const Cart = () => {
       return;
     }
     const localProducts =
-        (typeof window !== "undefined" &&
-            JSON.parse(localStorage.getItem("products"))) ||
-        [];
+      (typeof window !== "undefined" &&
+        JSON.parse(localStorage.getItem("products"))) ||
+      [];
     localProducts.push({
       amount: 1,
       order_date: new Date(),
@@ -75,10 +72,10 @@ const Cart = () => {
       status: "in cart",
     });
     typeof window !== "undefined" &&
-    localStorage.setItem("products", JSON.stringify(localProducts));
-    dispatchStore(productsListActions.doAdd(localProducts))
+      localStorage.setItem("products", JSON.stringify(localProducts));
+    dispatchStore(productsListActions.doAdd(localProducts));
     localStorage.removeItem("wishlist");
-    setProducts([])
+    setProducts([]);
   };
 
   return (
@@ -87,28 +84,42 @@ const Cart = () => {
         <title>Wishlist</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
-        <meta name="description" content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development" />
+        <meta
+          name="description"
+          content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
+        />
         <meta name="keywords" content="flatlogic, react templates" />
         <meta name="author" content="Flatlogic LLC." />
         <meta charSet="utf-8" />
 
-
-        <meta property="og:title" content="Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:url" content="https://flatlogic-ecommerce.herokuapp.com/"/>
-        <meta property="og:image" content="https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"/>
-        <meta property="og:description" content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"/>
+        <meta
+          property="og:title"
+          content="Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://flatlogic-ecommerce.herokuapp.com/"
+        />
+        <meta
+          property="og:image"
+          content="https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"
+        />
+        <meta
+          property="og:description"
+          content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
+        />
         <meta name="twitter:card" content="summary_large_image" />
 
         <meta property="fb:app_id" content="712557339116053" />
 
-        <meta property="og:site_name" content="Flatlogic"/>
+        <meta property="og:site_name" content="Flatlogic" />
         <meta name="twitter:site" content="@flatlogic" />
       </Head>
       <Container>
         <ToastContainer />
         <Row className={"mb-5"} style={{ marginTop: 32 }}>
-          <Col xs={12} style={{ overflow: 'auto' }}>
+          <Col xs={12} style={{ overflow: "auto" }}>
             <h2 className={"fw-bold mt-4 mb-4"}>Wishlist</h2>
             <Table className={s1.wishListTable} borderless>
               <thead>
@@ -165,9 +176,9 @@ const Cart = () => {
                               className={`text-uppercase d-flex align-items-center ${s1.addToCartBtn}`}
                               size={"sm"}
                               onClick={() => {
-                                addToCart(item.id)
+                                addToCart(item.id);
                                 toast.info(
-                                    "product successfully added to your cart"
+                                  "product successfully added to your cart"
                                 );
                               }}
                             >
@@ -180,13 +191,14 @@ const Cart = () => {
                           <Button
                             className={"bg-transparent border-0 p-0"}
                             onClick={() => {
-                              removeFromWishlist(item.id)
-                              toast.info(
-                                  "product successfully removed"
-                              );
+                              removeFromWishlist(item.id);
+                              toast.info("product successfully removed");
                             }}
                           >
-                            <img src={close} alt={"close"} />
+                            <img
+                              src="/images/e-commerce/close.svg"
+                              alt={"close"}
+                            />
                           </Button>
                         </td>
                       </tr>
@@ -209,7 +221,7 @@ export async function getServerSideProps(context) {
   // const products = res.data.rows;
 
   return {
-    props: {  }, // will be passed to the page component as props
+    props: {}, // will be passed to the page component as props
   };
 }
 

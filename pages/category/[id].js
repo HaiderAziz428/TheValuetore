@@ -6,8 +6,6 @@ import s from "./Shop.module.scss";
 
 import InfoBlock from "components/e-commerce/InfoBlock";
 import InstagramWidget from "components/e-commerce/Instagram";
-import filter from "public/images/e-commerce/filter.svg";
-import relevant from "public/images/e-commerce/relevant.svg";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import Head from "next/head";
@@ -446,13 +444,13 @@ const Index = ({ categoryId, categoryData }) => {
                     style={{ padding: "14px 0 22px 0" }}
                     onClick={() => setShowFilter(true)}
                   >
-                    <img src={filter} /> Filters
+                    <img src="/images/e-commerce/filter.svg" /> Filters
                   </Button>
                   <Button
                     className={"text-dark bg-transparent border-0"}
                     style={{ padding: "14px 0 22px 0" }}
                   >
-                    <img src={relevant} /> Relevant
+                    <img src="/images/e-commerce/relevant.svg" /> Relevant
                   </Button>
                 </div>
                 <hr style={{ marginTop: 0, marginBottom: "2rem" }} />

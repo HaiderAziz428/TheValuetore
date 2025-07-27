@@ -15,7 +15,6 @@ import {
 } from "reactstrap";
 import { registerUser, authError } from "redux/actions/auth";
 import { loginUser } from "redux/actions/auth";
-import logo from "public/images/e-commerce/logo.svg";
 import Head from "next/head";
 
 import s from "./Register.module.scss";
@@ -163,7 +162,7 @@ class Index extends React.Component {
                 <Col lg={8} xs={"auto"}>
                   <Link href={"/"}>
                     <img
-                      src={logo}
+                      src={"/images/e-commerce/logo.svg"}
                       alt={"logo"}
                       style={{ marginBottom: 120 }}
                     />

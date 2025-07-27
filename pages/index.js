@@ -6,8 +6,6 @@ import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
 import Head from "next/head";
 
-import arrowRight from "public/images/e-commerce/home/arrow-right.svg";
-
 import InfoBlock from "components/e-commerce/InfoBlock";
 import InstagramWidget from "components/e-commerce/Instagram";
 import productsListActions from "../redux/actions/products/productsListActions";
@@ -364,7 +362,7 @@ const Index = ({ products: serverSideProducts }) => {
                       <a className={"fw-semi-bold"}>
                         More about product
                         <img
-                          src={arrowRight}
+                          src="/images/e-commerce/home/arrow-right.svg"
                           alt={"arrow"}
                           className={"ml-2"}
                         />

@@ -27,13 +27,8 @@ import { useSelector, useDispatch } from "react-redux";
 import s from "./Product.module.scss";
 
 import InfoBlock from "components/e-commerce/InfoBlock";
-import closeIcon from "public/images/e-commerce/details/close.svg";
-import preloaderImg from "public/images/e-commerce/preloader.gif";
 import InstagramWidget from "components/e-commerce/Instagram";
 import axios from "axios";
-import close from "public/images/e-commerce/close.svg";
-import chevronRightIcon from "public/images/e-commerce/details/chevron-right.svg";
-import chevronLeftIcon from "public/images/e-commerce/details/chevron-left.svg";
 import actions from "redux/actions/products/productsFormActions";
 import Head from "next/head";
 import feedbackActions from "redux/actions/feedback/feedbackListActions";
@@ -218,7 +213,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
             style={{ height: 480 }}
             className={"d-flex justify-content-center align-items-center"}
           >
-            <img src={preloaderImg} alt={"fetching"} />
+            <img src="/images/e-commerce/preloader.gif" alt={"fetching"} />
           </div>
         ) : (
           <Row className={"mb-5"} style={{ marginTop: 32 }}>
