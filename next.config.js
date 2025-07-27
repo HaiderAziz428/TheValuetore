@@ -10,6 +10,8 @@ module.exports = withImages({
     domains: [
       "your-railway-domain.railway.app",
       "your-supabase-domain.supabase.co",
+      "ecommerce-backend-dgnm.onrender.com",
+      "flatlogic-ecommerce-backend.herokuapp.com",
     ],
     formats: ["image/webp", "image/avif"],
   },
@@ -63,6 +65,16 @@ module.exports = withImages({
       },
     };
 
+    // Fix for Node.js modules in browser
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+
     return config;
   },
 
@@ -70,5 +82,16 @@ module.exports = withImages({
   experimental: {
     optimizeCss: true,
     scrollRestoration: true,
+  },
+
+  // Add trailing slash for better compatibility
+  trailingSlash: false,
+
+  // Disable serverless functions for better performance
+  target: "serverless",
+
+  // Add environment variables
+  env: {
+    CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
 });
