@@ -1,9 +1,16 @@
-const baseURLApi = process.env.NEXT_PUBLIC_API_URL;
+const baseURLApi =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://your-railway-backend-url.railway.app/api";
 
 export default {
   baseURLApi,
   remote: "https://flatlogic-ecommerce-backend.herokuapp.com/api/:41521",
   isBackend: process.env.REACT_APP_BACKEND,
+  // Add timeout configuration
+  timeout: 10000, // 10 seconds timeout
+  // Add retry configuration
+  retryAttempts: 3,
+  retryDelay: 1000,
   app: {
     colors: {
       dark: "#002B49",
