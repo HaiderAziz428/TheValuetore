@@ -1,27 +1,21 @@
 import React from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Input,
-  Button,
-  Modal,
-} from "reactstrap";
+import { Container, Row, Col, Input, Button, Modal } from "reactstrap";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import s from "./Shop.module.scss";
 
-import InfoBlock from 'components/e-commerce/InfoBlock';
-import InstagramWidget from 'components/e-commerce/Instagram';
+import InfoBlock from "components/e-commerce/InfoBlock";
+import InstagramWidget from "components/e-commerce/Instagram";
 import filter from "public/images/e-commerce/filter.svg";
 import relevant from "public/images/e-commerce/relevant.svg";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import Image from 'next/image';
+import Image from "next/image";
 
-let categoriesList = [], brandsList = [];
+let categoriesList = [],
+  brandsList = [];
 
 const Index = ({ categoryId, categoryData }) => {
   const router = useRouter();
@@ -82,7 +76,7 @@ const Index = ({ categoryId, categoryData }) => {
         };
     }
   };
-  const {categoryName} = router.query
+  const { categoryName } = router.query;
   const [width, setWidth] = React.useState(1440);
   const [products, setProducts] = React.useState([]);
   const [showFilter, setShowFilter] = React.useState(false);
@@ -103,13 +97,11 @@ const Index = ({ categoryId, categoryData }) => {
     window.addEventListener("resize", () => {
       setWidth(window.innerWidth);
     });
-      axios.get(`/products?categories=${categoryId}`).then((res) => {
-          setAllProducts(res.data.rows);
-          setProducts([...res.data.rows]);
-      })
+    axios.get(`/products?categories=${categoryId}`).then((res) => {
+      setAllProducts(res.data.rows);
+      setProducts([...res.data.rows]);
+    });
   }, [categoryName, categoryId]);
-
-
 
   const addToCart = (id) => {
     if (currentUser) {
@@ -158,123 +150,229 @@ const Index = ({ categoryId, categoryData }) => {
   };
 
   const filterByCategory = (category, brands) => {
-    let count = 0, brandsCount = 0, brandsString = "", categoriesString = "";
+    let count = 0,
+      brandsCount = 0,
+      brandsString = "",
+      categoriesString = "";
     if (brands) {
-      brandsList.push(category)
-      brandsList.forEach(item => {
+      brandsList.push(category);
+      brandsList.forEach((item) => {
         if (item === category) brandsCount += 1;
-      })
-      brandsList = brandsList.filter(item => {
+      });
+      brandsList = brandsList.filter((item) => {
         if (brandsList.length === 1) {
-          return true
+          return true;
         }
         if (brandsCount === 1 && item === category) return true;
-        return item !== category
-      })
-      brandsString = brandsList.join('|')
+        return item !== category;
+      });
+      brandsString = brandsList.join("|");
     } else {
-      categoriesList.push(category)
-      categoriesList.forEach(item => {
+      categoriesList.push(category);
+      categoriesList.forEach((item) => {
         if (item === category) count += 1;
-      })
-      categoriesList = categoriesList.filter(item => {
+      });
+      categoriesList = categoriesList.filter((item) => {
         if (categoriesList.length === 1) {
-          return true
+          return true;
         }
         if (count === 1 && item === category) return true;
-        return item !== category
-      })
-      categoriesString = categoriesList.join('|')
+        return item !== category;
+      });
+      categoriesString = categoriesList.join("|");
     }
-    axios.get(`/products?categories=${categoriesString}&brand=${brandsString}`).then((res) => {
-      setProducts([...res.data.rows]);
-    });
-  }
+    axios
+      .get(`/products?categories=${categoriesString}&brand=${brandsString}`)
+      .then((res) => {
+        setProducts([...res.data.rows]);
+      });
+  };
   return (
     <>
       <Head>
         <title>{categoryName} Category</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
-        <meta name="description" content={`${categoryData.meta_description || 'Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development'}`}  />
-        <meta name="keywords" content={`${categoryData.keywords || "flatlogic, react templates"}`} />
-        <meta name="author" content={`${categoryData.meta_author || "Flatlogic LLC."}`} />
+        <meta
+          name="description"
+          content={`${
+            categoryData.meta_description ||
+            "Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
+          }`}
+        />
+        <meta
+          name="keywords"
+          content={`${categoryData.keywords || "flatlogic, react templates"}`}
+        />
+        <meta
+          name="author"
+          content={`${categoryData.meta_author || "Flatlogic LLC."}`}
+        />
         <meta charSet="utf-8" />
 
-
-        <meta property="og:title" content={`${categoryData.meta_og_title || "Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"}`} />
-        <meta property="og:type" content="website"/>
-        <meta property="og:url" content={`${categoryData.meta_og_url || "https://flatlogic-ecommerce.herokuapp.com/"}`} />
-        <meta property="og:image" content={`${categoryData.meta_og_image || "https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"}`} />
-        <meta property="og:description" content={`${categoryData.meta_description || 'Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development'}`} />
+        <meta
+          property="og:title"
+          content={`${
+            categoryData.meta_og_title ||
+            "Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"
+          }`}
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`${
+            categoryData.meta_og_url ||
+            "https://flatlogic-ecommerce.herokuapp.com/"
+          }`}
+        />
+        <meta
+          property="og:image"
+          content={`${
+            categoryData.meta_og_image ||
+            "https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"
+          }`}
+        />
+        <meta
+          property="og:description"
+          content={`${
+            categoryData.meta_description ||
+            "Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
+          }`}
+        />
         <meta name="twitter:card" content="summary_large_image" />
 
-        <meta property="fb:app_id" content={`${categoryData.meta_fb_id || "712557339116053"}`} />
+        <meta
+          property="fb:app_id"
+          content={`${categoryData.meta_fb_id || "712557339116053"}`}
+        />
 
-        <meta property="og:site_name" content={`${categoryData.meta_og_sitename || "Flatlogic"}`} />
-        <meta name="twitter:site" content={`${categoryData.post_twitter || "@flatlogic"}`} />
+        <meta
+          property="og:site_name"
+          content={`${categoryData.meta_og_sitename || "Flatlogic"}`}
+        />
+        <meta
+          name="twitter:site"
+          content={`${categoryData.post_twitter || "@flatlogic"}`}
+        />
       </Head>
       <Container className={"mb-5"} style={{ marginTop: 21 }}>
         <Row>
           <ToastContainer />
-          <Col sm={3} className={`${s.filterColumn} ${showFilter ? s.showFilter : ''}`}>
-          <div className={s.filterTitle}><h5 className={"fw-bold mb-5 text-uppercase"}>Categories</h5><span onClick={() => setShowFilter(false)}>✕</span></div>
+          <Col
+            sm={3}
+            className={`${s.filterColumn} ${showFilter ? s.showFilter : ""}`}
+          >
+            <div className={s.filterTitle}>
+              <h5 className={"fw-bold mb-5 text-uppercase"}>Categories</h5>
+              <span onClick={() => setShowFilter(false)}>✕</span>
+            </div>
             <div className={"d-flex align-items-center"}>
-              <input type={"checkbox"} onClick={() => filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc711")}/>
+              <input
+                type={"checkbox"}
+                onClick={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc711")
+                }
+              />
               <p className={"d-inline-block ml-2 mb-0"}>Furniture</p>
             </div>
             <div className={"d-flex align-items-center mt-2"}>
-              <input type={"checkbox"} onClick={() => filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc712")}/>
+              <input
+                type={"checkbox"}
+                onClick={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc712")
+                }
+              />
               <p className={"d-inline-block ml-2 mb-0"}>Lighting</p>
             </div>
             <div className={"d-flex align-items-center mt-2"}>
-              <input type={"checkbox"} onClick={() => filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc713")}/>
+              <input
+                type={"checkbox"}
+                onClick={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc713")
+                }
+              />
               <p className={"d-inline-block ml-2 mb-0"}>Decoration</p>
             </div>
             <div className={"d-flex align-items-center mt-2"}>
-              <input type={"checkbox"} onClick={() => filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc714")}/>
+              <input
+                type={"checkbox"}
+                onClick={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc714")
+                }
+              />
               <p className={"d-inline-block ml-2 mb-0"}>Bedding</p>
             </div>
             <div className={"d-flex align-items-center mt-2"}>
-              <input type={"checkbox"} onClick={() => filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc715")}/>
+              <input
+                type={"checkbox"}
+                onClick={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc715")
+                }
+              />
               <p className={"d-inline-block ml-2 mb-0"}>Bath & Shower</p>
             </div>
             <div className={"d-flex align-items-center mt-2"}>
-              <input type={"checkbox"} onClick={() => filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc716")}/>
+              <input
+                type={"checkbox"}
+                onClick={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc716")
+                }
+              />
               <p className={"d-inline-block ml-2 mb-0"}>Curtains</p>
             </div>
             <div className={"d-flex align-items-center mt-2"}>
-              <input type={"checkbox"} onClick={() => filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc717")}/>
+              <input
+                type={"checkbox"}
+                onClick={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc717")
+                }
+              />
               <p className={"d-inline-block ml-2 mb-0"}>Toys</p>
             </div>
-            <h5
-                className={"fw-bold mb-5 mt-5 text-uppercase"}
-            >
-              Price
-            </h5>
+            <h5 className={"fw-bold mb-5 mt-5 text-uppercase"}>Price</h5>
             <p>Price Range: $0 - $1000</p>
             <input
-                type="range"
-                min="0"
-                max="1400"
-                defaultValue={"1000"}
-                className={"w-100"}
+              type="range"
+              min="0"
+              max="1400"
+              defaultValue={"1000"}
+              className={"w-100"}
             />
             <h5 className={"fw-bold mb-5 mt-5 text-uppercase"}>Brands</h5>
             <div className={"d-flex align-items-center"}>
-              <input type={"checkbox"} onClick={() => filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc721", true)}/>
+              <input
+                type={"checkbox"}
+                onClick={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc721", true)
+                }
+              />
               <p className={"d-inline-block ml-2 mb-0"}>Poliform</p>
             </div>
             <div className={"d-flex align-items-center mt-2"}>
-              <input type={"checkbox"} onClick={() => filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc722", true)}/>
+              <input
+                type={"checkbox"}
+                onClick={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc722", true)
+                }
+              />
               <p className={"d-inline-block ml-2 mb-0"}>Roche Bobois</p>
             </div>
             <div className={"d-flex align-items-center mt-2"}>
-              <input type={"checkbox"} onClick={() => filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc723", true)}/>
+              <input
+                type={"checkbox"}
+                onClick={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc723", true)
+                }
+              />
               <p className={"d-inline-block ml-2 mb-0"}>Edra</p>
             </div>
             <div className={"d-flex align-items-center mt-2"}>
-              <input type={"checkbox"} onClick={() => filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc724", true)}/>
+              <input
+                type={"checkbox"}
+                onClick={() =>
+                  filterByCategory("1fcb7ece-6373-405d-92ef-3f3c4e7dc724", true)
+                }
+              />
               <p className={"d-inline-block ml-2 mb-0"}>Kartell</p>
             </div>
             <h5 className={"fw-bold mb-5 mt-5 text-uppercase"}>Rooms</h5>
@@ -306,9 +404,7 @@ const Index = ({ categoryId, categoryData }) => {
               <input type={"checkbox"} />
               <p className={"d-inline-block ml-2 mb-0"}>Games Room</p>
             </div>
-            <h5 className={"fw-bold mb-5 mt-5 text-uppercase"}>
-              Availability
-            </h5>
+            <h5 className={"fw-bold mb-5 mt-5 text-uppercase"}>Availability</h5>
             <div className={"d-flex align-items-center"}>
               <input type={"checkbox"} />
               <p className={"d-inline-block ml-2 mb-0"}>On Stock</p>
@@ -365,7 +461,13 @@ const Index = ({ categoryId, categoryData }) => {
             <Row>
               {products.map((c, index) => {
                 return (
-                  <Col xs={12} md={6} sm={6} lg={4} className={`mb-4 ${s.product}`}>
+                  <Col
+                    xs={12}
+                    md={6}
+                    sm={6}
+                    lg={4}
+                    className={`mb-4 ${s.product}`}
+                  >
                     <Modal
                       isOpen={openState[`open${index}`]}
                       toggle={() => dispatch({ type: `open${index}` })}
@@ -375,17 +477,58 @@ const Index = ({ categoryId, categoryData }) => {
                     <div style={{ position: "relative" }}>
                       <Link href={`/products/${c.id}`}>
                         <a>
-                        <Image
-                          src={c.image[0].publicUrl}
-                          alt={c.title}
-                          width={400}
-                          height={400}
-                          layout="responsive"
-                          placeholder="blur"
-                          blurDataURL="/public/images/e-commerce/404/1.png" // fallback placeholder, adjust as needed
-                          className={"img-fluid"}
-                        />
+                          <Image
+                            src={c.image[0].publicUrl}
+                            alt={c.title}
+                            width={400}
+                            height={400}
+                            layout="responsive"
+                            placeholder="blur"
+                            blurDataURL="/public/images/e-commerce/404/1.png" // fallback placeholder, adjust as needed
+                            className={"img-fluid"}
+                          />
                         </a>
                       </Link>
                       <div
-                        className={`
+                        className={
+                          "d-flex flex-column justify-content-center " +
+                          s.product__actions
+                        }
+                        style={{
+                          position: "absolute",
+                          height: "100%",
+                          top: 0,
+                          right: 15,
+                        }}
+                      >
+                        <Button
+                          className={"text-dark bg-transparent border-0"}
+                          onClick={() => addToCart(c.id)}
+                        >
+                          <img src="/public/images/e-commerce/cart.svg" />
+                        </Button>
+                        <Button
+                          className={"text-dark bg-transparent border-0"}
+                          onClick={() => addToWishlist(c.id)}
+                        >
+                          <img src="/public/images/e-commerce/heart.svg" />
+                        </Button>
+                      </div>
+                    </div>
+                    <div className={s.product__info}>
+                      <h6 className={"fw-bold mb-1"}>{c.title}</h6>
+                      <p className={"text-muted"}>{c.description}</p>
+                      <h5 className={"fw-bold text-primary"}>${c.price}</h5>
+                    </div>
+                  </Col>
+                );
+              })}
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
+};
+
+export default Index;
