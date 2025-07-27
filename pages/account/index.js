@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import s from "./Account.module.scss";
 import product from "public/images/e-commerce/account/products.svg";
 import settings from "public/images/e-commerce/account/settings.svg";
-import edit from "public/images/e-commerce/account/edit.svg";
 import visa from "public/images/e-commerce/account/visa.svg";
 
 const Index = () => {
@@ -190,7 +189,10 @@ const Index = () => {
                     </p>
                   </div>
                   <Button className={"bg-transparent border-0 p-0"}>
-                    <img src={edit} alt={"edit"} />
+                    <img
+                      src={"/images/e-commerce/account/edit.svg"}
+                      alt={"edit"}
+                    />
                   </Button>
                 </div>
               </div>
@@ -207,7 +209,10 @@ const Index = () => {
                     </div>
                   </div>
                   <Button className={"bg-transparent border-0 p-0"}>
-                    <img src={edit} alt={"edit"} />
+                    <img
+                      src={"/images/e-commerce/account/edit.svg"}
+                      alt={"edit"}
+                    />
                   </Button>
                 </div>
               </div>
@@ -223,7 +228,10 @@ const Index = () => {
                     </p>
                   </div>
                   <Button className={"bg-transparent border-0 p-0"}>
-                    <img src={edit} alt={"edit"} />
+                    <img
+                      src={"/images/e-commerce/account/edit.svg"}
+                      alt={"edit"}
+                    />
                   </Button>
                 </div>
               </div>
