@@ -3,7 +3,6 @@ import { Container, Row, Col, Button, Table } from "reactstrap";
 import Head from "next/head";
 import { useSelector } from "react-redux";
 import s from "./Account.module.scss";
-import product from "public/images/e-commerce/account/products.svg";
 import settings from "public/images/e-commerce/account/settings.svg";
 import visa from "public/images/e-commerce/account/visa.svg";
 
@@ -89,7 +88,11 @@ const Index = () => {
                       </td>
                       <td className={"px-0 pt-4"}>
                         <div className={"d-flex align-items-center"}>
-                          <img src={product} width={100} className={"mr-4"} />
+                          <img
+                            src={"/images/e-commerce/account/products.svg"}
+                            width={100}
+                            className={"mr-4"}
+                          />
                           <div>
                             <h6 className={"text-muted"}>Delivered</h6>
                             <h5 className={"fw-bold"}># 123345</h5>
@@ -109,7 +112,11 @@ const Index = () => {
                       </td>
                       <td className={"px-0 pt-4"}>
                         <div className={"d-flex align-items-center"}>
-                          <img src={product} width={100} className={"mr-4"} />
+                          <img
+                            src={"/images/e-commerce/account/products.svg"}
+                            width={100}
+                            className={"mr-4"}
+                          />
                           <div>
                             <h6 className={"text-muted"}>Delivered</h6>
                             <h5 className={"fw-bold"}># 123345</h5>
@@ -129,7 +136,11 @@ const Index = () => {
                       </td>
                       <td className={"px-0 pt-4"}>
                         <div className={"d-flex align-items-center"}>
-                          <img src={product} width={100} className={"mr-4"} />
+                          <img
+                            src={"/images/e-commerce/account/products.svg"}
+                            width={100}
+                            className={"mr-4"}
+                          />
                           <div>
                             <h6 className={"text-muted"}>Delivered</h6>
                             <h5 className={"fw-bold"}># 123345</h5>
