@@ -18,7 +18,7 @@ module.exports = withImages({
     scrollRestoration: true,
   },
 
-  // Webpack optimizations
+  // Webpack optimizations - compatible with older Next.js
   webpack: (config, { isServer }) => {
     // Optimize bundle size
     config.optimization = {
@@ -34,14 +34,6 @@ module.exports = withImages({
         },
       },
     };
-
-    // Add compression
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-      };
-    }
 
     return config;
   },
