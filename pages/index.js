@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Countdown from "./home/Countdown";
 import rating from "../public/images/e-commerce/details/stars.svg";
 import productsListActions from "../redux/actions/products/productsListActions";
+import Image from "next/image";
 
 const Index = ({ products: serverSideProducts }) => {
   const [quantity, setQuantity] = React.useState(1);
@@ -350,11 +351,14 @@ const Index = ({ products: serverSideProducts }) => {
               >
                 <div className={s.modalWidndow}>
                   <div className={s.image}>
-                    <img
+                    <Image
                       src={item.image[0]?.publicUrl}
-                      width={"100%"}
-                      height={"100%"}
                       alt="img"
+                      layout="responsive"
+                      width={400}
+                      height={400}
+                      placeholder="blur"
+                      blurDataURL="/public/images/e-commerce/404/1.png" // fallback placeholder, adjust as needed
                     />
                   </div>
                   <div

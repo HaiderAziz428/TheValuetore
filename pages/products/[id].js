@@ -59,6 +59,7 @@ import {
   ButtonBack,
   ButtonNext,
 } from "pure-react-carousel";
+import Image from "next/image";
 
 const Star = ({ selected = false, onClick = (f) => f }) => (
   <div
@@ -314,12 +315,14 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                             src={media.publicUrl}
                           />
                         ) : (
-                          <img
+                          <Image
                             src={media.publicUrl}
+                            alt={product.title}
                             width={60}
                             height={40}
-                            alt={product.title}
-                            style={{ objectFit: "cover", borderRadius: 2 }}
+                            className={"product-thumbnail"}
+                            placeholder="blur"
+                            blurDataURL="/public/images/e-commerce/404/1.png"
                           />
                         )}
                       </div>
@@ -333,11 +336,14 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                   style={{ width: 160 }}
                 >
                   {product.image.slice(1).map((img, index) => (
-                    <img
+                    <Image
                       key={index}
                       src={`${img.publicUrl}?t=${Date.now()}`}
                       width={160}
+                      height={120}
                       alt={`Product view ${index + 2}`}
+                      placeholder="blur"
+                      blurDataURL="/public/images/e-commerce/404/1.png"
                     />
                   ))}
                 </div>

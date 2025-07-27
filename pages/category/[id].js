@@ -19,6 +19,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Image from 'next/image';
 
 let categoriesList = [], brandsList = [];
 
@@ -374,90 +375,17 @@ const Index = ({ categoryId, categoryData }) => {
                     <div style={{ position: "relative" }}>
                       <Link href={`/products/${c.id}`}>
                         <a>
-                        <img
+                        <Image
                           src={c.image[0].publicUrl}
+                          alt={c.title}
+                          width={400}
+                          height={400}
+                          layout="responsive"
+                          placeholder="blur"
+                          blurDataURL="/public/images/e-commerce/404/1.png" // fallback placeholder, adjust as needed
                           className={"img-fluid"}
                         />
                         </a>
                       </Link>
                       <div
-                        className={`d-flex flex-column justify-content-center ${s.product__actions}`}
-                        style={{
-                          position: "absolute",
-                          height: "100%",
-                          top: 0,
-                          right: 15,
-                        }}
-                      >
-                        <Button
-                          className={"p-0 bg-transparent border-0"}
-                          onClick={() => {
-                            addToWishlist(c.id);
-                            toast.info(
-                              "products successfully added to your wishlist"
-                            );
-                          }}
-                        >
-                          <div
-                            className={`mb-4 ${s.product__actions__heart}`}
-                          />
-                        </Button>
-                        <Button
-                          className={"p-0 bg-transparent border-0"}
-                          onClick={() => {
-                            dispatch({ type: `open${index}` });
-                          }}
-                        >
-                          <div className={`mb-4 ${s.product__actions__max}`} />
-                        </Button>
-                        <Button
-                          className={"p-0 bg-transparent border-0"}
-                          onClick={() => {
-                            addToCart(c.id);
-                            toast.info(
-                              "products successfully added to your cart"
-                            );
-                          }}
-                        >
-                          <div className={`mb-4 ${s.product__actions__cart}`} />
-                        </Button>
-                      </div>
-                    </div>
-                    <p className={"mt-3 text-muted mb-0"}>
-                      {c.categories[0].title[0].toUpperCase() +
-                        c.categories[0].title.slice(1)}
-                    </p>
-                    <Link href={`/products/${c.id}`}>
-                      <a>
-                      <h6
-                        className={"fw-bold font-size-base mt-1"}
-                        style={{ fontSize: 16 }}
-                      >
-                        {c.title}
-                      </h6>
-                      </a>
-                    </Link>
-                    <h6 style={{ fontSize: 16 }}>${c.price}</h6>
-                  </Col>
-                );
-              })}
-            </Row>
-          </Col>
-        </Row>
-      </Container>
-      <InfoBlock />
-      <InstagramWidget />
-    </>
-  );
-};
-
-export async function getServerSideProps(context) {
-  const res = await axios.get(`/categories/${context.query.id}`);
-  const category = res.data;
-
-  return {
-    props: { categoryId: context.query.id, categoryData: category }, // will be passed to the page component as props
-  };
-}
-
-export default Index;
+                        className={`
