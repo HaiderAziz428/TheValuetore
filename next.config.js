@@ -1,9 +1,10 @@
-const withImages = require('next-images')
-const withNextCircularDeps = require('next-circular-dependency')
-module.exports = withImages({
-    // webpack: (config, { isServer }) => {
-    //     config.externals = ["webpack", "readable-stream", "d3-interpolate", "next"]
-    //     return config
-    // }
-})
-
+const withImages = require("next-images");
+const withNextCircularDeps = require("next-circular-dependency");
+module.exports = {
+  images: {
+    domains: [
+      "the-value-store-backend-production.up.railway.app",
+      // add more domains here if needed
+    ],
+  },
+};
