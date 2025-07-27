@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Link from 'next/link'
-import {withRouter} from 'next/router'
+import Link from "next/link";
+import { withRouter } from "next/router";
 import { connect } from "react-redux";
 import {
   Container,
@@ -18,11 +18,9 @@ import { loginUser } from "redux/actions/auth";
 import microsoft from "public/images/microsoft.png";
 import img from "public/images/e-commerce/register/bg.png";
 import logo from "public/images/e-commerce/logo.svg";
-import eye from 'public/images/e-commerce/login/eye.png';
-import eyeOff from 'public/images/e-commerce/login/eye-off.png';
-import Head from 'next/head';
+import Head from "next/head";
 
-import s from './Register.module.scss';
+import s from "./Register.module.scss";
 
 class Index extends React.Component {
   static propTypes = {
@@ -86,7 +84,7 @@ class Index extends React.Component {
     if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
-      console.log('registre')
+      console.log("registre");
       this.props.dispatch(
         registerUser({
           email: this.state.email,
@@ -109,19 +107,44 @@ class Index extends React.Component {
       <>
         <Head>
           <title>Register | Ecommerce</title>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
 
-          <meta name="description" content={'Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development'}  />
+          <meta
+            name="description"
+            content={
+              "Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
+            }
+          />
           <meta name="keywords" content={"flatlogic, react templates"} />
           <meta name="author" content={"Flatlogic LLC."} />
           <meta charSet="utf-8" />
 
-
-          <meta property="og:title" content={"Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"} />
-          <meta property="og:type" content="website"/>
-          <meta property="og:url" content={"https://flatlogic-ecommerce.herokuapp.com/"} />
-          <meta property="og:image" content={"https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"} />
-          <meta property="og:description" content={'Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development'} />
+          <meta
+            property="og:title"
+            content={
+              "Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"
+            }
+          />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:url"
+            content={"https://flatlogic-ecommerce.herokuapp.com/"}
+          />
+          <meta
+            property="og:image"
+            content={
+              "https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"
+            }
+          />
+          <meta
+            property="og:description"
+            content={
+              "Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
+            }
+          />
           <meta name="twitter:card" content="summary_large_image" />
 
           <meta property="fb:app_id" content={"712557339116053"} />
@@ -141,7 +164,11 @@ class Index extends React.Component {
               <Row className={"d-flex justify-content-center"}>
                 <Col lg={8} xs={"auto"}>
                   <Link href={"/"}>
-                    <img src={logo} alt={"logo"} style={{ marginBottom: 120 }} />
+                    <img
+                      src={logo}
+                      alt={"logo"}
+                      style={{ marginBottom: 120 }}
+                    />
                   </Link>
                   <h5 className={"fw-bold mb-5"}>Sign Up</h5>
                   <Form className={"w-100"} onSubmit={this.doRegister}>
@@ -165,7 +192,7 @@ class Index extends React.Component {
                         Password
                       </Label>
                       <Input
-                          type={this.state.viewPassword ? 'text' : 'password'}
+                        type={this.state.viewPassword ? "text" : "password"}
                         name="text"
                         id="exampleEmail"
                         className="w-100"
@@ -174,14 +201,26 @@ class Index extends React.Component {
                         onChange={this.changePassword}
                         required
                       />
-                      <img className={s.viewPassword} src={this.state.viewPassword ? eye : eyeOff} onClick={() => this.setState({ viewPassword: !this.state.viewPassword })} />
+                      <img
+                        className={s.viewPassword}
+                        src={
+                          this.state.viewPassword
+                            ? "/images/e-commerce/login/eye.png"
+                            : "/images/e-commerce/login/eye-off.png"
+                        }
+                        onClick={() =>
+                          this.setState({
+                            viewPassword: !this.state.viewPassword,
+                          })
+                        }
+                      />
                     </FormGroup>
                     <FormGroup className={s.formGroup}>
                       <Label for="exampleEmail" className="fw-bold">
                         Repeat Password
                       </Label>
                       <Input
-                          type={this.state.viewCopyPassword ? 'text' : 'password'}
+                        type={this.state.viewCopyPassword ? "text" : "password"}
                         name="text"
                         id="exampleEmail"
                         className="w-100"
@@ -190,7 +229,19 @@ class Index extends React.Component {
                         onChange={this.changeConfirmPassword}
                         required
                       />
-                      <img className={s.viewPassword} src={this.state.viewCopyPassword ? eye : eyeOff} onClick={() => this.setState({ viewCopyPassword: !this.state.viewCopyPassword })} />
+                      <img
+                        className={s.viewPassword}
+                        src={
+                          this.state.viewCopyPassword
+                            ? "/images/e-commerce/login/eye.png"
+                            : "/images/e-commerce/login/eye-off.png"
+                        }
+                        onClick={() =>
+                          this.setState({
+                            viewCopyPassword: !this.state.viewCopyPassword,
+                          })
+                        }
+                      />
                     </FormGroup>
                     <div
                       className={
@@ -226,7 +277,10 @@ class Index extends React.Component {
               </Row>
             </Container>
           </Col>
-          <Col sm={6} className={`d-none d-md-inline-block h-100 ${s.backgroundImage}`} />
+          <Col
+            sm={6}
+            className={`d-none d-md-inline-block h-100 ${s.backgroundImage}`}
+          />
         </Row>
       </>
     );
@@ -238,7 +292,7 @@ export async function getServerSideProps(context) {
   // const products = res.data.rows;
 
   return {
-    props: {  }, // will be passed to the page component as props
+    props: {}, // will be passed to the page component as props
   };
 }
 
