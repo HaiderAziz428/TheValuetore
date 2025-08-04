@@ -356,20 +356,8 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                     />
                   ))}
                   <p className={"text-primary ml-3 mb-0"}>
-                    {/* {feedbackList.length} reviews */}0 reviews
+                    {/* {feedbackList.length} reviews */} reviews
                   </p>
-                </div>
-                <div
-                  style={{
-                    whiteSpace: "pre-wrap",
-                    lineHeight: "1.6",
-                    fontFamily: "inherit",
-                    wordWrap: "break-word",
-                    overflowWrap: "break-word",
-                    marginBottom: "1rem",
-                  }}
-                >
-                  {product.description}
                 </div>
                 <div className={"d-flex"}>
                   <div
@@ -479,6 +467,25 @@ Please let me know about delivery options and payment methods. Thank you!`
                   </Button>
                 </a>
               </div>
+              {product.description && (
+                <div
+                  style={{
+                    whiteSpace: "pre-wrap",
+                    lineHeight: "1.6",
+                    fontFamily: "inherit",
+                    wordWrap: "break-word",
+                    overflowWrap: "break-word",
+                    marginTop: "2rem",
+                    padding: "1rem",
+                    backgroundColor: "#f8f9fa",
+                    borderRadius: "8px",
+                    border: "1px solid #e9ecef",
+                  }}
+                >
+                  <h6 className="fw-bold mb-3">Product Description:</h6>
+                  {product.description}
+                </div>
+              )}
             </Col>
           </Row>
         )}
