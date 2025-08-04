@@ -18,7 +18,7 @@ const Footer = () => {
               <div>
                 <img
                   alt="img"
-                  src="images/e-commerce/logo-white.svg"
+                  src="/images/e-commerce/logo-white.svg"
                   className={"mb-4"}
                 />
                 <p className={"text-white fw-thin mb-0"}>
@@ -33,7 +33,7 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img src="images/e-commerce/Google.svg" alt="Google" />
+                    <img src="/images/e-commerce/google.svg" alt="Google" />
                   </a>
                 </Link>
                 <Link href="https://twitter.com/flatlogic">
@@ -42,7 +42,7 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img src="images/e-commerce/Twitter.svg" alt="Twitter" />
+                    <img src="/images/e-commerce/twitter.svg" alt="Twitter" />
                   </a>
                 </Link>
                 <Link href="https://www.linkedin.com/company/flatlogic/">
@@ -51,7 +51,7 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img src="images/e-commerce/Linkedin.svg" alt="Linkedin" />
+                    <img src="/images/e-commerce/linkedin.svg" alt="Linkedin" />
                   </a>
                 </Link>
                 <Link href="https://www.facebook.com/flatlogic/">
@@ -60,7 +60,7 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img src="images/e-commerce/Facebook.svg" alt="Facebook" />
+                    <img src="/images/e-commerce/facebook.svg" alt="Facebook" />
                   </a>
                 </Link>
               </div>

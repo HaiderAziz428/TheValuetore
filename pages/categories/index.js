@@ -181,7 +181,7 @@ const Categories = () => {
               }}
               className={"btn bg-transparent border-0 p-0"}
             >
-              <img src="images/e-commerce/details/chevron-left.svg" />
+              <img src="/images/e-commerce/details/chevron-left.svg" />
             </ButtonBack>
             <Slider>
               {products.map((c, index) => (
@@ -227,7 +227,7 @@ const Categories = () => {
               }}
               className={"btn bg-transparent border-0 p-0"}
             >
-              <img src="images/e-commerce/details/chevron-right.svg" />
+              <img src="/images/e-commerce/details/chevron-right.svg" />
             </ButtonNext>
           </CarouselProvider>
         </Row>

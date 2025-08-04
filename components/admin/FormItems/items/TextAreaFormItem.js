@@ -61,6 +61,12 @@ export class TextAreaFormItemNotFast extends Component {
             name,
             errorMessage
           )}`}
+          style={{
+            whiteSpace: "pre-wrap",
+            fontFamily: "monospace",
+            lineHeight: "1.5",
+            minHeight: "120px",
+          }}
           {...inputProps}
         />
         <div className="invalid-feedback">

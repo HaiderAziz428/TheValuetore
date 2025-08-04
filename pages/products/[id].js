@@ -359,7 +359,15 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                     {/* {feedbackList.length} reviews */}0 reviews
                   </p>
                 </div>
-                <p>{product.description}</p>
+                <div
+                  style={{
+                    whiteSpace: "pre-wrap",
+                    lineHeight: "1.6",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  {product.description}
+                </div>
                 <div className={"d-flex"}>
                   <div
                     className={

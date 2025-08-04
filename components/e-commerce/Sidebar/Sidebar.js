@@ -67,9 +67,11 @@ class Sidebar extends React.Component {
       >
         <nav className={s.root}>
           <header className={s.logo}>
-            <span className={`${s.logoStyle} mx-1`}>
-              The Value Store<i>.</i>
-            </span>
+            <img
+              src="/images/e-commerce/header/logo.png"
+              alt="The Value Store"
+              style={{ height: "50px", width: "auto" }}
+            />
           </header>
           <ul className={s.nav}>
             <LinksGroup

@@ -137,7 +137,11 @@ class Header extends React.Component {
 
           <NavbarBrand>
             <Link href={"/"}>
-              <span className={s.logoStyle}>The Value Store</span>
+              <img
+                src="/images/e-commerce/header/logo.png"
+                alt="The Value Store"
+                style={{ height: "40px", width: "auto" }}
+              />
             </Link>
           </NavbarBrand>
 

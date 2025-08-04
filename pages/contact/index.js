@@ -9,6 +9,8 @@ import {
   Input,
   Button,
 } from "reactstrap";
+import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 
 import s from "./Contact.module.scss";
 import InstagramWidget from "components/e-commerce/Instagram";
@@ -20,51 +22,59 @@ const Index = () => {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
 
-  const updateForm = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setName("");
-    setEmail("");
-    setPhone("");
-    setMessage("");
+
+    // Validate form
+    if (!name || !email || !message) {
+      toast.error(
+        "Please fill in all required fields (Name, Email, and Message)"
+      );
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Send data to API endpoint
+      const response = await axios.post("/api/contact", {
+        name,
+        email,
+        phone,
+        message,
+      });
+
+      if (response.status === 200) {
+        // Show success message
+        toast.success("Message sent successfully! We'll get back to you soon.");
+
+        // Clear form
+        setName("");
+        setEmail("");
+        setPhone("");
+        setMessage("");
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast.error("Failed to send message. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <>
       <Head>
         <title>Contact Us</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-
-        <meta
-          name="description"
-          content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
-        />
-        <meta name="keywords" content="flatlogic, react templates" />
-        <meta name="author" content="Flatlogic LLC." />
-        <meta charSet="utf-8" />
-
-        <meta
-          property="og:title"
-          content="Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content="https://flatlogic-ecommerce.herokuapp.com/"
-        />
-        <meta
-          property="og:image"
-          content="https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"
-        />
-        <meta
-          property="og:description"
-          content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-
-        <meta property="fb:app_id" content="712557339116053" />
-
-        <meta property="og:site_name" content="Flatlogic" />
-        <meta name="twitter:site" content="@flatlogic" />
       </Head>
       <Container>
         <Row className={"mb-5"} style={{ marginTop: 32 }}>
@@ -82,7 +92,7 @@ const Index = () => {
             <Form>
               <FormGroup>
                 <Label for="exampleEmail" className="fw-bold text-muted">
-                  Name
+                  Name *
                 </Label>
                 <Input
                   type="text"
@@ -91,12 +101,13 @@ const Index = () => {
                   className="w-100"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  required
                 />
               </FormGroup>
               <FormGroup className="d-flex">
                 <div className="flex-fill mr-5">
                   <Label for="exampleEmail" className="fw-bold text-muted">
-                    Email
+                    Email *
                   </Label>
                   <Input
                     type="email"
@@ -104,6 +115,7 @@ const Index = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     id="exampleEmail1"
+                    required
                   />
                 </div>
                 <div className="flex-fill">
@@ -111,7 +123,7 @@ const Index = () => {
                     Phone
                   </Label>
                   <Input
-                    type="phone"
+                    type="tel"
                     name="text"
                     id="exampleEmail"
                     value={phone}
@@ -121,7 +133,7 @@ const Index = () => {
               </FormGroup>
               <FormGroup>
                 <Label for="exampleEmail" className="fw-bold text-muted">
-                  Your Message
+                  Your Message *
                 </Label>
                 <Input
                   value={message}
@@ -131,6 +143,7 @@ const Index = () => {
                   id="exampleEmail"
                   className="w-100"
                   style={{ height: 155 }}
+                  required
                 />
               </FormGroup>
               <FormGroup>
@@ -138,9 +151,10 @@ const Index = () => {
                   color="primary"
                   className="text-uppercase fw-bold align-self-start"
                   type={"submit"}
-                  onClick={updateForm}
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
                 >
-                  send message
+                  {isSubmitting ? "Sending..." : "send message"}
                 </Button>
               </FormGroup>
             </Form>
@@ -150,6 +164,7 @@ const Index = () => {
           </Col>
         </Row>
       </Container>
+      <ToastContainer />
       <InstagramWidget />
     </>
   );
