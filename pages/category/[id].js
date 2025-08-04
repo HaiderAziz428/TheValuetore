@@ -482,7 +482,7 @@ const Index = ({ categoryId, categoryData }) => {
                             height={400}
                             layout="responsive"
                             placeholder="blur"
-                            blurDataURL="/public/images/e-commerce/404/1.png" // fallback placeholder, adjust as needed
+                            blurDataURL="/images/e-commerce/404/1.png" // fallback placeholder, adjust as needed
                             className={"img-fluid"}
                           />
                         </a>
@@ -503,13 +503,13 @@ const Index = ({ categoryId, categoryData }) => {
                           className={"text-dark bg-transparent border-0"}
                           onClick={() => addToCart(c.id)}
                         >
-                          <img src="/public/images/e-commerce/cart.svg" />
+                          <img src="/images/e-commerce/shopping-cart.svg" />
                         </Button>
                         <Button
                           className={"text-dark bg-transparent border-0"}
                           onClick={() => addToWishlist(c.id)}
                         >
-                          <img src="/public/images/e-commerce/heart.svg" />
+                          <img src="/images/e-commerce/heart.svg" />
                         </Button>
                       </div>
                     </div>

@@ -306,7 +306,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                             height={40}
                             className={"product-thumbnail"}
                             placeholder="blur"
-                            blurDataURL="/public/images/e-commerce/404/1.png"
+                            blurDataURL="/images/e-commerce/404/1.png"
                           />
                         )}
                       </div>
@@ -327,7 +327,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                       height={120}
                       alt={`Product view ${index + 2}`}
                       placeholder="blur"
-                      blurDataURL="/public/images/e-commerce/404/1.png"
+                      blurDataURL="/images/e-commerce/404/1.png"
                     />
                   ))}
                 </div>

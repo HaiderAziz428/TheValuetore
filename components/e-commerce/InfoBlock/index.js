@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Col, Row } from "reactstrap";
-
 import s from "./InfoBlock.module.scss";
 
 const InfoBlock = () => (
@@ -19,10 +18,7 @@ const InfoBlock = () => (
             className={`h-100 d-flex align-items-center ${s.info__item} justify-content-center`}
           >
             <section className={"d-flex align-items-center"}>
-              <img
-                src={"public/images/e-commerce/home/car.svg"}
-                className={"mr-3"}
-              />
+              <img src="/images/e-commerce/home/car.svg" className={"mr-3"} />
               <div>
                 <h5 className={"fw-bold text-uppercase"}>free shipping</h5>
                 <p className={"text-muted mb-0"}>On all orders of $ 150</p>
@@ -36,7 +32,7 @@ const InfoBlock = () => (
           >
             <section className={"d-flex align-items-center"}>
               <img
-                src={"public/images/e-commerce/home/headphones.svg"}
+                src="/images/e-commerce/home/headphones.svg"
                 className={"mr-3"}
               />
               <div>
@@ -51,10 +47,7 @@ const InfoBlock = () => (
             className={`h-100 d-flex align-items-center ${s.info__item} justify-content-center`}
           >
             <section className={"d-flex align-items-center"}>
-              <img
-                src={"public/images/e-commerce/home/Sync.svg"}
-                className={"mr-3"}
-              />
+              <img src="/images/e-commerce/home/Sync.svg" className={"mr-3"} />
               <div>
                 <h5 className={"fw-bold text-uppercase"}>100% money back</h5>
                 <p className={"text-muted mb-0"}>30 day money back guarantee</p>
