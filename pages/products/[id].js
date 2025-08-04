@@ -364,6 +364,9 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                     whiteSpace: "pre-wrap",
                     lineHeight: "1.6",
                     fontFamily: "inherit",
+                    wordWrap: "break-word",
+                    overflowWrap: "break-word",
+                    marginBottom: "1rem",
                   }}
                 >
                   {product.description}

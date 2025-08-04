@@ -437,13 +437,17 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                           />
                           <p className={"text-primary ml-3 mb-0"}>12 reviews</p>
                         </div>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. In ut ullamcorper leo, eget euismod orci. Cum
-                          sociis natoque penatibus et magnis dis parturient
-                          montes, nascetur ridiculus mus. Vestibulum ultricies
-                          aliquam.
-                        </p>
+                        <div
+                          style={{
+                            whiteSpace: "pre-wrap",
+                            lineHeight: "1.6",
+                            fontFamily: "inherit",
+                            wordWrap: "break-word",
+                            overflowWrap: "break-word",
+                          }}
+                        >
+                          {item.description || "No description available"}
+                        </div>
                         <div className={"d-flex"}>
                           <div
                             className={
@@ -501,18 +505,17 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                           >
                             Add to Cart
                           </Button>
-                          <Link
-                            href={"/billing"}
-                            className={"d-inline-block flex-fill"}
-                          >
-                            <Button
-                              color={"primary"}
-                              className={"text-uppercase fw-bold"}
-                              style={{ width: "50%" }}
-                            >
-                              Buy now
-                            </Button>
-                          </Link>
+                          <div className={"d-inline-block flex-fill"}>
+                            <Link href={"/billing"}>
+                              <Button
+                                color={"primary"}
+                                className={"text-uppercase fw-bold"}
+                                style={{ width: "100%" }}
+                              >
+                                Buy now
+                              </Button>
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
