@@ -16,8 +16,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Countdown from "./home/Countdown";
 
-const Index = ({ products: serverSideProducts }) => {
+const Index = ({ products: serverSideProducts, backendAvailable }) => {
   const [quantity, setQuantity] = React.useState(1);
+  const [isLoading, setIsLoading] = React.useState(!backendAvailable);
+  const [backendStatus, setBackendStatus] = React.useState(backendAvailable);
   const dispatchStore = useDispatch();
   const openReducer = (state, action) => {
     switch (action.type) {
@@ -151,6 +153,47 @@ const Index = ({ products: serverSideProducts }) => {
   React.useEffect(() => {
     secsInterval();
   }, []);
+
+  // Client-side loading when backend is not available during SSR
+  React.useEffect(() => {
+    if (!backendAvailable) {
+      const loadProducts = async () => {
+        try {
+          setIsLoading(true);
+          const res = await axios.get("/products");
+          setProducts(res.data.rows);
+          setBackendStatus(true);
+          setIsLoading(false);
+        } catch (error) {
+          console.log("Backend still not available");
+          setIsLoading(false);
+        }
+      };
+
+      // Try to load products after a short delay
+      const timer = setTimeout(loadProducts, 1000);
+
+      // Set up periodic retry every 5 seconds if backend is not available
+      const retryInterval = setInterval(async () => {
+        if (!backendStatus) {
+          try {
+            const res = await axios.get("/products");
+            setProducts(res.data.rows);
+            setBackendStatus(true);
+            setIsLoading(false);
+            clearInterval(retryInterval);
+          } catch (error) {
+            console.log("Backend still not available, will retry...");
+          }
+        }
+      }, 5000);
+
+      return () => {
+        clearTimeout(timer);
+        clearInterval(retryInterval);
+      };
+    }
+  }, [backendAvailable, backendStatus]);
 
   return (
     <>
@@ -331,207 +374,239 @@ const Index = ({ products: serverSideProducts }) => {
           </Col>
         </Row>
         <Row>
-          {products.map((item, index) => (
-            <Col
-              sm={6}
-              md={3}
-              xs={12}
-              className={`mb-4 ${s.product}`}
-              key={index}
-            >
-              <Modal
-                isOpen={openState[`open${index}`]}
-                toggle={() => dispatch({ type: `open${index}` })}
+          {isLoading ? (
+            <Col sm={12} className="text-center">
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ minHeight: "200px" }}
               >
-                <div className={s.modalWidndow}>
-                  <div className={s.image}>
-                    <Image
-                      src={item.image[0]?.publicUrl}
-                      alt="img"
-                      layout="responsive"
-                      width={400}
-                      height={400}
-                      placeholder="blur"
-                      blurDataURL="/public/images/e-commerce/404/1.png" // fallback placeholder, adjust as needed
-                    />
-                  </div>
-                  <div
-                    className={`${s.content} p-4 d-flex flex-column justify-content-between`}
+                <div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+                <span className="ms-3">Loading products...</span>
+              </div>
+            </Col>
+          ) : products.length > 0 ? (
+            <>
+              {products.map((item, index) => (
+                <Col
+                  sm={6}
+                  md={3}
+                  xs={12}
+                  className={`mb-4 ${s.product}`}
+                  key={index}
+                >
+                  <Modal
+                    isOpen={openState[`open${index}`]}
+                    toggle={() => dispatch({ type: `open${index}` })}
                   >
+                    <div className={s.modalWidndow}>
+                      <div className={s.image}>
+                        <Image
+                          src={item.image[0]?.publicUrl}
+                          alt="img"
+                          layout="responsive"
+                          width={400}
+                          height={400}
+                          placeholder="blur"
+                          blurDataURL="/public/images/e-commerce/404/1.png" // fallback placeholder, adjust as needed
+                        />
+                      </div>
+                      <div
+                        className={`${s.content} p-4 d-flex flex-column justify-content-between`}
+                      >
+                        <Link href={`/products/${item.id}`}>
+                          <a className={"fw-semi-bold"}>
+                            More about product
+                            <img
+                              src="/images/e-commerce/home/arrow-right.svg"
+                              alt={"arrow"}
+                              className={"ml-2"}
+                            />
+                          </a>
+                        </Link>
+                        <h6 className={`text-muted`}>
+                          {item.categories[0].title[0].toUpperCase() +
+                            item.categories[0].title.slice(1)}
+                        </h6>
+                        <h4 className={"fw-bold"}>{item.title}</h4>
+                        <div className={"d-flex align-items-center"}>
+                          <img
+                            src="/images/e-commerce/details/stars.svg"
+                            alt={"rating"}
+                          />
+                          <p className={"text-primary ml-3 mb-0"}>12 reviews</p>
+                        </div>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. In ut ullamcorper leo, eget euismod orci. Cum
+                          sociis natoque penatibus et magnis dis parturient
+                          montes, nascetur ridiculus mus. Vestibulum ultricies
+                          aliquam.
+                        </p>
+                        <div className={"d-flex"}>
+                          <div
+                            className={
+                              "d-flex flex-column mr-5 justify-content-between"
+                            }
+                          >
+                            <h6 className={"fw-bold text-muted text-uppercase"}>
+                              Quantity
+                            </h6>
+                            <div className={"d-flex align-items-center"}>
+                              <Button
+                                className={`bg-transparent border-0 p-1 fw-bold mr-3 ${s.quantityBtn}`}
+                                onClick={() => {
+                                  if (quantity === 1) return;
+                                  setQuantity((prevState) => prevState - 1);
+                                }}
+                              >
+                                -
+                              </Button>
+                              <p className={"fw-bold mb-0"}>{quantity}</p>
+                              <Button
+                                className={`bg-transparent border-0 p-1 fw-bold ml-3 ${s.quantityBtn}`}
+                                onClick={() => {
+                                  if (quantity < 1) return;
+                                  setQuantity((prevState) => prevState + 1);
+                                }}
+                              >
+                                +
+                              </Button>
+                            </div>
+                          </div>
+                          <div
+                            className={
+                              "d-flex flex-column justify-content-between"
+                            }
+                          >
+                            <h6 className={"fw-bold text-muted text-uppercase"}>
+                              Price
+                            </h6>
+                            <h6 className={"fw-bold"}>{item.price}$</h6>
+                          </div>
+                        </div>
+                        <div className={"d-flex mt-5"}>
+                          <Button
+                            outline
+                            color={"primary"}
+                            className={"flex-fill mr-4 text-uppercase fw-bold"}
+                            style={{ width: "50%" }}
+                            onClick={() => {
+                              toast.info(
+                                "products successfully added to your cart"
+                              );
+                              addToCart();
+                            }}
+                          >
+                            Add to Cart
+                          </Button>
+                          <Link
+                            href={"/billing"}
+                            className={"d-inline-block flex-fill"}
+                          >
+                            <Button
+                              color={"primary"}
+                              className={"text-uppercase fw-bold"}
+                              style={{ width: "50%" }}
+                            >
+                              Buy now
+                            </Button>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </Modal>
+                  <div style={{ position: "relative" }}>
                     <Link href={`/products/${item.id}`}>
-                      <a className={"fw-semi-bold"}>
-                        More about product
-                        <img
-                          src="/images/e-commerce/home/arrow-right.svg"
-                          alt={"arrow"}
-                          className={"ml-2"}
+                      <a>
+                        <div
+                          style={{
+                            background: `url(${item.image[0]?.publicUrl}) no-repeat center`,
+                            backgroundSize: "contain",
+                            transition: "all .65s ease",
+                          }}
+                          className={s.productImage}
                         />
                       </a>
                     </Link>
-                    <h6 className={`text-muted`}>
-                      {item.categories[0].title[0].toUpperCase() +
-                        item.categories[0].title.slice(1)}
-                    </h6>
-                    <h4 className={"fw-bold"}>{item.title}</h4>
-                    <div className={"d-flex align-items-center"}>
-                      <img
-                        src="/images/e-commerce/details/stars.svg"
-                        alt={"rating"}
-                      />
-                      <p className={"text-primary ml-3 mb-0"}>12 reviews</p>
-                    </div>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      In ut ullamcorper leo, eget euismod orci. Cum sociis
-                      natoque penatibus et magnis dis parturient montes,
-                      nascetur ridiculus mus. Vestibulum ultricies aliquam.
-                    </p>
-                    <div className={"d-flex"}>
-                      <div
-                        className={
-                          "d-flex flex-column mr-5 justify-content-between"
-                        }
-                      >
-                        <h6 className={"fw-bold text-muted text-uppercase"}>
-                          Quantity
-                        </h6>
-                        <div className={"d-flex align-items-center"}>
-                          <Button
-                            className={`bg-transparent border-0 p-1 fw-bold mr-3 ${s.quantityBtn}`}
-                            onClick={() => {
-                              if (quantity === 1) return;
-                              setQuantity((prevState) => prevState - 1);
-                            }}
-                          >
-                            -
-                          </Button>
-                          <p className={"fw-bold mb-0"}>{quantity}</p>
-                          <Button
-                            className={`bg-transparent border-0 p-1 fw-bold ml-3 ${s.quantityBtn}`}
-                            onClick={() => {
-                              if (quantity < 1) return;
-                              setQuantity((prevState) => prevState + 1);
-                            }}
-                          >
-                            +
-                          </Button>
-                        </div>
-                      </div>
-                      <div
-                        className={"d-flex flex-column justify-content-between"}
-                      >
-                        <h6 className={"fw-bold text-muted text-uppercase"}>
-                          Price
-                        </h6>
-                        <h6 className={"fw-bold"}>{item.price}$</h6>
-                      </div>
-                    </div>
-                    <div className={"d-flex mt-5"}>
+                    <div
+                      className={`d-flex flex-column justify-content-center ${s.product__actions}`}
+                      style={{
+                        position: "absolute",
+                        height: "100%",
+                        top: 0,
+                        right: 15,
+                      }}
+                    >
                       <Button
-                        outline
-                        color={"primary"}
-                        className={"flex-fill mr-4 text-uppercase fw-bold"}
-                        style={{ width: "50%" }}
+                        className={"p-0 bg-transparent border-0"}
                         onClick={() => {
+                          addToWishlist(item.id);
+                          toast.info(
+                            "products successfully added to your wishlist"
+                          );
+                        }}
+                      >
+                        <div className={`mb-4 ${s.product__actions__heart}`} />
+                      </Button>
+                      <Button
+                        className={"p-0 bg-transparent border-0"}
+                        onClick={() => {
+                          dispatch({ type: `open${index}` });
+                        }}
+                      >
+                        <div className={`mb-4 ${s.product__actions__max}`} />
+                      </Button>
+                      <Button
+                        className={"p-0 bg-transparent border-0"}
+                        onClick={() => {
+                          addToCart(item.id);
                           toast.info(
                             "products successfully added to your cart"
                           );
-                          addToCart();
                         }}
                       >
-                        Add to Cart
+                        <div className={`mb-4 ${s.product__actions__cart}`} />
                       </Button>
-                      <Link
-                        href={"/billing"}
-                        className={"d-inline-block flex-fill"}
-                      >
-                        <Button
-                          color={"primary"}
-                          className={"text-uppercase fw-bold"}
-                          style={{ width: "50%" }}
-                        >
-                          Buy now
-                        </Button>
-                      </Link>
                     </div>
                   </div>
-                </div>
-              </Modal>
-              <div style={{ position: "relative" }}>
-                <Link href={`/products/${item.id}`}>
-                  <a>
-                    <div
-                      style={{
-                        background: `url(${item.image[0]?.publicUrl}) no-repeat center`,
-                        backgroundSize: "contain",
-                        transition: "all .65s ease",
-                      }}
-                      className={s.productImage}
-                    />
-                  </a>
-                </Link>
-                <div
-                  className={`d-flex flex-column justify-content-center ${s.product__actions}`}
-                  style={{
-                    position: "absolute",
-                    height: "100%",
-                    top: 0,
-                    right: 15,
-                  }}
-                >
-                  <Button
-                    className={"p-0 bg-transparent border-0"}
-                    onClick={() => {
-                      addToWishlist(item.id);
-                      toast.info(
-                        "products successfully added to your wishlist"
-                      );
-                    }}
-                  >
-                    <div className={`mb-4 ${s.product__actions__heart}`} />
-                  </Button>
-                  <Button
-                    className={"p-0 bg-transparent border-0"}
-                    onClick={() => {
-                      dispatch({ type: `open${index}` });
-                    }}
-                  >
-                    <div className={`mb-4 ${s.product__actions__max}`} />
-                  </Button>
-                  <Button
-                    className={"p-0 bg-transparent border-0"}
-                    onClick={() => {
-                      addToCart(item.id);
-                      toast.info("products successfully added to your cart");
-                    }}
-                  >
-                    <div className={`mb-4 ${s.product__actions__cart}`} />
-                  </Button>
-                </div>
-              </div>
-              <div className={s.productInfo}>
-                <div>
-                  <Link href={`/category/${item.categories[0].id}`}>
-                    <a className={"mt-3 text-muted mb-0 d-inline-block"}>
-                      {item.categories[0].title[0].toUpperCase() +
-                        item.categories[0].title.slice(1)}
-                    </a>
-                  </Link>
-                  <Link href={`/products/${item.id}`}>
-                    <a>
-                      <h6
-                        className={"fw-bold font-size-base mt-1"}
-                        style={{ fontSize: 16 }}
-                      >
-                        {item.title}
-                      </h6>
-                    </a>
-                  </Link>
-                  <h6 style={{ fontSize: 16 }}>${item.price}</h6>
-                </div>
+                  <div className={s.productInfo}>
+                    <div>
+                      <Link href={`/category/${item.categories[0].id}`}>
+                        <a className={"mt-3 text-muted mb-0 d-inline-block"}>
+                          {item.categories[0].title[0].toUpperCase() +
+                            item.categories[0].title.slice(1)}
+                        </a>
+                      </Link>
+                      <Link href={`/products/${item.id}`}>
+                        <a>
+                          <h6
+                            className={"fw-bold font-size-base mt-1"}
+                            style={{ fontSize: 16 }}
+                          >
+                            {item.title}
+                          </h6>
+                        </a>
+                      </Link>
+                      <h6 style={{ fontSize: 16 }}>${item.price}</h6>
+                    </div>
+                  </div>
+                </Col>
+              ))}
+            </>
+          ) : (
+            <Col sm={12} className="text-center">
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ minHeight: "200px" }}
+              >
+                <p className="text-muted">
+                  No products available at the moment.
+                </p>
               </div>
             </Col>
-          ))}
+          )}
         </Row>
         <Row className={"d-flex justify-content-center"}>
           <Link href={"/shop"}>
@@ -674,12 +749,18 @@ const Index = ({ products: serverSideProducts }) => {
 };
 
 export async function getServerSideProps(context) {
-  const res = await axios.get("/products");
-  const products = res.data.rows;
-
-  return {
-    props: { products }, // will be passed to the page component as props
-  };
+  try {
+    const res = await axios.get("/products");
+    const products = res.data.rows;
+    return {
+      props: { products, backendAvailable: true }, // will be passed to the page component as props
+    };
+  } catch (error) {
+    console.log("Backend not available during SSR, will load client-side");
+    return {
+      props: { products: [], backendAvailable: false }, // will be passed to the page component as props
+    };
+  }
 }
 
 export default Index;

@@ -137,7 +137,7 @@ class Header extends React.Component {
 
           <NavbarBrand>
             <Link href={"/"}>
-              <span className={s.logoStyle}>Flatlogic</span>
+              <span className={s.logoStyle}>The Value Store</span>
             </Link>
           </NavbarBrand>
 

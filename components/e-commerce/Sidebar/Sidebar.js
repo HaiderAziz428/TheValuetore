@@ -68,7 +68,7 @@ class Sidebar extends React.Component {
         <nav className={s.root}>
           <header className={s.logo}>
             <span className={`${s.logoStyle} mx-1`}>
-              Flatlogic<i>.</i>
+              The Value Store<i>.</i>
             </span>
           </header>
           <ul className={s.nav}>
