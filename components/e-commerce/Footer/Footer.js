@@ -7,27 +7,6 @@ const Footer = () => {
   return (
     <footer className={s.footer}>
       <Container>
-        <Row className={"justify-content-between"}>
-          <Col xl={5} md={5}>
-            <h5 className={"text-white fw-bold"}>Many desktop publishing</h5>
-            <p className={"text-muted mt-3"}>
-              Do you want to receive exclusive email offers? Subscribe to our
-              newsletter! You will receive a unique promo code which gives you a
-              20% discount on all our products in 10 minutes.
-            </p>
-          </Col>
-          <Col xl={5} md={7} className={"d-flex align-items-center"}>
-            <Input
-              type={"email"}
-              placeholder={"Enter your email"}
-              className={"mr-3 border-0"}
-              style={{ height: 51 }}
-            />
-            <Button color={"primary"} className={"fw-bold"}>
-              Subscribe
-            </Button>
-          </Col>
-        </Row>
         <>
           <hr className={s.footer__hr} />
           <Row className={"my-5 justify-content-between"}>

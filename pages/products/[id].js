@@ -93,6 +93,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
   const [quantity, setQuantity] = React.useState(1);
   const [fetching, setFetching] = React.useState(true);
   const router = useRouter();
+  const dispatch = useDispatch();
   const { id } = router.query;
 
   // Gallery state: main media index and type
@@ -424,7 +425,15 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                   Add to Cart
                 </Button>
                 <a
-                  href={`https://wa.me/923356630319?text=Hi, I want to buy ${product.title} (Price: $${product.price})`}
+                  href={`https://wa.me/923356630319?text=${encodeURIComponent(
+                    `Hi! I would like to place an order for the following item:
+
+• ${product.title} - Quantity: ${quantity} - Price: $${product.price} each
+
+Total: $${product.price * quantity}
+
+Please let me know about delivery options and payment methods. Thank you!`
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={"d-inline-block flex-fill"}

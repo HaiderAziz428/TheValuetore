@@ -138,7 +138,6 @@ const Index = () => {
           wishlist: [],
         },
       });
-      setTest(true);
     } else if (typeof window !== "undefined") {
       let count = 0;
       // localStorage.removeItem("products")
@@ -297,10 +296,17 @@ const Index = () => {
             </div>
             <a
               href={`https://wa.me/923356630319?text=${encodeURIComponent(
-                "Hi, I want to buy " +
-                  products
-                    .map((p) => `${p.title} (Price: $${p.price})`)
-                    .join(", ")
+                products.length > 0
+                  ? `Hi! I would like to place an order for the following items:
+
+${products
+  .map((p) => `• ${p.title} - Quantity: ${p.amount} - Price: $${p.price} each`)
+  .join("\n")}
+
+Total: $${totalPrice}
+
+Please let me know about delivery options and payment methods. Thank you!`
+                  : "Hi! I would like to inquire about your products and place an order. Please let me know about your available items and delivery options. Thank you!"
               )}`}
               target="_blank"
               rel="noopener noreferrer"
