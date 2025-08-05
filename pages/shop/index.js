@@ -786,7 +786,27 @@ const Index = () => {
                           </h6>
                         </a>
                       </Link>
-                      <h6 style={{ fontSize: 16 }}>Rs {item.price} PKR</h6>
+                      {item.discountedPrice && item.discountedPrice < item.price ? (
+                        <div>
+                          <span
+                            style={{
+                              color: "#888",
+                              textDecoration: "line-through",
+                              marginRight: 8,
+                              fontSize: 16,
+                            }}
+                          >
+                            Rs {item.price} PKR
+                          </span>
+                          <span
+                            style={{ color: "#b3d334", fontWeight: 700, fontSize: 16 }}
+                          >
+                            Rs {item.discountedPrice} PKR
+                          </span>
+                        </div>
+                      ) : (
+                        <h6 style={{ fontSize: 16 }}>Rs {item.price} PKR</h6>
+                      )}
                     </div>
                   </div>
                 </Col>

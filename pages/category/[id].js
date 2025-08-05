@@ -516,9 +516,26 @@ const Index = ({ categoryId, categoryData }) => {
                     <div className={s.product__info}>
                       <h6 className={"fw-bold mb-1"}>{c.title}</h6>
                       <p className={"text-muted"}>{c.description}</p>
-                      <h5 className={"fw-bold text-primary"}>
-                        Rs {c.price} PKR
-                      </h5>
+                      {c.discountedPrice && c.discountedPrice < c.price ? (
+                        <div>
+                          <span
+                            style={{
+                              color: "#888",
+                              textDecoration: "line-through",
+                              marginRight: 8,
+                            }}
+                          >
+                            Rs {c.price} PKR
+                          </span>
+                          <span style={{ color: "#b3d334", fontWeight: 700 }}>
+                            Rs {c.discountedPrice} PKR
+                          </span>
+                        </div>
+                      ) : (
+                        <h5 className={"fw-bold text-primary"}>
+                          Rs {c.price} PKR
+                        </h5>
+                      )}
                     </div>
                   </Col>
                 );

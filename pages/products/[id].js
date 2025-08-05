@@ -475,7 +475,26 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                     <h6 className={"fw-bold text-muted text-uppercase"}>
                       Price
                     </h6>
-                    <h6 className={"fw-bold"}>Rs {product.price} PKR</h6>
+                    {/* Price display */}
+                    {product.discountedPrice &&
+                    product.discountedPrice < product.price ? (
+                      <div>
+                        <span
+                          style={{
+                            color: "#888",
+                            textDecoration: "line-through",
+                            marginRight: 8,
+                          }}
+                        >
+                          Rs {product.price} PKR
+                        </span>
+                        <span style={{ color: "#b3d334", fontWeight: 700 }}>
+                          Rs {product.discountedPrice} PKR
+                        </span>
+                      </div>
+                    ) : (
+                      <h6 className={"fw-bold"}>Rs {product.price} PKR</h6>
+                    )}
                   </div>
                 </div>
               </div>

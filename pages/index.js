@@ -490,7 +490,29 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                             <h6 className={"fw-bold text-muted text-uppercase"}>
                               Price
                             </h6>
-                            <h6 className={"fw-bold"}>Rs {item.price} PKR</h6>
+                            {item.discountedPrice &&
+                            item.discountedPrice < item.price ? (
+                              <div>
+                                <span
+                                  style={{
+                                    color: "#888",
+                                    textDecoration: "line-through",
+                                    marginRight: 8,
+                                  }}
+                                >
+                                  Rs {item.price} PKR
+                                </span>
+                                <span
+                                  style={{ color: "#b3d334", fontWeight: 700 }}
+                                >
+                                  Rs {item.discountedPrice} PKR
+                                </span>
+                              </div>
+                            ) : (
+                              <h6 style={{ fontSize: 16 }}>
+                                Rs {item.price} PKR
+                              </h6>
+                            )}
                           </div>
                         </div>
                         <div className={"d-flex mt-5"}>
@@ -595,7 +617,26 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                           </h6>
                         </a>
                       </Link>
-                      <h6 style={{ fontSize: 16 }}>Rs {item.price} PKR</h6>
+                      {/* Price display */}
+                      {item.discountedPrice &&
+                      item.discountedPrice < item.price ? (
+                        <div>
+                          <span
+                            style={{
+                              color: "#888",
+                              textDecoration: "line-through",
+                              marginRight: 8,
+                            }}
+                          >
+                            Rs {item.price} PKR
+                          </span>
+                          <span style={{ color: "#b3d334", fontWeight: 700 }}>
+                            Rs {item.discountedPrice} PKR
+                          </span>
+                        </div>
+                      ) : (
+                        <h6 style={{ fontSize: 16 }}>Rs {item.price} PKR</h6>
+                      )}
                     </div>
                   </div>
                 </Col>
