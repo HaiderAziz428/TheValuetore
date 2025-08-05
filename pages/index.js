@@ -490,8 +490,7 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                             <h6 className={"fw-bold text-muted text-uppercase"}>
                               Price
                             </h6>
-                            {item.discountedPrice &&
-                            item.discountedPrice < item.price ? (
+                            {item.discount && item.discount > 0 ? (
                               <div>
                                 <span
                                   style={{
@@ -502,10 +501,8 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                                 >
                                   Rs {item.price} PKR
                                 </span>
-                                <span
-                                  style={{ color: "#b3d334", fontWeight: 700 }}
-                                >
-                                  Rs {item.discountedPrice} PKR
+                                <span style={{ color: "#b3d334", fontWeight: 700 }}>
+                                  Rs {item.price - item.discount} PKR
                                 </span>
                               </div>
                             ) : (
@@ -618,8 +615,7 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                         </a>
                       </Link>
                       {/* Price display */}
-                      {item.discountedPrice &&
-                      item.discountedPrice < item.price ? (
+                      {item.discount && item.discount > 0 ? (
                         <div>
                           <span
                             style={{
@@ -631,7 +627,7 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                             Rs {item.price} PKR
                           </span>
                           <span style={{ color: "#b3d334", fontWeight: 700 }}>
-                            Rs {item.discountedPrice} PKR
+                            Rs {item.price - item.discount} PKR
                           </span>
                         </div>
                       ) : (

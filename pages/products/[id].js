@@ -476,8 +476,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                       Price
                     </h6>
                     {/* Price display */}
-                    {product.discountedPrice &&
-                    product.discountedPrice < product.price ? (
+                    {product.discount && product.discount > 0 ? (
                       <div>
                         <span
                           style={{
@@ -489,7 +488,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                           Rs {product.price} PKR
                         </span>
                         <span style={{ color: "#b3d334", fontWeight: 700 }}>
-                          Rs {product.discountedPrice} PKR
+                          Rs {product.price - product.discount} PKR
                         </span>
                       </div>
                     ) : (
