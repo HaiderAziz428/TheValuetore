@@ -98,12 +98,6 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
   const [reviewText, setReviewText] = React.useState("");
   const [reviewHeadline, setReviewHeadline] = React.useState("");
   const [reviewRating, setReviewRating] = React.useState(5);
-  const [reviewStatistics, setReviewStatistics] = React.useState({
-    totalReviews: 0,
-    averageRating: "0.00",
-    ratingCounts: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
-  });
-  const [isSubmittingReview, setIsSubmittingReview] = React.useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const { id } = router.query;
@@ -121,29 +115,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
       window.setTimeout(() => {
         setFetching(false);
       }, 1000);
-
-    // Fetch reviews for this product
-    if (id) {
-      fetchReviews();
-    }
-  }, [id]);
-
-  const fetchReviews = async () => {
-    try {
-      const response = await axios.get(`/reviews/product/${id}`);
-      setReviews(response.data.reviews || []);
-      setReviewStatistics(
-        response.data.statistics || {
-          totalReviews: 0,
-          averageRating: "0.00",
-          ratingCounts: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
-        }
-      );
-    } catch (error) {
-      console.error("Error fetching reviews:", error);
-      // If backend is not available, keep using local state
-    }
-  };
+  }, []);
 
   const addToCart = () => {
     dispatch(actions.doFind(id));
@@ -194,66 +166,50 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
     setReviewImages(newImages);
   };
 
-  const submitReview = async () => {
+  const submitReview = () => {
     if (!reviewHeadline.trim() || !reviewText.trim()) {
       toast.error("Please fill in all required fields");
       return;
     }
 
-    setIsSubmittingReview(true);
+    const newReview = {
+      id: Date.now(),
+      reviewer: "User",
+      headline: reviewHeadline,
+      comment: reviewText,
+      rating: reviewRating,
+      images: reviewImages.map((img) => img.preview),
+      date: new Date().toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      }),
+    };
 
-    try {
-      // Prepare review data
-      const reviewData = {
-        product_id: id,
-        rating: reviewRating,
-        headline: reviewHeadline,
-        comment: reviewText,
-        reviewer_name: currentUser
-          ? currentUser.firstname || "Anonymous"
-          : "Anonymous",
-        images: reviewImages.map((img) => img.preview),
-      };
-
-      // Submit to backend
-      const response = await axios.post("/reviews", reviewData);
-
-      // Add to local state
-      const newReview = {
-        id: response.data.id,
-        reviewer: reviewData.reviewer_name,
-        headline: reviewHeadline,
-        comment: reviewText,
-        rating: reviewRating,
-        images: reviewImages.map((img) => img.preview),
-        date: new Date().toLocaleDateString("en-US", {
-          month: "2-digit",
-          day: "2-digit",
-          year: "numeric",
-        }),
-      };
-
-      setReviews([newReview, ...reviews]);
-      setShowReviewModal(false);
-      setReviewHeadline("");
-      setReviewText("");
-      setReviewImages([]);
-      setReviewRating(5);
-
-      // Refresh reviews from backend
-      await fetchReviews();
-
-      toast.success("Review submitted successfully!");
-    } catch (error) {
-      console.error("Error submitting review:", error);
-      toast.error("Failed to submit review. Please try again.");
-    } finally {
-      setIsSubmittingReview(false);
-    }
+    setReviews([newReview, ...reviews]);
+    setShowReviewModal(false);
+    setReviewHeadline("");
+    setReviewText("");
+    setReviewImages([]);
+    setReviewRating(5);
+    toast.success("Review submitted successfully!");
   };
 
-  const averageRating = reviewStatistics.averageRating;
-  const ratingCounts = reviewStatistics.ratingCounts;
+  const averageRating =
+    reviews.length > 0
+      ? (
+          reviews.reduce((sum, review) => sum + review.rating, 0) /
+          reviews.length
+        ).toFixed(2)
+      : "0.00";
+
+  const ratingCounts = {
+    5: reviews.filter((r) => r.rating === 5).length,
+    4: reviews.filter((r) => r.rating === 4).length,
+    3: reviews.filter((r) => r.rating === 3).length,
+    2: reviews.filter((r) => r.rating === 2).length,
+    1: reviews.filter((r) => r.rating === 1).length,
+  };
 
   return (
     <>
@@ -646,11 +602,7 @@ Please let me know about delivery options and payment methods. Thank you!`
                           style={{ width: "40px", height: "40px" }}
                         >
                           <span className="text-white">
-                            {(
-                              review.reviewer_name ||
-                              review.reviewer ||
-                              "A"
-                            ).charAt(0)}
+                            {review.reviewer.charAt(0)}
                           </span>
                         </div>
                         <div>
@@ -665,20 +617,10 @@ Please let me know about delivery options and payment methods. Thank you!`
                           </div>
                         </div>
                       </div>
-                      <span className="text-muted">
-                        {review.date ||
-                          new Date(review.created_at).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "2-digit",
-                              day: "2-digit",
-                              year: "numeric",
-                            }
-                          )}
-                      </span>
+                      <span className="text-muted">{review.date}</span>
                     </div>
                     <p className="mb-3">{review.comment}</p>
-                    {review.images && review.images.length > 0 && (
+                    {review.images.length > 0 && (
                       <div className="d-flex gap-2 mb-3">
                         {review.images.map((image, imgIndex) => (
                           <img
@@ -796,12 +738,8 @@ Please let me know about delivery options and payment methods. Thank you!`
             <Button color="secondary" onClick={() => setShowReviewModal(false)}>
               Cancel
             </Button>
-            <Button
-              color="primary"
-              onClick={submitReview}
-              disabled={isSubmittingReview}
-            >
-              {isSubmittingReview ? "Submitting..." : "Submit Review"}
+            <Button color="primary" onClick={submitReview}>
+              Submit Review
             </Button>
           </ModalFooter>
         </Modal>
