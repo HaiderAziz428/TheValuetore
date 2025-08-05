@@ -1,5 +1,15 @@
 @import "styles/app";
 
+// Define sidebar-specific variables
+$sidebar-bg: #14444d;
+$sidebar-color: #fff;
+$sidebar-active-bg: #b3d334;
+$sidebar-active-color: #14444d;
+$sidebar-border: 1px solid #e9ecef;
+$sidebar-scrollbar-bg: #f8f9fa;
+$sidebar-transition-time: 0.3s;
+$font-weight-thin: 300;
+
 .root {
   width: 300px;
   position: absolute;
@@ -8,8 +18,8 @@
   bottom: 0;
   border-right: $sidebar-border;
   // background-color: var(--sidebar-bg-color);
-  background-color: #262626;
-  color: #fff;
+  background-color: $sidebar-bg;
+  color: $sidebar-color;
   overflow-y: auto;
   @include scroll-bar($sidebar-scrollbar-bg);
 }
@@ -34,7 +44,7 @@
 }
 
 .logoStyle {
-  color: #fff;
+  color: $sidebar-color;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 36px;
@@ -100,7 +110,7 @@
   margin: 35px 0 5px 11px;
   font-size: $font-size-larger;
   transition: opacity $sidebar-transition-time ease-in-out;
-  color: var(--sidebar-nav-title-color);
+  color: $sidebar-color;
 
   @media (min-width: breakpoint-min(lg)) {
     opacity: 1;
@@ -148,7 +158,7 @@
 
   li > a {
     font-size: $font-size-mini;
-    color: var(--sidebar-color);
+    color: $sidebar-color;
     text-decoration: none;
 
     > i {
@@ -156,6 +166,14 @@
       vertical-align: 1px;
       transition: margin-left $sidebar-transition-time ease-in-out;
     }
+  }
+}
+
+.sidebarLabels li > a {
+  color: $sidebar-color;
+  &.active {
+    background: $sidebar-active-bg;
+    color: $sidebar-active-color;
   }
 }
 

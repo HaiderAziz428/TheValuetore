@@ -19,7 +19,7 @@ const Footer = () => {
                 <img
                   alt="img"
                   src="/images/e-commerce/header/logo.png"
-                  className={"mb-4"}
+                  className={"mb-4 p-40 bg-white"}
                   style={{ height: "70px" }}
                 />
                 <p className={"text-white fw-thin mb-0"}>

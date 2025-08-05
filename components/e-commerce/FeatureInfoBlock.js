@@ -1,10 +1,10 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 
-const limeGradient = "url(#lime-gradient)";
-const teal = "#14444d";
-const limeLeft = "#b3d334";
-const limeRight = "#7ea100";
+const limeGradient = "linear-gradient(90deg, #b3d334 0%, #7ea100 100%)"; // Use SCSS variable values
+const teal = "#14444d"; // Use SCSS variable value
+const limeLeft = "#b3d334"; // Use SCSS variable value
+const limeRight = "#7ea100"; // Use SCSS variable value
 
 const features = [
   {
@@ -170,7 +170,7 @@ const FeatureInfoBlock = () => (
           background: "#fff",
           borderRadius: "24px",
           boxShadow:
-            "0 8px 32px rgba(123, 211, 52, 0.15), 0 1.5px 8px rgba(20, 68, 77, 0.08)",
+            "0 8px 32px rgba(179, 211, 52, 0.15), 0 1.5px 8px rgba(20, 68, 77, 0.08)",
           padding: "32px 0",
           display: "flex",
           alignItems: "stretch",
