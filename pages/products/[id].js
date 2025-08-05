@@ -514,9 +514,11 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                   href={`https://wa.me/923356630319?text=${encodeURIComponent(
                     `Hi! I would like to place an order for the following item:
 
-• ${product.title} - Quantity: ${quantity} - Price: Rs ${product.price} PKR each
+• ${product.title} - Quantity: ${quantity} - Price: Rs ${
+                      product.discount
+                    } PKR each
 
-Total: Rs ${product.price * quantity} PKR
+Total: Rs ${product.discount * quantity} PKR
 
 Please let me know about delivery options and payment methods. Thank you!`
                   )}`}
