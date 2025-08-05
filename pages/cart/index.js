@@ -58,7 +58,12 @@ const Index = () => {
   React.useEffect(() => {
     let total = 0;
     products.map((item) => {
-      total += item.amount * item.price;
+      // Use discounted price if available, otherwise use original price
+      const itemPrice =
+        item.discount && item.discount > 0
+          ? item.price - item.discount
+          : item.price;
+      total += item.amount * itemPrice;
     });
     setTotalPrice((prevState) => total);
   }, [products]);
@@ -319,10 +324,11 @@ const Index = () => {
                   ? `Hi! I would like to place an order for the following items:
 
 ${products
-  .map(
-    (p) =>
-      `• ${p.title} - Quantity: ${p.amount} - Price: Rs ${p.price} PKR each`
-  )
+  .map((p) => {
+    const itemPrice =
+      p.discount && p.discount > 0 ? p.price - p.discount : p.price;
+    return `• ${p.title} - Quantity: ${p.amount} - Price: Rs ${itemPrice} PKR each`;
+  })
   .join("\n")}
 
 Total: Rs ${totalPrice} PKR
