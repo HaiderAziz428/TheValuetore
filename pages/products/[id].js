@@ -96,7 +96,6 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
   const [showReviewModal, setShowReviewModal] = React.useState(false);
   const [reviewImages, setReviewImages] = React.useState([]);
   const [reviewText, setReviewText] = React.useState("");
-  const [reviewHeadline, setReviewHeadline] = React.useState("");
   const [reviewRating, setReviewRating] = React.useState(5);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -167,7 +166,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
   };
 
   const submitReview = () => {
-    if (!reviewHeadline.trim() || !reviewText.trim()) {
+    if (!reviewText.trim()) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -175,7 +174,6 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
     const newReview = {
       id: Date.now(),
       reviewer: "User",
-      headline: reviewHeadline,
       comment: reviewText,
       rating: reviewRating,
       images: reviewImages.map((img) => img.preview),
@@ -188,7 +186,6 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
 
     setReviews([newReview, ...reviews]);
     setShowReviewModal(false);
-    setReviewHeadline("");
     setReviewText("");
     setReviewImages([]);
     setReviewRating(5);
@@ -606,7 +603,6 @@ Please let me know about delivery options and payment methods. Thank you!`
                           </span>
                         </div>
                         <div>
-                          <h6 className="mb-1">{review.headline}</h6>
                           <div className="d-flex align-items-center">
                             {[1, 2, 3, 4, 5].map((star) => (
                               <Star
@@ -674,16 +670,6 @@ Please let me know about delivery options and payment methods. Thank you!`
                 ))}
                 <span className="ms-2">{reviewRating} stars</span>
               </div>
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label fw-bold">Headline</label>
-              <Input
-                type="text"
-                value={reviewHeadline}
-                onChange={(e) => setReviewHeadline(e.target.value)}
-                placeholder="Summarize your experience"
-              />
             </div>
 
             <div className="mb-3">
