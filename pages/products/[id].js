@@ -125,7 +125,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get(`/api/reviews/product/${id}`);
+      const response = await axios.get(`/reviews/product/${id}`);
       setReviews(response.data || []);
     } catch (error) {
       console.error("Error fetching reviews:", error);
@@ -205,7 +205,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
         formData.append("images", image.file);
       });
 
-      const response = await axios.post("/api/reviews", formData, {
+      const response = await axios.post("/reviews", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
