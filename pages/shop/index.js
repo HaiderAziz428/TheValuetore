@@ -398,11 +398,11 @@ const Index = () => {
               />
             </div>
             <h5 className={"fw-bold mb-5 mt-5 text-uppercase"}>Price</h5>
-            <p>Price Range: $0 - $1500</p>
+            <p>Price Range: Rs 0 - Rs 1500 PKR</p>
             <InputRange
               maxValue={1500}
               minValue={0}
-              formatLabel={(rangeValue) => `${rangeValue} $`}
+              formatLabel={(rangeValue) => `Rs ${rangeValue} PKR`}
               value={rangeValue}
               onChange={(value) => setRangeValue(value)}
             />
@@ -636,7 +636,8 @@ const Index = () => {
                           style={{
                             whiteSpace: "pre-wrap",
                             lineHeight: "1.6",
-                            fontFamily: "inherit",
+                            fontFamily:
+                              "'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",
                             wordWrap: "break-word",
                             overflowWrap: "break-word",
                           }}
@@ -682,7 +683,7 @@ const Index = () => {
                             <h6 className={"fw-bold text-muted text-uppercase"}>
                               Price
                             </h6>
-                            <h6 className={"fw-bold"}>{item.price}$</h6>
+                            <h6 className={"fw-bold"}>Rs {item.price} PKR</h6>
                           </div>
                         </div>
                         <div className={"d-flex mt-5"}>
@@ -785,7 +786,7 @@ const Index = () => {
                           </h6>
                         </a>
                       </Link>
-                      <h6 style={{ fontSize: 16 }}>${item.price}</h6>
+                      <h6 style={{ fontSize: 16 }}>Rs {item.price} PKR</h6>
                     </div>
                   </div>
                 </Col>

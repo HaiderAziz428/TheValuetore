@@ -1,8 +1,9 @@
-const baseURLApi = process.env.NEXT_PUBLIC_API_URL;
+const baseURLApi =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api";
 
 export default {
   baseURLApi,
-  remote: "https://flatlogic-ecommerce-backend.herokuapp.com/api/:41521",
+  remote: "http://localhost:8080/api",
   isBackend: process.env.REACT_APP_BACKEND,
   app: {
     colors: {

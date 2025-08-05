@@ -33,6 +33,7 @@
     "lodash": "4.17.21",
     "md5": "2.3.0",
     "moment": "2.30.1",
+    "multer": "^2.0.2",
     "next": "10.2.3",
     "next-circular-dependency": "1.0.1",
     "next-images": "1.8.5",
@@ -86,7 +87,7 @@
     "stripe": "8.222.0",
     "styled-components": "5.3.5",
     "toastr": "2.1.4",
-    "uuid": "8.3.2",
+    "uuid": "^8.3.2",
     "xlsx": "0.18.5",
     "yup": "0.32.11"
   },

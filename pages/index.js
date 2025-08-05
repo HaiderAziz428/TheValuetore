@@ -441,7 +441,8 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                           style={{
                             whiteSpace: "pre-wrap",
                             lineHeight: "1.6",
-                            fontFamily: "inherit",
+                            fontFamily:
+                              "'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",
                             wordWrap: "break-word",
                             overflowWrap: "break-word",
                           }}
@@ -487,7 +488,7 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                             <h6 className={"fw-bold text-muted text-uppercase"}>
                               Price
                             </h6>
-                            <h6 className={"fw-bold"}>{item.price}$</h6>
+                            <h6 className={"fw-bold"}>Rs {item.price} PKR</h6>
                           </div>
                         </div>
                         <div className={"d-flex mt-5"}>
@@ -592,7 +593,7 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                           </h6>
                         </a>
                       </Link>
-                      <h6 style={{ fontSize: 16 }}>${item.price}</h6>
+                      <h6 style={{ fontSize: 16 }}>Rs {item.price} PKR</h6>
                     </div>
                   </div>
                 </Col>

@@ -157,7 +157,7 @@ const Cart = () => {
                           </div>
                         </td>
                         <td className={"px-0 pt-4"}>
-                          <h6 className={"fw-bold mb-0"}>${item.price}</h6>
+                          <h6 className={"fw-bold mb-0"}>Rs {item.price} PKR</h6>
                         </td>
                         <td className={"px-0 pt-4"}>
                           <h6

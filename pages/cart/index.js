@@ -247,7 +247,7 @@ const Index = () => {
                         </div>
                       </td>
                       <td className={"px-0 pt-4"}>
-                        <h6 className={"fw-bold mb-0"}>{item.price}$</h6>
+                        <h6 className={"fw-bold mb-0"}>Rs {item.price} PKR</h6>
                       </td>
                       <td className={"px-0 pt-4"}>
                         <Button
@@ -275,7 +275,7 @@ const Index = () => {
             <h2 className={"fw-bold mb-5"}>Cart Total</h2>
             <div className={"d-flex"}>
               <h6 className={"fw-bold mr-5 mb-0"}>Subtotal:</h6>
-              <h6 className={"fw-bold mb-0"}>{totalPrice}$</h6>
+              <h6 className={"fw-bold mb-0"}>Rs {totalPrice} PKR</h6>
             </div>
             <hr className={"my-4"} />
             <div className={"d-flex"}>
@@ -292,7 +292,7 @@ const Index = () => {
               <h5 className={"fw-bold"} style={{ marginRight: 63 }}>
                 Total:
               </h5>
-              <h5 className={"fw-bold"}>{totalPrice}$</h5>
+              <h5 className={"fw-bold"}>Rs {totalPrice} PKR</h5>
             </div>
             <a
               href={`https://wa.me/923356630319?text=${encodeURIComponent(
@@ -300,10 +300,13 @@ const Index = () => {
                   ? `Hi! I would like to place an order for the following items:
 
 ${products
-  .map((p) => `• ${p.title} - Quantity: ${p.amount} - Price: $${p.price} each`)
+  .map(
+    (p) =>
+      `• ${p.title} - Quantity: ${p.amount} - Price: Rs ${p.price} PKR each`
+  )
   .join("\n")}
 
-Total: $${totalPrice}
+Total: Rs ${totalPrice} PKR
 
 Please let me know about delivery options and payment methods. Thank you!`
                   : "Hi! I would like to inquire about your products and place an order. Please let me know about your available items and delivery options. Thank you!"

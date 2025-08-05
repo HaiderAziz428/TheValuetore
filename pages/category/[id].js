@@ -328,7 +328,7 @@ const Index = ({ categoryId, categoryData }) => {
               <p className={"d-inline-block ml-2 mb-0"}>Toys</p>
             </div>
             <h5 className={"fw-bold mb-5 mt-5 text-uppercase"}>Price</h5>
-            <p>Price Range: $0 - $1000</p>
+            <p>Price Range: Rs 0 - Rs 1000 PKR</p>
             <input
               type="range"
               min="0"
@@ -516,7 +516,9 @@ const Index = ({ categoryId, categoryData }) => {
                     <div className={s.product__info}>
                       <h6 className={"fw-bold mb-1"}>{c.title}</h6>
                       <p className={"text-muted"}>{c.description}</p>
-                      <h5 className={"fw-bold text-primary"}>${c.price}</h5>
+                      <h5 className={"fw-bold text-primary"}>
+                        Rs {c.price} PKR
+                      </h5>
                     </div>
                   </Col>
                 );

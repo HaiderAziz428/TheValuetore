@@ -92,6 +92,12 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
   const [product, setProduct] = React.useState(serverSideProduct);
   const [quantity, setQuantity] = React.useState(1);
   const [fetching, setFetching] = React.useState(true);
+  const [reviews, setReviews] = React.useState([]);
+  const [showReviewModal, setShowReviewModal] = React.useState(false);
+  const [reviewImages, setReviewImages] = React.useState([]);
+  const [reviewText, setReviewText] = React.useState("");
+  const [reviewHeadline, setReviewHeadline] = React.useState("");
+  const [reviewRating, setReviewRating] = React.useState(5);
   const router = useRouter();
   const dispatch = useDispatch();
   const { id } = router.query;
@@ -110,6 +116,22 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
         setFetching(false);
       }, 1000);
   }, []);
+
+  React.useEffect(() => {
+    if (id) {
+      fetchReviews();
+    }
+  }, [id]);
+
+  const fetchReviews = async () => {
+    try {
+      const response = await axios.get(`/api/reviews/product/${id}`);
+      setReviews(response.data || []);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+      setReviews([]);
+    }
+  };
 
   const addToCart = () => {
     dispatch(actions.doFind(id));
@@ -138,6 +160,87 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
     typeof window !== "undefined" &&
       localStorage.setItem("products", JSON.stringify(localProducts));
     dispatch(productsListActions.doAdd(localProducts));
+  };
+
+  const handleImageUpload = (event) => {
+    const files = Array.from(event.target.files);
+    if (reviewImages.length + files.length > 3) {
+      toast.error("Maximum 3 images allowed");
+      return;
+    }
+
+    const newImages = files.map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    setReviewImages([...reviewImages, ...newImages]);
+  };
+
+  const removeImage = (index) => {
+    const newImages = reviewImages.filter((_, i) => i !== index);
+    setReviewImages(newImages);
+  };
+
+  const submitReview = async () => {
+    if (!reviewHeadline.trim() || !reviewText.trim()) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    try {
+      // Create FormData for file uploads
+      const formData = new FormData();
+      formData.append("productId", String(id));
+      formData.append("headline", reviewHeadline);
+      formData.append("comment", reviewText);
+      formData.append("rating", String(reviewRating));
+      formData.append(
+        "reviewer",
+        currentUser ? currentUser.name || "User" : "User"
+      );
+
+      // Append images if any
+      reviewImages.forEach((image, index) => {
+        formData.append("images", image.file);
+      });
+
+      const response = await axios.post("/api/reviews", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 201) {
+        toast.success("Review submitted successfully!");
+        setShowReviewModal(false);
+        setReviewHeadline("");
+        setReviewText("");
+        setReviewImages([]);
+        setReviewRating(5);
+        // Refresh reviews from API
+        await fetchReviews();
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      toast.error("Failed to submit review. Please try again.");
+    }
+  };
+
+  const averageRating =
+    reviews.length > 0
+      ? (
+          reviews.reduce((sum, review) => sum + review.rating, 0) /
+          reviews.length
+        ).toFixed(2)
+      : "0.00";
+
+  const ratingCounts = {
+    5: reviews.filter((r) => r.rating === 5).length,
+    4: reviews.filter((r) => r.rating === 4).length,
+    3: reviews.filter((r) => r.rating === 3).length,
+    2: reviews.filter((r) => r.rating === 2).length,
+    1: reviews.filter((r) => r.rating === 1).length,
   };
 
   return (
@@ -359,6 +462,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                     {/* {feedbackList.length} reviews */} reviews
                   </p>
                 </div>
+
                 <div className={"d-flex"}>
                   <div
                     className={
@@ -406,7 +510,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                     <h6 className={"fw-bold text-muted text-uppercase"}>
                       Price
                     </h6>
-                    <h6 className={"fw-bold"}>{product.price}$</h6>
+                    <h6 className={"fw-bold"}>Rs {product.price} PKR</h6>
                   </div>
                 </div>
               </div>
@@ -427,9 +531,9 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                   href={`https://wa.me/923356630319?text=${encodeURIComponent(
                     `Hi! I would like to place an order for the following item:
 
-• ${product.title} - Quantity: ${quantity} - Price: $${product.price} each
+• ${product.title} - Quantity: ${quantity} - Price: Rs ${product.price} PKR each
 
-Total: $${product.price * quantity}
+Total: Rs ${product.price * quantity} PKR
 
 Please let me know about delivery options and payment methods. Thank you!`
                   )}`}
@@ -467,34 +571,210 @@ Please let me know about delivery options and payment methods. Thank you!`
                   </Button>
                 </a>
               </div>
-              {product.description && (
-                <div
-                  style={{
-                    whiteSpace: "pre-wrap",
-                    lineHeight: "1.6",
-                    fontFamily: "inherit",
-                    wordWrap: "break-word",
-                    overflowWrap: "break-word",
-                    marginTop: "2rem",
-                    padding: "1rem",
-                    backgroundColor: "#f8f9fa",
-                    borderRadius: "8px",
-                    border: "1px solid #e9ecef",
-                  }}
-                >
-                  <h6 className="fw-bold mb-3">Product Description:</h6>
-                  {product.description}
-                </div>
-              )}
+              <h4 className="fw-bold my-4">Description</h4>
+              <div
+                style={{
+                  whiteSpace: "pre-wrap",
+                  lineHeight: "1.6",
+                  fontSize: "1.1rem",
+                  fontFamily:
+                    "'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",
+                  wordWrap: "break-word",
+                  overflowWrap: "break-word",
+                }}
+              >
+                {product.description}
+              </div>
             </Col>
           </Row>
         )}
         <hr />
+
+        {/* Reviews Section */}
         <Row className={"mt-5 mb-5"}>
-          {/* Remove all feedback-related state, handlers, and the Formik feedback form/modal from this file. */}
-          {/* Remove feedbackList, starsSelected, firstname, lastname, review, setOpen, isOpen, addFeedback, iniValues, formValidations, handleSubmit, and any feedbackActions/feedbackActionsForm usage. */}
-          {/* Remove the feedback modal and the 'Leave Feedback' button and reviews section from the render output. */}
+          <Col xs={12}>
+            <h3 className="text-center mb-4 fw-bold">Customer Reviews</h3>
+
+            <Button
+              style={{
+                backgroundColor: "#8B4513",
+
+                borderColor: "#8B4513",
+                color: "white",
+                borderRadius: "8px",
+                padding: "10px 20px",
+                fontWeight: "bold",
+              }}
+              onClick={() => setShowReviewModal(true)}
+            >
+              Write a review
+            </Button>
+
+            {reviews.length > 0 && (
+              <div>
+                <div className="d-flex align-items-center mb-3">
+                  <h6 className="mb-0 me-3">Most Recent</h6>
+                  <div className="dropdown">
+                    <button
+                      className="btn btn-outline-secondary dropdown-toggle"
+                      type="button"
+                      style={{ fontSize: "14px" }}
+                    >
+                      Sort by
+                    </button>
+                  </div>
+                </div>
+
+                {reviews.map((review, index) => (
+                  <div key={review.id} className="border-bottom pb-4 mb-4">
+                    <div className="d-flex justify-content-between align-items-start mb-2">
+                      <div className="d-flex align-items-center">
+                        <div
+                          className="bg-secondary rounded-circle d-flex align-items-center justify-content-center me-3"
+                          style={{ width: "40px", height: "40px" }}
+                        >
+                          <span className="text-white">
+                            {review.reviewer.charAt(0)}
+                          </span>
+                        </div>
+                        <div>
+                          <h6 className="mb-1">{review.headline}</h6>
+                          <div className="d-flex align-items-center">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <Star
+                                key={star}
+                                selected={star <= review.rating}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <span className="text-muted">{review.date}</span>
+                    </div>
+                    <p className="mb-3">{review.comment}</p>
+                    {review.images.length > 0 && (
+                      <div className="d-flex gap-2 mb-3">
+                        {review.images.map((image, imgIndex) => (
+                          <img
+                            key={imgIndex}
+                            src={image}
+                            alt={`Review image ${imgIndex + 1}`}
+                            style={{
+                              width: "80px",
+                              height: "80px",
+                              objectFit: "cover",
+                              borderRadius: "4px",
+                            }}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {reviews.length === 0 && (
+              <div className="text-center py-5">
+                <p className="text-muted">
+                  No reviews yet. Be the first to write a review!
+                </p>
+              </div>
+            )}
+          </Col>
         </Row>
+
+        {/* Review Modal */}
+        <Modal
+          isOpen={showReviewModal}
+          toggle={() => setShowReviewModal(false)}
+          size="lg"
+        >
+          <ModalHeader toggle={() => setShowReviewModal(false)}>
+            Write a Review
+          </ModalHeader>
+          <ModalBody>
+            <div className="mb-3">
+              <label className="form-label fw-bold">Rating</label>
+              <div className="d-flex align-items-center">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Star
+                    key={star}
+                    selected={star <= reviewRating}
+                    onClick={() => setReviewRating(star)}
+                  />
+                ))}
+                <span className="ms-2">{reviewRating} stars</span>
+              </div>
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label fw-bold">Headline</label>
+              <Input
+                type="text"
+                value={reviewHeadline}
+                onChange={(e) => setReviewHeadline(e.target.value)}
+                placeholder="Summarize your experience"
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label fw-bold">Review</label>
+              <Input
+                type="textarea"
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
+                placeholder="Tell others about your experience"
+                rows={4}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label fw-bold">Images (Max 3)</label>
+              <Input
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={reviewImages.length >= 3}
+              />
+              {reviewImages.length > 0 && (
+                <div className="d-flex gap-2 mt-2">
+                  {reviewImages.map((image, index) => (
+                    <div key={index} className="position-relative">
+                      <img
+                        src={image.preview}
+                        alt={`Preview ${index + 1}`}
+                        style={{
+                          width: "80px",
+                          height: "80px",
+                          objectFit: "cover",
+                          borderRadius: "4px",
+                        }}
+                      />
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-danger position-absolute"
+                        style={{ top: "-5px", right: "-5px" }}
+                        onClick={() => removeImage(index)}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={() => setShowReviewModal(false)}>
+              Cancel
+            </Button>
+            <Button color="primary" onClick={submitReview}>
+              Submit Review
+            </Button>
+          </ModalFooter>
+        </Modal>
         <hr />
       </Container>
       <InfoBlock />
