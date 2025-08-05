@@ -515,10 +515,10 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                     `Hi! I would like to place an order for the following item:
 
 • ${product.title} - Quantity: ${quantity} - Price: Rs ${
-                      product.discount
+                      product.price - product.discount
                     } PKR each
 
-Total: Rs ${product.discount * quantity} PKR
+Total: Rs ${(product.price - product.discount) * quantity} PKR
 
 Please let me know about delivery options and payment methods. Thank you!`
                   )}`}
