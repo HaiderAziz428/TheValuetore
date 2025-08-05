@@ -15,6 +15,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 
 import Countdown from "./home/Countdown";
+import FeatureInfoBlock from "../components/e-commerce/FeatureInfoBlock";
 
 const Index = ({ products: serverSideProducts, backendAvailable }) => {
   const [quantity, setQuantity] = React.useState(1);
@@ -362,6 +363,7 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
           </section>
         </Carousel.Item>
       </Carousel>
+      <FeatureInfoBlock />
       <Container style={{ marginTop: 80, marginBottom: 80 }}>
         <h3 className={`text-center fw-bold mb-4`}>New Arrivals</h3>
         <Row className={"justify-content-center mb-2"}>
