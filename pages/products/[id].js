@@ -117,22 +117,6 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
       }, 1000);
   }, []);
 
-  React.useEffect(() => {
-    if (id) {
-      fetchReviews();
-    }
-  }, [id]);
-
-  const fetchReviews = async () => {
-    try {
-      const response = await axios.get(`/reviews/product/${id}`);
-      setReviews(response.data || []);
-    } catch (error) {
-      console.error("Error fetching reviews:", error);
-      setReviews([]);
-    }
-  };
-
   const addToCart = () => {
     dispatch(actions.doFind(id));
     if (currentUser) {
@@ -182,49 +166,33 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
     setReviewImages(newImages);
   };
 
-  const submitReview = async () => {
+  const submitReview = () => {
     if (!reviewHeadline.trim() || !reviewText.trim()) {
       toast.error("Please fill in all required fields");
       return;
     }
 
-    try {
-      // Create FormData for file uploads
-      const formData = new FormData();
-      formData.append("productId", String(id));
-      formData.append("headline", reviewHeadline);
-      formData.append("comment", reviewText);
-      formData.append("rating", String(reviewRating));
-      formData.append(
-        "reviewer",
-        currentUser ? currentUser.name || "User" : "User"
-      );
+    const newReview = {
+      id: Date.now(),
+      reviewer: "User",
+      headline: reviewHeadline,
+      comment: reviewText,
+      rating: reviewRating,
+      images: reviewImages.map((img) => img.preview),
+      date: new Date().toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      }),
+    };
 
-      // Append images if any
-      reviewImages.forEach((image, index) => {
-        formData.append("images", image.file);
-      });
-
-      const response = await axios.post("/reviews", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      if (response.status === 201) {
-        toast.success("Review submitted successfully!");
-        setShowReviewModal(false);
-        setReviewHeadline("");
-        setReviewText("");
-        setReviewImages([]);
-        setReviewRating(5);
-        // Refresh reviews from API
-        await fetchReviews();
-      }
-    } catch (error) {
-      console.error("Error submitting review:", error);
-      toast.error("Failed to submit review. Please try again.");
-    }
+    setReviews([newReview, ...reviews]);
+    setShowReviewModal(false);
+    setReviewHeadline("");
+    setReviewText("");
+    setReviewImages([]);
+    setReviewRating(5);
+    toast.success("Review submitted successfully!");
   };
 
   const averageRating =

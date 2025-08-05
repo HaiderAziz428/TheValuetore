@@ -140,7 +140,7 @@ class Header extends React.Component {
               <img
                 src="/images/e-commerce/header/logo.png"
                 alt="The Value Store"
-                style={{ height: "40px", width: "auto" }}
+                style={{ height: "50px", width: "auto" }}
               />
             </Link>
           </NavbarBrand>

@@ -18,8 +18,9 @@ const Footer = () => {
               <div>
                 <img
                   alt="img"
-                  src="/images/e-commerce/logo-white.svg"
+                  src="/images/e-commerce/header/logo.png"
                   className={"mb-4"}
+                  style={{ height: "70px" }}
                 />
                 <p className={"text-white fw-thin mb-0"}>
                   Lorem Ipsum has been the industry's standard dummy text ever
