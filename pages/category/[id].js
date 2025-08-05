@@ -516,7 +516,7 @@ const Index = ({ categoryId, categoryData }) => {
                     <div className={s.product__info}>
                       <h6 className={"fw-bold mb-1"}>{c.title}</h6>
                       <p className={"text-muted"}>{c.description}</p>
-                      {c.discountedPrice && c.discountedPrice < c.price ? (
+                      {c.discount && c.discount > 0 ? (
                         <div>
                           <span
                             style={{
@@ -528,7 +528,7 @@ const Index = ({ categoryId, categoryData }) => {
                             Rs {c.price} PKR
                           </span>
                           <span style={{ color: "#b3d334", fontWeight: 700 }}>
-                            Rs {c.discountedPrice} PKR
+                            Rs {c.price - c.discount} PKR
                           </span>
                         </div>
                       ) : (

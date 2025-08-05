@@ -786,7 +786,7 @@ const Index = () => {
                           </h6>
                         </a>
                       </Link>
-                      {item.discountedPrice && item.discountedPrice < item.price ? (
+                      {item.discount && item.discount > 0 ? (
                         <div>
                           <span
                             style={{
@@ -801,7 +801,7 @@ const Index = () => {
                           <span
                             style={{ color: "#b3d334", fontWeight: 700, fontSize: 16 }}
                           >
-                            Rs {item.discountedPrice} PKR
+                            Rs {item.price - item.discount} PKR
                           </span>
                         </div>
                       ) : (
