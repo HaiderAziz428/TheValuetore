@@ -518,19 +518,6 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                                 >
                                   Rs {item.price - item.discount} PKR
                                 </span>
-                                <span
-                                  style={{
-                                    background: "#b3d334",
-                                    color: "#fff",
-                                    fontWeight: 700,
-                                    fontSize: "0.9rem",
-                                    borderRadius: 4,
-                                    padding: "2px 8px",
-                                    marginLeft: 6,
-                                  }}
-                                >
-                                  Discount
-                                </span>
                               </div>
                             ) : (
                               <h6 style={{ fontSize: 16 }}>

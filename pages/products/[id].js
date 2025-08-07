@@ -504,19 +504,6 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                         >
                           Rs {product.price - product.discount} PKR
                         </span>
-                        <span
-                          style={{
-                            background: "#b3d334",
-                            color: "#fff",
-                            fontWeight: 700,
-                            fontSize: "0.9rem",
-                            borderRadius: 4,
-                            padding: "2px 8px",
-                            marginLeft: 6,
-                          }}
-                        >
-                          Discount
-                        </span>
                       </div>
                     ) : (
                       <h6 className={"fw-bold"}>Rs {product.price} PKR</h6>
