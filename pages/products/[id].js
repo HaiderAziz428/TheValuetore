@@ -477,12 +477,19 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                     </h6>
                     {/* Price display */}
                     {product.discount && product.discount > 0 ? (
-                      <div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 8,
+                        }}
+                      >
                         <span
                           style={{
                             color: "#888",
                             textDecoration: "line-through",
                             marginRight: 8,
+                            fontSize: "1rem",
                           }}
                         >
                           Rs {product.price} PKR
@@ -490,11 +497,25 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                         <span
                           style={{
                             color: "#b3d334",
-                            fontWeight: 700,
-                            fontSize: "1.2rem",
+                            fontWeight: 900,
+                            fontSize: "1.5rem",
+                            letterSpacing: "0.5px",
                           }}
                         >
                           Rs {product.price - product.discount} PKR
+                        </span>
+                        <span
+                          style={{
+                            background: "#b3d334",
+                            color: "#fff",
+                            fontWeight: 700,
+                            fontSize: "0.9rem",
+                            borderRadius: 4,
+                            padding: "2px 8px",
+                            marginLeft: 6,
+                          }}
+                        >
+                          Discount
                         </span>
                       </div>
                     ) : (

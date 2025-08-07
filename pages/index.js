@@ -491,18 +491,45 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                               Price
                             </h6>
                             {item.discount && item.discount > 0 ? (
-                              <div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: 8,
+                                }}
+                              >
                                 <span
                                   style={{
                                     color: "#888",
                                     textDecoration: "line-through",
                                     marginRight: 8,
+                                    fontSize: "1rem",
                                   }}
                                 >
                                   Rs {item.price} PKR
                                 </span>
-                                <span style={{ color: "#b3d334", fontWeight: 700 }}>
+                                <span
+                                  style={{
+                                    color: "#b3d334",
+                                    fontWeight: 900,
+                                    fontSize: "1.5rem",
+                                    letterSpacing: "0.5px",
+                                  }}
+                                >
                                   Rs {item.price - item.discount} PKR
+                                </span>
+                                <span
+                                  style={{
+                                    background: "#b3d334",
+                                    color: "#fff",
+                                    fontWeight: 700,
+                                    fontSize: "0.9rem",
+                                    borderRadius: 4,
+                                    padding: "2px 8px",
+                                    marginLeft: 6,
+                                  }}
+                                >
+                                  Discount
                                 </span>
                               </div>
                             ) : (
@@ -616,7 +643,13 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                       </Link>
                       {/* Price display */}
                       {item.discount && item.discount > 0 ? (
-                        <div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 8,
+                          }}
+                        >
                           <span
                             style={{
                               color: "#888",
@@ -628,6 +661,19 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                           </span>
                           <span style={{ color: "#b3d334", fontWeight: 700 }}>
                             Rs {item.price - item.discount} PKR
+                          </span>
+                          <span
+                            style={{
+                              background: "#b3d334",
+                              color: "#fff",
+                              fontWeight: 700,
+                              fontSize: "0.9rem",
+                              borderRadius: 4,
+                              padding: "2px 8px",
+                              marginLeft: 6,
+                            }}
+                          >
+                            Discount
                           </span>
                         </div>
                       ) : (
