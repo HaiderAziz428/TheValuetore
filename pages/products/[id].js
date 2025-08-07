@@ -487,7 +487,13 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                         >
                           Rs {product.price} PKR
                         </span>
-                        <span style={{ color: "#b3d334", fontWeight: 700 }}>
+                        <span
+                          style={{
+                            color: "#b3d334",
+                            fontWeight: 700,
+                            fontSize: "1.2rem",
+                          }}
+                        >
                           Rs {product.price - product.discount} PKR
                         </span>
                       </div>
