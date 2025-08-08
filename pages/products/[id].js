@@ -97,6 +97,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
   const [reviewImages, setReviewImages] = React.useState([]);
   const [reviewText, setReviewText] = React.useState("");
   const [reviewRating, setReviewRating] = React.useState(5);
+  const [reviewName, setReviewName] = React.useState("");
   const router = useRouter();
   const dispatch = useDispatch();
   const { id } = router.query;
@@ -149,6 +150,12 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
       }, 1000);
   }, []);
 
+  React.useEffect(() => {
+    // Prefill reviewer name from logged in user if available
+    const name = (currentUser && (currentUser.name || currentUser.email)) || "";
+    setReviewName(name);
+  }, [currentUser]);
+
   const addToCart = () => {
     dispatch(actions.doFind(id));
     if (currentUser) {
@@ -185,12 +192,20 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
       return;
     }
 
-    const newImages = files.map((file) => ({
-      file,
-      preview: URL.createObjectURL(file),
-    }));
+    // Read files as data URLs for persistence after refresh
+    const readers = files.map(
+      (file) =>
+        new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () =>
+            resolve({ file, preview: reader.result, dataUrl: reader.result });
+          reader.readAsDataURL(file);
+        })
+    );
 
-    setReviewImages([...reviewImages, ...newImages]);
+    Promise.all(readers).then((newImages) => {
+      setReviewImages((prev) => [...prev, ...newImages]);
+    });
   };
 
   const removeImage = (index) => {
@@ -209,8 +224,14 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
         product_id: id,
         rating: reviewRating,
         comment: reviewText,
-        reviewer_name: currentUser?.email || currentUser?.name || "Anonymous",
-        images: reviewImages.map((img) => img.preview),
+        reviewer_name:
+          reviewName?.trim() ||
+          currentUser?.email ||
+          currentUser?.name ||
+          "Anonymous",
+        images: reviewImages
+          .map((img) => img.dataUrl || img.preview)
+          .slice(0, 3),
       };
 
       const r = await fetch(`/api/reviews`, {
@@ -694,7 +715,7 @@ Please let me know about delivery options and payment methods. Thank you!`
                           style={{ width: "40px", height: "40px" }}
                         >
                           <span className="text-white">
-                            {review.reviewer.charAt(0)}
+                            {review.reviewer?.charAt(0)?.toUpperCase()}
                           </span>
                         </div>
                         <div>
@@ -705,6 +726,9 @@ Please let me know about delivery options and payment methods. Thank you!`
                                 selected={star <= review.rating}
                               />
                             ))}
+                          </div>
+                          <div className="fw-bold" style={{ marginTop: 4 }}>
+                            {review.reviewer || "Anonymous"}
                           </div>
                         </div>
                       </div>
@@ -775,6 +799,16 @@ Please let me know about delivery options and payment methods. Thank you!`
                 onChange={(e) => setReviewText(e.target.value)}
                 placeholder="Tell others about your experience"
                 rows={4}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label fw-bold">Your name</label>
+              <Input
+                type="text"
+                value={reviewName}
+                onChange={(e) => setReviewName(e.target.value)}
+                placeholder="Enter your name (optional)"
               />
             </div>
 
