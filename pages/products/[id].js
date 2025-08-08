@@ -98,6 +98,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
   const [reviewText, setReviewText] = React.useState("");
   const [reviewRating, setReviewRating] = React.useState(5);
   const [reviewName, setReviewName] = React.useState("");
+  const [sortBy, setSortBy] = React.useState("recent");
   const router = useRouter();
   const dispatch = useDispatch();
   const { id } = router.query;
@@ -289,6 +290,14 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
     2: reviews.filter((r) => r.rating === 2).length,
     1: reviews.filter((r) => r.rating === 1).length,
   };
+
+  const sortedReviews = React.useMemo(() => {
+    const copy = [...reviews];
+    if (sortBy === "highest") return copy.sort((a, b) => b.rating - a.rating);
+    if (sortBy === "lowest") return copy.sort((a, b) => a.rating - b.rating);
+    // recent (no created_at client side date for local ones) – keep insertion order
+    return copy;
+  }, [reviews, sortBy]);
 
   return (
     <>
@@ -675,39 +684,101 @@ Please let me know about delivery options and payment methods. Thank you!`
         <Row className={"mt-5 mb-5"}>
           <Col xs={12}>
             <h3 className="text-center mb-4 fw-bold">Customer Reviews</h3>
-
-            <Button
-              style={{
-                backgroundColor: "#8B4513",
-
-                borderColor: "#8B4513",
-                color: "white",
-                borderRadius: "8px",
-                padding: "10px 20px",
-                fontWeight: "bold",
-              }}
-              onClick={() => setShowReviewModal(true)}
-            >
-              Write a review
-            </Button>
-
-            {reviews.length > 0 && (
-              <div>
-                <div className="d-flex align-items-center mb-3">
-                  <h6 className="mb-0 me-3">Most Recent</h6>
-                  <div className="dropdown">
-                    <button
-                      className="btn btn-outline-secondary dropdown-toggle"
-                      type="button"
-                      style={{ fontSize: "14px" }}
-                    >
-                      Sort by
-                    </button>
-                  </div>
+            <Row className="align-items-center mb-4">
+              <Col md={4} className="text-center text-md-start mb-3 mb-md-0">
+                <div
+                  className="d-flex align-items-center justify-content-center justify-content-md-start"
+                  style={{ gap: 8 }}
+                >
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star
+                      key={s}
+                      selected={s <= Math.round(parseFloat(averageRating))}
+                    />
+                  ))}
+                  <span className="fw-bold" style={{ marginLeft: 8 }}>
+                    {averageRating} out of 5
+                  </span>
                 </div>
+                <div className="text-muted">
+                  Based on {reviews.length} review
+                  {reviews.length === 1 ? "" : "s"}
+                </div>
+              </Col>
+              <Col md={5} className="mb-3 mb-md-0">
+                {[5, 4, 3, 2, 1].map((star) => {
+                  const count = ratingCounts[star];
+                  const percent = reviews.length
+                    ? Math.round((count / reviews.length) * 100)
+                    : 0;
+                  return (
+                    <div
+                      key={star}
+                      className="d-flex align-items-center mb-1"
+                      style={{ gap: 8 }}
+                    >
+                      <span style={{ width: 60 }}>{star} star</span>
+                      <div
+                        style={{
+                          flex: 1,
+                          height: 8,
+                          background: "#eee",
+                          borderRadius: 4,
+                          overflow: "hidden",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: `${percent}%`,
+                            height: "100%",
+                            background: "#8B4513",
+                          }}
+                        />
+                      </div>
+                      <span style={{ width: 20, textAlign: "right" }}>
+                        {count}
+                      </span>
+                    </div>
+                  );
+                })}
+              </Col>
+              <Col md={3} className="text-center text-md-end">
+                <Button
+                  style={{
+                    backgroundColor: "#8B4513",
+                    borderColor: "#8B4513",
+                    color: "white",
+                  }}
+                  onClick={() => setShowReviewModal(true)}
+                >
+                  Write a review
+                </Button>
+              </Col>
+            </Row>
 
-                {reviews.map((review, index) => (
-                  <div key={review.id} className="border-bottom pb-4 mb-4">
+            <div className="d-flex align-items-center justify-content-between mb-3">
+              <div className="text-muted">Most Recent</div>
+              <div>
+                <select
+                  className="form-select"
+                  style={{ width: 180 }}
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                >
+                  <option value="recent">Sort by</option>
+                  <option value="highest">Highest Rated</option>
+                  <option value="lowest">Lowest Rated</option>
+                </select>
+              </div>
+            </div>
+
+            {sortedReviews.length > 0 && (
+              <div>
+                {sortedReviews.map((review, index) => (
+                  <div
+                    key={review.id || index}
+                    className="border-bottom pb-4 mb-4"
+                  >
                     <div className="d-flex justify-content-between align-items-start mb-2">
                       <div className="d-flex align-items-center">
                         <div
@@ -719,7 +790,10 @@ Please let me know about delivery options and payment methods. Thank you!`
                           </span>
                         </div>
                         <div>
-                          <div className="d-flex align-items-center">
+                          <div
+                            className="d-flex align-items-center"
+                            style={{ gap: 2 }}
+                          >
                             {[1, 2, 3, 4, 5].map((star) => (
                               <Star
                                 key={star}
@@ -727,37 +801,46 @@ Please let me know about delivery options and payment methods. Thank you!`
                               />
                             ))}
                           </div>
-                          <div className="fw-bold" style={{ marginTop: 4 }}>
+                          <div className="fw-bold" style={{ marginTop: 6 }}>
                             {review.reviewer || "Anonymous"}
                           </div>
                         </div>
                       </div>
                       <span className="text-muted">{review.date}</span>
                     </div>
-                    <p className="mb-3">{review.comment}</p>
-                    {review.images.length > 0 && (
-                      <div className="d-flex gap-2 mb-3">
-                        {review.images.map((image, imgIndex) => (
-                          <img
-                            key={imgIndex}
-                            src={image}
-                            alt={`Review image ${imgIndex + 1}`}
-                            style={{
-                              width: "80px",
-                              height: "80px",
-                              objectFit: "cover",
-                              borderRadius: "4px",
-                            }}
-                          />
-                        ))}
+                    {/* First line bold as pseudo-title */}
+                    {review.comment && (
+                      <div style={{ marginBottom: 6 }} className="fw-bold">
+                        {String(review.comment).split("\n")[0].slice(0, 80)}
                       </div>
                     )}
+                    <p className="mb-3" style={{ whiteSpace: "pre-wrap" }}>
+                      {review.comment}
+                    </p>
+                    {Array.isArray(review.images) &&
+                      review.images.length > 0 && (
+                        <div className="d-flex flex-wrap gap-2 mb-3">
+                          {review.images.map((image, imgIndex) => (
+                            <img
+                              key={imgIndex}
+                              src={image}
+                              alt={`Review image ${imgIndex + 1}`}
+                              style={{
+                                width: 120,
+                                height: 120,
+                                objectFit: "cover",
+                                borderRadius: 6,
+                              }}
+                            />
+                          ))}
+                        </div>
+                      )}
                   </div>
                 ))}
               </div>
             )}
 
-            {reviews.length === 0 && (
+            {sortedReviews.length === 0 && (
               <div className="text-center py-5">
                 <p className="text-muted">
                   No reviews yet. Be the first to write a review!
