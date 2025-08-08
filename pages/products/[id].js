@@ -106,10 +106,12 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
     const loadReviews = async () => {
       if (!id) return;
       try {
-        const res = await axios.get(`/api/reviews`, {
-          params: { product_id: id },
-        });
-        const rows = res.data?.rows || [];
+        const r = await fetch(
+          `/api/reviews?product_id=${encodeURIComponent(id)}`
+        );
+        if (!r.ok) throw new Error(`Failed to load reviews: ${r.status}`);
+        const res = await r.json();
+        const rows = res?.rows || [];
         const mapped = rows.map((r) => ({
           id: r.id,
           reviewer: r.reviewer_name || "Anonymous",
@@ -126,7 +128,6 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
         }));
         setReviews(mapped);
       } catch (e) {
-        // eslint-disable-next-line no-console
         console.error("Failed to load reviews", e);
       }
     };
@@ -207,14 +208,19 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
       const payload = {
         product_id: id,
         rating: reviewRating,
-        // headline removed from UI; generate automatically on API
         comment: reviewText,
         reviewer_name: currentUser?.email || currentUser?.name || "Anonymous",
         images: reviewImages.map((img) => img.preview),
       };
 
-      const res = await axios.post(`/api/reviews`, payload);
-      const saved = res.data?.row || payload;
+      const r = await fetch(`/api/reviews`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!r.ok) throw new Error(`Failed to submit review: ${r.status}`);
+      const res = await r.json();
+      const saved = res?.row || payload;
 
       const newReview = {
         id: saved.id || Date.now(),
@@ -242,7 +248,6 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
       setReviewRating(5);
       toast.success("Review submitted successfully!");
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error("Failed to submit review", e);
       toast.error("Failed to submit review. Please try again.");
     }
