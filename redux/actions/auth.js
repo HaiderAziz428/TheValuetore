@@ -20,8 +20,16 @@ export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 
 async function findMe() {
-  const response = await axios.get("/auth/me");
-  return response.data;
+  try {
+    const response = await axios.get("/auth/me");
+    return response.data;
+  } catch (e) {
+    if (e && e.response && e.response.status === 401) {
+      // Unauthorized – treat as not logged in
+      return null;
+    }
+    throw e;
+  }
 }
 
 export function authError(payload) {
@@ -39,6 +47,12 @@ export function doInit() {
         typeof window !== "undefined" && localStorage.getItem("token");
       if (token) {
         currentUser = await findMe();
+        // If token is invalid/expired, clean it up and proceed as guest
+        if (!currentUser && typeof window !== "undefined") {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          delete axios.defaults.headers.common["Authorization"];
+        }
       }
       dispatch({
         type: AUTH_INIT_SUCCESS,
@@ -47,11 +61,10 @@ export function doInit() {
         },
       });
     } catch (error) {
-      Errors.handle(error);
-
+      // Fallback: if anything else fails, initialize without a user
       dispatch({
-        type: AUTH_INIT_ERROR,
-        payload: error,
+        type: AUTH_INIT_SUCCESS,
+        payload: { currentUser: null },
       });
     }
   };

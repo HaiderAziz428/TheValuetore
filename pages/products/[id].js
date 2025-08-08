@@ -101,6 +101,38 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
   const dispatch = useDispatch();
   const { id } = router.query;
 
+  // Load reviews from backend (Supabase via Next API)
+  React.useEffect(() => {
+    const loadReviews = async () => {
+      if (!id) return;
+      try {
+        const res = await axios.get(`/api/reviews`, {
+          params: { product_id: id },
+        });
+        const rows = res.data?.rows || [];
+        const mapped = rows.map((r) => ({
+          id: r.id,
+          reviewer: r.reviewer_name || "Anonymous",
+          comment: r.comment,
+          rating: r.rating,
+          images: Array.isArray(r.images) ? r.images : [],
+          date: r.created_at
+            ? new Date(r.created_at).toLocaleDateString("en-US", {
+                month: "2-digit",
+                day: "2-digit",
+                year: "numeric",
+              })
+            : "",
+        }));
+        setReviews(mapped);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error("Failed to load reviews", e);
+      }
+    };
+    loadReviews();
+  }, [id]);
+
   // Gallery state: main media index and type
   const allMedia = [...(product.image || []), ...(product.video || [])];
   const [mainMediaIdx, setMainMediaIdx] = React.useState(0);
@@ -165,31 +197,55 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
     setReviewImages(newImages);
   };
 
-  const submitReview = () => {
+  const submitReview = async () => {
     if (!reviewText.trim()) {
       toast.error("Please fill in all required fields");
       return;
     }
 
-    const newReview = {
-      id: Date.now(),
-      reviewer: "User",
-      comment: reviewText,
-      rating: reviewRating,
-      images: reviewImages.map((img) => img.preview),
-      date: new Date().toLocaleDateString("en-US", {
-        month: "2-digit",
-        day: "2-digit",
-        year: "numeric",
-      }),
-    };
+    try {
+      const payload = {
+        product_id: id,
+        rating: reviewRating,
+        // headline removed from UI; generate automatically on API
+        comment: reviewText,
+        reviewer_name: currentUser?.email || currentUser?.name || "Anonymous",
+        images: reviewImages.map((img) => img.preview),
+      };
 
-    setReviews([newReview, ...reviews]);
-    setShowReviewModal(false);
-    setReviewText("");
-    setReviewImages([]);
-    setReviewRating(5);
-    toast.success("Review submitted successfully!");
+      const res = await axios.post(`/api/reviews`, payload);
+      const saved = res.data?.row || payload;
+
+      const newReview = {
+        id: saved.id || Date.now(),
+        reviewer: saved.reviewer_name || "Anonymous",
+        comment: saved.comment,
+        rating: saved.rating,
+        images: Array.isArray(saved.images) ? saved.images : [],
+        date: saved.created_at
+          ? new Date(saved.created_at).toLocaleDateString("en-US", {
+              month: "2-digit",
+              day: "2-digit",
+              year: "numeric",
+            })
+          : new Date().toLocaleDateString("en-US", {
+              month: "2-digit",
+              day: "2-digit",
+              year: "numeric",
+            }),
+      };
+
+      setReviews([newReview, ...reviews]);
+      setShowReviewModal(false);
+      setReviewText("");
+      setReviewImages([]);
+      setReviewRating(5);
+      toast.success("Review submitted successfully!");
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error("Failed to submit review", e);
+      toast.error("Failed to submit review. Please try again.");
+    }
   };
 
   const averageRating =
