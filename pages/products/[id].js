@@ -646,6 +646,7 @@ Please let me know about delivery options and payment methods. Thank you!`
         <hr />
 
         <div className="mb-4">
+        
           <div className="card p-3 shadow-sm rounded-xl">
             {/* Top stats */}
             <div className="d-flex flex-wrap gap-2 mb-3">
