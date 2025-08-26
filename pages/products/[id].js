@@ -25,6 +25,8 @@ import Head from "next/head";
 
 import productsListActions from "redux/actions/products/productsListActions";
 import ReactImageMagnify from "react-image-magnify";
+import { Eye, ShoppingCart, Truck } from "lucide-react";
+
 import {
   CarouselProvider,
   Slider,
@@ -79,6 +81,19 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
   const [randomReviewsCount] = React.useState(
     () => Math.floor(Math.random() * (50 - 20 + 1)) + 20
   );
+  const [watchingCount] = React.useState(
+    () => Math.floor(Math.random() * (80 - 50 + 1)) + 50
+  );
+  const [inCartCount] = React.useState(
+    () => Math.floor(Math.random() * (80 - 40 + 1)) + 40
+  );
+  const [leftInStock] = React.useState(
+    () => Math.floor(Math.random() * (10 - 1 + 1)) + 1
+  );
+
+  const deliveryStart = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
+  const deliveryEnd = new Date(Date.now() + 6 * 24 * 60 * 60 * 1000);
+
   const [sortBy, setSortBy] = React.useState("recent");
   const router = useRouter();
   const dispatch = useDispatch();
@@ -454,7 +469,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
               className={"d-flex flex-column justify-content-between"}
             >
               <div
-                className={"d-flex flex-column justify-content-between"}
+                className={"d-flex flex-column justify-content-between mb-2"}
                 style={{ height: 250 }}
               >
                 <h6 className={`text-muted ${s.detailCategory}`}>
@@ -474,8 +489,18 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                     {`${randomReviewsCount} reviews`}
                   </p>
                 </div>
+                <h6 className={"text-muted mt-3"}>Free Delivery Above 699</h6>
+                <h6 className={"text-muted "}>
+                  All Over Pakistan Within 3-5 Working Days
+                </h6>
+                <h6 className={"text-muted mb-3"}>
+                  First open your parcel then pay
+                </h6>
+                <p style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  پہلے اپنا پارسل کھولیں پھر ادائیگی کریں
+                </p>
 
-                <div className={"d-flex"}>
+                <div className={"d-flex mt-2"}>
                   <div
                     className={
                       "d-flex flex-column mr-5 justify-content-between"
@@ -558,7 +583,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                   </div>
                 </div>
               </div>
-              <div className={s.ctaButtons}>
+              <div className={`mt-5 ${s.ctaButtons}`}>
                 <Button
                   onClick={() => {
                     toast.info("products successfully added to your cart");
@@ -619,6 +644,95 @@ Please let me know about delivery options and payment methods. Thank you!`
           </Row>
         )}
         <hr />
+
+        <div className="mb-4">
+          <div className="card p-3 shadow-sm rounded-xl">
+            {/* Top stats */}
+            <div className="d-flex flex-wrap gap-2 mb-3">
+              {/* Watching */}
+              <div className="d-inline-flex align-items-center px-3 py-1 rounded-pill bg-light">
+                <Eye size={16} className="text-primary" />
+                <div className="ms-2">
+                  <span className="fw-bold text-primary">{watchingCount}</span>
+                  <span className="ms-1 text-muted">watching</span>
+                </div>
+              </div>
+
+              {/* In Cart */}
+              <div
+                className="d-inline-flex align-items-center px-3 py-1 rounded-pill"
+                style={{ background: "#f0fdf4" }}
+              >
+                <ShoppingCart size={16} className="text-success" />
+                <div className="ms-2">
+                  <span className="fw-bold text-success">{inCartCount}</span>
+                  <span className="ms-1 text-muted">in cart</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Delivery dates */}
+            <div className="mb-3 text-muted small">
+              Products will be delivered between{" "}
+              <strong>
+                {deliveryStart.toLocaleDateString("en-US", {
+                  weekday: "short",
+                  month: "short",
+                  day: "2-digit",
+                  year: "numeric",
+                })}
+              </strong>{" "}
+              and{" "}
+              <strong>
+                {deliveryEnd.toLocaleDateString("en-US", {
+                  weekday: "short",
+                  month: "short",
+                  day: "2-digit",
+                  year: "numeric",
+                })}
+              </strong>
+              .
+            </div>
+
+            {/* Stock info */}
+            <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex align-items-center">
+                <div className="fw-bold text-danger me-2">{leftInStock}</div>
+                <div className="text-uppercase small text-muted">
+                  Left in Stock
+                </div>
+              </div>
+              <div
+                className="border rounded bg-light overflow-hidden"
+                style={{ width: 140 }}
+              >
+                <div
+                  style={{
+                    height: 10,
+                    width: `${Math.min((leftInStock / 10) * 100, 100)}%`,
+                    background:
+                      leftInStock <= 3
+                        ? "#ef4444"
+                        : leftInStock <= 6
+                        ? "#f97316"
+                        : "#10b981",
+                    transition: "width 0.4s ease",
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Low Stock Warning */}
+            {leftInStock <= 3 && (
+              <div className="mt-2 text-danger small d-flex align-items-center gap-1">
+                <AlertTriangle size={14} className="text-danger" />
+                Low stock - order soon!
+              </div>
+            )}
+          </div>
+        </div>
+        <hr />
+
         {/* Reviews Section */}
         <Row className={"mt-5 mb-5"}>
           <Col xs={12}>
