@@ -29,6 +29,8 @@ export default function RecentPurchasePopup() {
   const [product, setProduct] = useState(null);
   const [fadeOut, setFadeOut] = useState(false);
   const [products, setProducts] = useState([]);
+  const [timeAgo, setTimeAgo] = useState("");
+  const [location, setLocation] = useState("");
   const router = useRouter();
 
   // Fetch products on component mount
@@ -37,7 +39,6 @@ export default function RecentPurchasePopup() {
       try {
         const response = await axios.get("/products");
         const allProducts = response.data.rows || [];
-        // Filter for in-stock products with images
         const availableProducts = allProducts.filter(
           (p) => p && p.status === "in stock" && p.image && p.image.length > 0
         );
@@ -59,6 +60,11 @@ export default function RecentPurchasePopup() {
       const randomProduct =
         products[Math.floor(Math.random() * products.length)];
       setProduct(randomProduct);
+
+      // ✅ Generate new time and location each time popup shows
+      setTimeAgo(getRandomTimeAgo());
+      setLocation(getRandomLocation());
+
       setFadeOut(false);
       setShow(true);
 
@@ -88,7 +94,7 @@ export default function RecentPurchasePopup() {
   const handleClose = (e) => {
     e.stopPropagation();
     setFadeOut(true);
-    setTimeout(() => setShow(false), 1000); // Wait for fade-out
+    setTimeout(() => setShow(false), 1000);
   };
 
   return (
@@ -128,7 +134,7 @@ export default function RecentPurchasePopup() {
           Someone recently bought <b>{product.title}</b>
         </div>
         <div style={{ fontSize: "0.95rem", color: "#aaa", marginTop: 4 }}>
-          {getRandomTimeAgo()}, from {getRandomLocation()}
+          {timeAgo}, from {location}
         </div>
         {product.discount && product.discount > 0 && (
           <div style={{ fontSize: "0.9rem", color: "#28a745", marginTop: 4 }}>

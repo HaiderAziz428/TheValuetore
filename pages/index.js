@@ -233,29 +233,34 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                     "h-100 d-flex flex-column justify-content-center align-items-center align-items-md-start"
                   }
                 >
-                  <p className={"text-uppercase text-primary fw-bold mb-2"}>
-                    chair
+                  <p
+                    className="text-uppercase fw-bold mb-2"
+                    style={{ color: "rgb(179, 211, 52)" }}
+                  >
+                    Daily Essentials
                   </p>
+
                   <h2 className={"mb-2"}>get all</h2>
                   <h1 className={"text-uppercase fw-bold mt-1"}>
                     the good stuff
                   </h1>
-                  <Link href={"/shop"}>
+                  <Link href="/shop">
                     {typeof window !== "undefined" &&
                     window.innerWidth <= 768 ? (
                       <Button
-                        color="primary"
-                        className={"text-uppercase mt-4 fw-bold"}
+                        className="text-uppercase mt-4 fw-bold view-more-btn "
+                        style={{
+                          background: "rgb(179, 211, 52)",
+                        }}
                       >
                         view more
                       </Button>
                     ) : (
                       <Button
                         outline
-                        color="primary"
-                        className={`text-uppercase mt-4 mr-auto fw-bold d-flex align-items-center ${s.viewMoreBtn}`}
+                        className={`text-uppercase mt-4 mr-auto fw-bold d-flex align-items-center view-more-btn ${s.viewMoreBtn}`}
                       >
-                        <p className={"mb-0"}>view more</p>{" "}
+                        <p className="mb-0">view more</p>
                         <div className={`ml-2 ${s.arrowRight}`} />
                       </Button>
                     )}
@@ -275,29 +280,34 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                     "h-100 d-flex flex-column justify-content-center align-items-center align-items-md-start"
                   }
                 >
-                  <p className={"text-uppercase text-primary fw-bold mb-2"}>
-                    chair
+                  <p
+                    className="text-uppercase fw-bold mb-2"
+                    style={{ color: "rgb(179, 211, 52)" }}
+                  >
+                    Daily Essentials
                   </p>
+
                   <h2 className={"mb-2"}>get all</h2>
                   <h1 className={"text-uppercase fw-bold mt-1"}>
                     the good stuff
                   </h1>
-                  <Link href={"/shop"}>
+                  <Link href="/shop">
                     {typeof window !== "undefined" &&
                     window.innerWidth <= 768 ? (
                       <Button
-                        color="primary"
-                        className={"text-uppercase mt-4 fw-bold"}
+                        className="text-uppercase mt-4 fw-bold view-more-btn"
+                        style={{
+                          background: "rgb(179, 211, 52)",
+                        }}
                       >
                         view more
                       </Button>
                     ) : (
                       <Button
                         outline
-                        color="primary"
-                        className={`text-uppercase mt-4 mr-auto fw-bold d-flex align-items-center ${s.viewMoreBtn}`}
+                        className={`text-uppercase mt-4 mr-auto fw-bold d-flex align-items-center view-more-btn ${s.viewMoreBtn}`}
                       >
-                        <p className={"mb-0"}>view more</p>{" "}
+                        <p className="mb-0">view more</p>
                         <div className={`ml-2 ${s.arrowRight}`} />
                       </Button>
                     )}
@@ -317,29 +327,34 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                     "h-100 d-flex flex-column justify-content-center align-items-center align-items-md-start"
                   }
                 >
-                  <p className={"text-uppercase text-primary fw-bold mb-2"}>
-                    chair
+                  <p
+                    className="text-uppercase fw-bold mb-2"
+                    style={{ color: "rgb(179, 211, 52)" }}
+                  >
+                    Daily Essentials
                   </p>
+
                   <h2 className={"mb-2"}>get all</h2>
                   <h1 className={"text-uppercase fw-bold mt-1"}>
                     the good stuff
                   </h1>
-                  <Link href={"/shop"}>
+                  <Link href="/shop">
                     {typeof window !== "undefined" &&
                     window.innerWidth <= 768 ? (
                       <Button
-                        color="primary"
-                        className={"text-uppercase mt-4 fw-bold"}
+                        className="text-uppercase mt-4 fw-bold view-more-btn"
+                        style={{
+                          background: "rgb(179, 211, 52)",
+                        }}
                       >
                         view more
                       </Button>
                     ) : (
                       <Button
                         outline
-                        color="primary"
-                        className={`text-uppercase mt-4 mr-auto fw-bold d-flex align-items-center ${s.viewMoreBtn}`}
+                        className={`text-uppercase mt-4 mr-auto fw-bold d-flex align-items-center view-more-btn ${s.viewMoreBtn}`}
                       >
-                        <p className={"mb-0"}>view more</p>{" "}
+                        <p className="mb-0">view more</p>
                         <div className={`ml-2 ${s.arrowRight}`} />
                       </Button>
                     )}

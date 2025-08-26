@@ -558,19 +558,17 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                   </div>
                 </div>
               </div>
-              <div className={` d-flex`}>
+              <div className={s.ctaButtons}>
                 <Button
-                  outline
-                  color={"primary"}
-                  className={"flex-fill mr-4 text-uppercase fw-bold"}
-                  style={{ width: "25%", height: "50%" }}
                   onClick={() => {
                     toast.info("products successfully added to your cart");
                     addToCart();
                   }}
+                  className={`${s.addToCart} text-uppercase`}
                 >
                   Add to Cart
                 </Button>
+
                 <a
                   href={`https://wa.me/923356630319?text=${encodeURIComponent(
                     `Hi! I would like to place an order for the following item:
@@ -585,23 +583,9 @@ Please let me know about delivery options and payment methods. Thank you!`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={"d-inline-block flex-fill"}
-                  style={{ width: "50%" }}
+                  className={"d-inline-block"}
                 >
-                  <Button
-                    style={{
-                      width: "100%",
-                      backgroundColor: "#25D366",
-                      borderColor: "#25D366",
-                      color: "#fff",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: 8,
-                    }}
-                    className={"text-uppercase fw-bold"}
-                  >
-                    {/* WhatsApp logo SVG as provided */}
+                  <Button className={`${s.whatsapp} text-uppercase`}>
                     <span style={{ display: "flex", alignItems: "center" }}>
                       <svg
                         className="logo-svg"
