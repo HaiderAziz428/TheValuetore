@@ -23,23 +23,22 @@ const Footer = () => {
                   style={{ height: "70px" }}
                 />
                 <p className={"text-white fw-thin mb-0"}>
-                  Lorem Ipsum has been the industry's standard dummy text ever
-                  since the 1500s,
+                  Your trusted stop for quality and value.
                 </p>
               </div>
               <div className={s.socialLinks}>
-                <Link href="https://flatlogic.com/">
+                <Link href="/">
                   <a
-                    className={s.socialLink}
+                    className={`${s.socialLink} mr-2`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <img src="/images/e-commerce/google.svg" alt="Google" />
                   </a>
                 </Link>
-                <Link href="https://twitter.com/flatlogic">
+                <Link href="/">
                   <a
-                    className={s.socialLink}
+                    className={`${s.socialLink} mr-2`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -48,7 +47,7 @@ const Footer = () => {
                 </Link>
                 <Link href="https://www.linkedin.com/company/flatlogic/">
                   <a
-                    className={s.socialLink}
+                    className={`${s.socialLink} mr-2`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -57,7 +56,7 @@ const Footer = () => {
                 </Link>
                 <Link href="https://www.facebook.com/flatlogic/">
                   <a
-                    className={s.socialLink}
+                    className={`${s.socialLink} mr-2`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

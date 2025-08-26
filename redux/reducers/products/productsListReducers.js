@@ -67,11 +67,11 @@ export default (state = initialData, { type, payload }) => {
     };
   }
 
-  if (type === 'PRODUCTS_LIST_DO_ADD') {
+  if (type === "PRODUCTS_LIST_DO_ADD") {
     return {
       ...state,
-      rows: payload.product
-    }
+      rows: payload.product,
+    };
   }
   return state;
 };

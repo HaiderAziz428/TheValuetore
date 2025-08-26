@@ -1,5 +1,6 @@
 @import "../styles/app";
 
+
 .promo {
   background-color: $addition-bg;
   @media (min-width: 768px) {
@@ -41,11 +42,12 @@
     width: 100%;
     height: 446px;
     padding: 50px 32px;
-    transition: background-size .35s ease;
+    transition: background-size 0.35s ease;
     background-size: 105%;
     background-position: center;
     cursor: pointer;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background-size: 110%;
     }
     .stroke {
@@ -72,11 +74,12 @@
   background-repeat: no-repeat;
   display: flex;
   padding: 30px 15px;
-  transition: background-size .35s ease;
+  transition: background-size 0.35s ease;
   background-size: 105%;
   background-position: center;
   cursor: pointer;
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-size: 110%;
   }
   div {
@@ -100,11 +103,12 @@
   background-repeat: no-repeat;
   display: flex;
   padding-bottom: 24px;
-  transition: background-size .35s ease;
+  transition: background-size 0.35s ease;
   background-size: 105%;
   background-position: center;
   cursor: pointer;
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-size: 110%;
   }
   .label {
@@ -130,11 +134,12 @@
   background-repeat: no-repeat;
   display: flex;
   padding-bottom: 24px;
-  transition: background-size .35s ease;
+  transition: background-size 0.35s ease;
   background-size: 105%;
   background-position: center;
   cursor: pointer;
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-size: 110%;
   }
   .label {
@@ -161,11 +166,12 @@
   display: flex;
   padding-top: 16px;
   align-items: flex-start;
-  transition: background-size .35s ease;
+  transition: background-size 0.35s ease;
   background-size: 105%;
   background-position: center;
   cursor: pointer;
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-size: 110%;
   }
   div:first-child {
@@ -206,9 +212,10 @@
   cursor: pointer;
   img {
     max-width: 100%;
-    transition: max-width .65s ease;
+    transition: max-width 0.65s ease;
   }
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     img {
       max-width: 115%;
     }
@@ -263,23 +270,24 @@
   }
 }
 
-
 .viewMoreBtn {
-& > * {
-  z-index: 1;
-}
-&::after {
-  z-index: 0!important;
-}
-.arrowRight {
-  background: url("../public/images/e-commerce/home/arrow-right.svg");
-  width: 24px;
-  height: 24px;
-  position: relative;
-  transition: left .25s ease;
-  left: 0px;
-}
-  &:hover, &:active, &:focus {
+  & > * {
+    z-index: 1;
+  }
+  &::after {
+    z-index: 0 !important;
+  }
+  .arrowRight {
+    background: url("../public/images/e-commerce/home/arrow-right.svg");
+    width: 24px;
+    height: 24px;
+    position: relative;
+    transition: left 0.25s ease;
+    left: 0px;
+  }
+  &:hover,
+  &:active,
+  &:focus {
     .arrowRight {
       left: 8px;
       background: url("../public/images/e-commerce/home/arrow-right-hover.svg");
@@ -289,20 +297,21 @@
 
 .modalWidndow {
   display: flex;
-  div.image, div.content {
+  div.image,
+  div.content {
     width: 50%;
     button {
       @media (max-width: 900px) {
         padding: 10px;
-      }    
+      }
     }
     @media (max-width: 900px) {
-      width: auto
+      width: auto;
     }
   }
   & > div > img {
     @media (max-width: 900px) {
-      max-width: 500px
+      max-width: 500px;
     }
   }
   @media (max-width: 900px) {
@@ -327,7 +336,7 @@
   }
   &:hover {
     h6:first-child {
-      color: theme-color("primary")
+      color: theme-color("primary");
     }
     .product__actions {
       opacity: 1 !important;
@@ -337,30 +346,30 @@
     color: #232323;
   }
   &__actions {
-    transition: all .65s ease;
+    transition: all 0.65s ease;
     opacity: 0 !important;
     &__heart {
-      background: url('../public/images/e-commerce/shop/heart.svg');
+      background: url("../public/images/e-commerce/shop/heart.svg");
       width: 24px;
       height: 24px;
       &:hover {
-        background: url('../public/images/e-commerce/shop/heart-hover.svg');
+        background: url("../public/images/e-commerce/shop/heart-hover.svg");
       }
     }
     &__max {
-      background: url('../public/images/e-commerce/shop/maximize.svg');
+      background: url("../public/images/e-commerce/shop/maximize.svg");
       width: 24px;
       height: 24px;
       &:hover {
-        background: url('../public/images/e-commerce/shop/maximize-hover.svg');
+        background: url("../public/images/e-commerce/shop/maximize-hover.svg");
       }
     }
     &__cart {
-      background: url('../public/images/e-commerce/shop/shopping-cart.svg');
+      background: url("../public/images/e-commerce/shop/shopping-cart.svg");
       width: 24px;
       height: 24px;
       &:hover {
-        background: url('../public/images/e-commerce/shop/shopping-cart-hover.svg');
+        background: url("../public/images/e-commerce/shop/shopping-cart-hover.svg");
       }
     }
   }
@@ -370,7 +379,7 @@
   @media (max-width: 576px) {
     display: flex;
     flex-direction: column;
-    align-items:flex-start;
+    align-items: flex-start;
     max-width: 245px;
     margin: 0 auto;
     justify-content: flex-start;
@@ -378,7 +387,7 @@
 }
 
 .productImage {
-  transition: all .65s ease;
+  transition: all 0.65s ease;
   max-width: 100%;
   width: 100%;
   height: 264px;

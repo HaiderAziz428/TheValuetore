@@ -33,7 +33,8 @@ class Header extends React.Component {
       heightTwo: 0,
       heightThree: 0,
       heightFour: 0,
-      innerWidth: typeof window !== "undefined" && window.innerWidth,
+      // use a default desktop width on server to avoid hydration mismatches
+      innerWidth: typeof window !== "undefined" ? window.innerWidth : 1024,
       count: 0,
       userDropdownOpen: false,
     };
@@ -124,192 +125,240 @@ class Header extends React.Component {
   render() {
     const { heightTwo, heightThree, heightFour } = this.state;
     return (
-      <Navbar className={s.header}>
-        <Container>
-          {this.state.innerWidth <= 768 && (
-            <Button
-              className={"bg-transparent border-0 p-0"}
-              onClick={() => this.switchSidebar()}
-            >
-              <img src={"/images/e-commerce/header/menu.svg"} alt={"menu"} />
-            </Button>
-          )}
+      <div className={s.headerWrapper}>
+        <Navbar className={s.header}>
+          <Container>
+            {this.state.innerWidth <= 768 && (
+              <Button
+                className={"bg-transparent border-0 p-0"}
+                onClick={() => this.switchSidebar()}
+              >
+                <img src={"/images/e-commerce/header/menu.svg"} alt={"menu"} />
+              </Button>
+            )}
 
-          <NavbarBrand>
-            <Link href={"/"}>
-              <img
-                src="/images/e-commerce/header/logo.png"
-                alt="The Value Store"
-                style={{ height: "50px", width: "auto" }}
-              />
-            </Link>
-          </NavbarBrand>
+            <NavbarBrand>
+              <Link href={"/"}>
+                <img
+                  src="/images/e-commerce/header/logo.png"
+                  alt="The Value Store"
+                  style={{ height: "50px", width: "auto" }}
+                />
+              </Link>
+            </NavbarBrand>
 
-          {this.state.innerWidth >= 768 && (
-            <nav className={s.nav}>
-              <ul className={s.nav__menu}>
-                <li className={s.nav__menuItem} style={{ width: 90 }}>
-                  <ActiveLink
-                    className={s.navLink}
-                    onMouseOver={this.toggleHeightOne}
-                    href={"/"}
-                  >
-                    <span>Home</span>
-                  </ActiveLink>
-                </li>
-                <li className={s.nav__menuItem}>
-                  <span
-                    className={s.dropdownItem}
-                    onMouseOver={this.toggleHeightTwo}
-                  >
-                    About <div className={s.dropdownItemImg} />
-                  </span>
-                  <AnimateHeight
-                    duration={500}
-                    className={`${s.nav__submenu}`}
-                    height={heightTwo}
-                  >
-                    <UncontrolledDropdown>
-                      <DropdownItem className={s.dropdownMenuItem}>
-                        <ActiveLink href={"/about"}>
-                          <a>About Us</a>
-                        </ActiveLink>
-                      </DropdownItem>
-                      <DropdownItem className={s.dropdownMenuItem}>
-                        <ActiveLink href={"/about-team"}>
-                          <a>About Team</a>
-                        </ActiveLink>
-                      </DropdownItem>
-                    </UncontrolledDropdown>
-                  </AnimateHeight>
-                </li>
-                <li className={s.nav__menuItem} style={{ width: 90 }}>
-                  <ActiveLink className={s.navLink} href={"/contact"}>
-                    <span>Contact</span>
-                  </ActiveLink>
-                </li>
+            {this.state.innerWidth >= 768 && (
+              <nav className={s.nav}>
+                <ul className={s.nav__menu}>
+                  <li className={s.nav__menuItem} style={{ width: 90 }}>
+                    <ActiveLink
+                      className={s.navLink}
+                      onMouseOver={this.toggleHeightOne}
+                      href={"/"}
+                    >
+                      <span>Home</span>
+                    </ActiveLink>
+                  </li>
+                  <li className={s.nav__menuItem}>
+                    <span
+                      className={s.dropdownItem}
+                      onMouseOver={this.toggleHeightTwo}
+                    >
+                      About <div className={s.dropdownItemImg} />
+                    </span>
+                    <AnimateHeight
+                      duration={500}
+                      className={`${s.nav__submenu}`}
+                      height={heightTwo}
+                    >
+                      <UncontrolledDropdown>
+                        <DropdownItem className={s.dropdownMenuItem}>
+                          <ActiveLink href={"/about"}>
+                            <a>About Us</a>
+                          </ActiveLink>
+                        </DropdownItem>
+                        <DropdownItem className={s.dropdownMenuItem}>
+                          <ActiveLink href={"/about-team"}>
+                            <a>About Team</a>
+                          </ActiveLink>
+                        </DropdownItem>
+                      </UncontrolledDropdown>
+                    </AnimateHeight>
+                  </li>
+                  <li className={s.nav__menuItem} style={{ width: 90 }}>
+                    <ActiveLink className={s.navLink} href={"/contact"}>
+                      <span>Contact</span>
+                    </ActiveLink>
+                  </li>
 
-                <li className={s.nav__menuItem}>
-                  <span
-                    className={s.dropdownItem}
-                    onMouseOver={this.toggleHeightThree}
-                  >
-                    Shop <div className={s.dropdownItemImg} />
-                  </span>
-                  <AnimateHeight
-                    duration={500}
-                    className={`${s.nav__submenu}`}
-                    height={heightThree}
-                  >
-                    <UncontrolledDropdown>
-                      <DropdownItem className={s.dropdownMenuItem}>
-                        <ActiveLink href={"/shop"}>
-                          <a>Shop</a>
-                        </ActiveLink>
-                      </DropdownItem>
-                      <DropdownItem className={s.dropdownMenuItem}>
-                        <ActiveLink href={"/categories"}>
-                          <a>Categories</a>
-                        </ActiveLink>
-                      </DropdownItem>
-                      <DropdownItem className={s.dropdownMenuItem}>
-                        <ActiveLink href={"/account"}>
-                          <a>Account</a>
-                        </ActiveLink>
-                      </DropdownItem>
-                    </UncontrolledDropdown>
-                  </AnimateHeight>
-                </li>
-              </ul>
-            </nav>
-          )}
+                  <li className={s.nav__menuItem}>
+                    <span
+                      className={s.dropdownItem}
+                      onMouseOver={this.toggleHeightThree}
+                    >
+                      Shop <div className={s.dropdownItemImg} />
+                    </span>
+                    <AnimateHeight
+                      duration={500}
+                      className={`${s.nav__submenu}`}
+                      height={heightThree}
+                    >
+                      <UncontrolledDropdown>
+                        <DropdownItem className={s.dropdownMenuItem}>
+                          <ActiveLink href={"/shop"}>
+                            <a>Shop</a>
+                          </ActiveLink>
+                        </DropdownItem>
+                        <DropdownItem className={s.dropdownMenuItem}>
+                          <ActiveLink href={"/categories"}>
+                            <a>Categories</a>
+                          </ActiveLink>
+                        </DropdownItem>
+                        <DropdownItem className={s.dropdownMenuItem}>
+                          <ActiveLink href={"/account"}>
+                            <a>Account</a>
+                          </ActiveLink>
+                        </DropdownItem>
+                      </UncontrolledDropdown>
+                    </AnimateHeight>
+                  </li>
+                </ul>
+              </nav>
+            )}
 
-          <Nav>
-            <NavItem className={"d-flex align-items-center"}>
-              {this.props.currentUser ? (
-                <div
-                  className={s.userDropdown}
-                  style={{ position: "relative", display: "inline-block" }}
-                  onMouseEnter={
-                    this.state.innerWidth >= 768
-                      ? () => this.setState({ userDropdownOpen: true })
-                      : undefined
-                  }
-                  onMouseLeave={
-                    this.state.innerWidth >= 768
-                      ? () => this.setState({ userDropdownOpen: false })
-                      : undefined
-                  }
-                >
-                  <Button
-                    className={`bg-transparent border-0 p-3`}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      boxShadow: "none",
-                    }}
-                    onClick={
-                      this.state.innerWidth < 768
-                        ? () =>
-                            this.setState({
-                              userDropdownOpen: !this.state.userDropdownOpen,
-                            })
+            <Nav>
+              <NavItem className={"d-flex align-items-center"}>
+                {this.props.currentUser ? (
+                  <div
+                    className={s.userDropdown}
+                    style={{ position: "relative", display: "inline-block" }}
+                    onMouseEnter={
+                      this.state.innerWidth >= 768
+                        ? () => this.setState({ userDropdownOpen: true })
+                        : undefined
+                    }
+                    onMouseLeave={
+                      this.state.innerWidth >= 768
+                        ? () => this.setState({ userDropdownOpen: false })
                         : undefined
                     }
                   >
-                    <div className={s.headerLoginIcon} />
-                  </Button>
-                  {this.state.userDropdownOpen && (
-                    <div className={s.userDropdownMenu}>
-                      <DropdownItem header>
-                        {this.props.currentUser.email}
-                      </DropdownItem>
-                      <DropdownItem
-                        onClick={() => {
-                          this.props.dispatch(logoutUser());
-                          window.location.href = "/";
-                        }}
-                      >
-                        Log out
-                      </DropdownItem>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <Link href={"/login"}>
-                  <a>
-                    <Button className={`bg-transparent border-0 p-3`}>
+                    <Button
+                      className={`bg-transparent border-0 p-3`}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        boxShadow: "none",
+                      }}
+                      onClick={
+                        this.state.innerWidth < 768
+                          ? () =>
+                              this.setState({
+                                userDropdownOpen: !this.state.userDropdownOpen,
+                              })
+                          : undefined
+                      }
+                    >
                       <div className={s.headerLoginIcon} />
+                    </Button>
+                    {this.state.userDropdownOpen && (
+                      <div className={s.userDropdownMenu}>
+                        <DropdownItem header>
+                          {this.props.currentUser.email}
+                        </DropdownItem>
+                        <DropdownItem
+                          onClick={() => {
+                            this.props.dispatch(logoutUser());
+                            window.location.href = "/";
+                          }}
+                        >
+                          Log out
+                        </DropdownItem>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link href={"/login"}>
+                    <a>
+                      <Button className={`bg-transparent border-0 p-3`}>
+                        <div className={s.headerLoginIcon} />
+                      </Button>
+                    </a>
+                  </Link>
+                )}
+                <Link href={"/cart"}>
+                  <a>
+                    {this.state.count ? (
+                      <p
+                        style={{ fontSize: 9, marginTop: 10, marginLeft: 30 }}
+                        className={`mb-0 text-dark fw-bold`}
+                      >
+                        {this.state.count}
+                      </p>
+                    ) : null}
+                    <Button
+                      className={`${s.headerSvgIcon} bg-transparent border-0 p-3`}
+                      style={{ marginTop: this.state.count ? -22 : 0 }}
+                    >
+                      {this.props.router.pathname.includes("cart") ? (
+                        <div className={s.headerCartIconActive} />
+                      ) : (
+                        <div className={s.headerCartIcon} />
+                      )}
                     </Button>
                   </a>
                 </Link>
-              )}
-              <Link href={"/cart"}>
-                <a>
-                  {this.state.count ? (
-                    <p
-                      style={{ fontSize: 9, marginTop: 10, marginLeft: 30 }}
-                      className={`mb-0 text-dark fw-bold`}
-                    >
-                      {this.state.count}
-                    </p>
-                  ) : null}
-                  <Button
-                    className={`${s.headerSvgIcon} bg-transparent border-0 p-3`}
-                    style={{ marginTop: this.state.count ? -22 : 0 }}
-                  >
-                    {this.props.router.pathname.includes("cart") ? (
-                      <div className={s.headerCartIconActive} />
-                    ) : (
-                      <div className={s.headerCartIcon} />
-                    )}
-                  </Button>
-                </a>
-              </Link>
-            </NavItem>
-          </Nav>
-        </Container>
-      </Navbar>
+              </NavItem>
+            </Nav>
+          </Container>
+        </Navbar>
+
+        {/* Running Banner */}
+        <div className={s.runningBanner}>
+          <div className={s.bannerContent}>
+            <span>
+              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Sale Up to 70% OFF – Shop Now!
+            </span>
+            <span>
+              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Sale Up to 70% OFF – Shop Now!
+            </span>
+            <span>
+              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Sale Up to 70% OFF – Shop Now!
+            </span>
+            <span>
+              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Sale Up to 70% OFF – Shop Now!
+            </span>
+            <span>
+              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Sale Up to 70% OFF – Shop Now!
+            </span>
+            <span>
+              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Sale Up to 70% OFF – Shop Now!
+            </span>
+            <span>
+              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Sale Up to 70% OFF – Shop Now!
+            </span>
+            <span>
+              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Sale Up to 70% OFF – Shop Now!
+            </span>
+            <span>
+              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Sale Up to 70% OFF – Shop Now!
+            </span>
+            <span>
+              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Sale Up to 70% OFF – Shop Now!
+            </span>
+          </div>
+        </div>
+      </div>
     );
   }
 }

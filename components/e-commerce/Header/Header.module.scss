@@ -5,6 +5,55 @@ $brand-teal: #14444d;
 $primary: #b3d334;
 $white: #fff;
 
+// Header Wrapper - Contains both header and running banner
+.headerWrapper {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+// Running Banner Styles
+.runningBanner {
+  background-color: rgb(179, 211, 52);
+  overflow: hidden;
+  white-space: nowrap;
+  position: fixed;
+  height: 50px;
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  top: 0;
+
+  .bannerContent {
+    display: inline-block;
+    animation: scroll-left 10s linear infinite;
+    white-space: nowrap;
+
+    span {
+      color: rgb(20, 68, 77);
+      font-weight: 600;
+      font-size: 16px;
+      margin-right: 50px;
+      display: inline-block;
+    }
+  }
+
+  &:hover .bannerContent {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 .header {
   background-color: $white;
   box-shadow: 0px 4px 20px rgba($brand-teal, 0.1);
@@ -261,5 +310,49 @@ $white: #fff;
       background: #f8f8f8;
       font-weight: bold;
     }
+  }
+}
+
+// Running Banner Styles
+.runningBanner {
+  background-color: rgb(179, 211, 52);
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 50px;
+
+  .bannerContent {
+    display: flex;
+    animation: scroll-left 60s linear infinite;
+    white-space: nowrap;
+    will-change: transform;
+    transform: translateX(0);
+
+    span {
+      color: rgb(20, 68, 77);
+      font-weight: 600;
+      font-size: 16px;
+      margin-right: 80px;
+      display: inline-block;
+      flex-shrink: 0;
+      opacity: 1;
+    }
+  }
+
+  &:hover .bannerContent {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }

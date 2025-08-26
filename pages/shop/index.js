@@ -799,7 +799,11 @@ const Index = () => {
                             Rs {item.price} PKR
                           </span>
                           <span
-                            style={{ color: "#b3d334", fontWeight: 700, fontSize: 16 }}
+                            style={{
+                              color: "#b3d334",
+                              fontWeight: 700,
+                              fontSize: 16,
+                            }}
                           >
                             Rs {item.price - item.discount} PKR
                           </span>

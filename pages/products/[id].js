@@ -4,21 +4,12 @@ import {
   Row,
   Col,
   Button,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Toast,
-  ToastBody,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
   Input,
 } from "reactstrap";
-import { Formik } from "formik";
-import IniValues from "components/admin/FormItems/iniValues";
-import PreparedValues from "components/admin/FormItems/preparedValues";
-import FormValidations from "components/admin/FormItems/formValidations";
 import ImagesFormItem from "components/admin/FormItems/items/ImagesFormItem";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
@@ -31,8 +22,7 @@ import InstagramWidget from "components/e-commerce/Instagram";
 import axios from "axios";
 import actions from "redux/actions/products/productsFormActions";
 import Head from "next/head";
-import feedbackActions from "redux/actions/feedback/feedbackListActions";
-import feedbackActionsForm from "redux/actions/feedback/feedbackFormActions";
+
 import productsListActions from "redux/actions/products/productsListActions";
 import ReactImageMagnify from "react-image-magnify";
 import {
@@ -46,45 +36,32 @@ import Image from "next/image";
 
 const Star = ({ selected = false, onClick = (f) => f }) => (
   <div
-    className={selected ? `${s.star} ${s.selected}` : `${s.star}`}
+    className={selected ? `${s.star} ${s.selected}` : `${s.star} `}
     onClick={onClick}
-  ></div>
+    style={{
+      width: 24,
+      height: 24,
+      display: "inline-block",
+      marginRight: 4,
+      cursor: onClick !== null ? "pointer" : "default",
+    }}
+  >
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 24 24"
+      fill={selected ? "rgb(179, 211, 52)" : "#e4e5e9"}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <polygon
+        points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+        stroke="rgb(179, 211, 52)"
+        strokeWidth="1"
+        fill={selected ? "rgb(179, 211, 52)" : "#e4e5e9"}
+      />
+    </svg>
+  </div>
 );
-
-const products = [
-  {
-    id: 0,
-    img: "/images/e-commerce/home/product1.png",
-  },
-  {
-    id: 1,
-    img: "/images/e-commerce/home/product2.png",
-  },
-  {
-    id: 2,
-    img: "/images/e-commerce/home/product3.png",
-  },
-  {
-    id: 3,
-    img: "/images/e-commerce/home/product4.png",
-  },
-  {
-    id: 7,
-    img: "/images/e-commerce/home/product1.png",
-  },
-  {
-    id: 4,
-    img: "/images/e-commerce/home/product2.png",
-  },
-  {
-    id: 5,
-    img: "/images/e-commerce/home/product3.png",
-  },
-  {
-    id: 6,
-    img: "/images/e-commerce/home/product4.png",
-  },
-];
 
 const Id = ({ product: serverSideProduct, currentProductId }) => {
   const [width, setWidth] = React.useState(1440);
@@ -98,6 +75,10 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
   const [reviewText, setReviewText] = React.useState("");
   const [reviewRating, setReviewRating] = React.useState(5);
   const [reviewName, setReviewName] = React.useState("");
+  // fixed random reviews count for this page visit (calculates once)
+  const [randomReviewsCount] = React.useState(
+    () => Math.floor(Math.random() * (50 - 20 + 1)) + 20
+  );
   const [sortBy, setSortBy] = React.useState("recent");
   const router = useRouter();
   const dispatch = useDispatch();
@@ -303,71 +284,46 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
     <>
       <Head>
         <title>{product.title}</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-
-        <meta
-          name="description"
-          content={`${
-            product.meta_description ||
-            "Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
-          }`}
-        />
-        <meta
-          name="keywords"
-          content={`${product.keywords || "flatlogic, react templates"}`}
-        />
-        <meta
-          name="author"
-          content={`${product.meta_author || "Flatlogic LLC."}`}
-        />
-        <meta charSet="utf-8" />
-
-        <meta
-          property="og:title"
-          content={`${
-            product.meta_og_title ||
-            "Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"
-          }`}
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content={`${
-            product.meta_og_url || "https://flatlogic-ecommerce.herokuapp.com/"
-          }`}
-        />
-        <meta
-          property="og:image"
-          content={`${
-            product.meta_og_image ||
-            "https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"
-          }`}
-        />
-        <meta
-          property="og:description"
-          content={`${
-            product.meta_description ||
-            "Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
-          }`}
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-
-        <meta
-          property="fb:app_id"
-          content={`${product.meta_fb_id || "712557339116053"}`}
-        />
-
-        <meta
-          property="og:site_name"
-          content={`${product.meta_og_sitename || "Flatlogic"}`}
-        />
-        <meta
-          name="twitter:site"
-          content={`${product.post_twitter || "@flatlogic"}`}
-        />
       </Head>
       <ToastContainer />
       <Container>
+        <Col xs={12} lg={allMedia.length > 1 ? 7 : 6} className={"d-flex"}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "100%",
+              position: "relative", // <-- Add this!
+            }}
+          >
+            {product.discount > 0 && (
+              <div
+                className="absolute"
+                style={{
+                  top: 10,
+                  left: 10,
+                  zIndex: 10,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "50%",
+                  fontWeight: "bold",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+                  backgroundColor: "rgb(179, 211, 52)",
+                  color: "rgb(20, 68, 77)",
+                  width: "70px",
+                  height: "70px",
+                  fontSize: "18px",
+                  border: "3px solid rgb(20, 68, 77)",
+                  position: "absolute",
+                }}
+              >
+                Sale!
+              </div>
+            )}
+          </div>
+        </Col>
         {fetching ? (
           <div
             style={{ height: 480 }}
@@ -499,14 +455,14 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
             >
               <div
                 className={"d-flex flex-column justify-content-between"}
-                style={{ height: 320 }}
+                style={{ height: 250 }}
               >
                 <h6 className={`text-muted ${s.detailCategory}`}>
                   {product.categories[0].title[0].toUpperCase() +
                     product.categories[0].title.slice(1)}
                 </h6>
                 <h4 className={"fw-bold"}>{product.title}</h4>
-                <div className={"d-flex align-items-center"}>
+                <div className={"d-flex align-items-center "}>
                   {[1, 2, 3, 4, 5].map((n, i) => (
                     <Star
                       key={i}
@@ -515,7 +471,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                     />
                   ))}
                   <p className={"text-primary ml-3 mb-0"}>
-                    {/* {feedbackList.length} reviews */} reviews
+                    {`${randomReviewsCount} reviews`}
                   </p>
                 </div>
 
@@ -602,12 +558,12 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                   </div>
                 </div>
               </div>
-              <div className={`${s.buttonsWrapper} d-flex`}>
+              <div className={` d-flex`}>
                 <Button
                   outline
                   color={"primary"}
                   className={"flex-fill mr-4 text-uppercase fw-bold"}
-                  style={{ width: "50%" }}
+                  style={{ width: "25%", height: "50%" }}
                   onClick={() => {
                     toast.info("products successfully added to your cart");
                     addToCart();
@@ -679,7 +635,6 @@ Please let me know about delivery options and payment methods. Thank you!`
           </Row>
         )}
         <hr />
-
         {/* Reviews Section */}
         <Row className={"mt-5 mb-5"}>
           <Col xs={12}>
@@ -849,7 +804,6 @@ Please let me know about delivery options and payment methods. Thank you!`
             )}
           </Col>
         </Row>
-
         {/* Review Modal */}
         <Modal
           isOpen={showReviewModal}

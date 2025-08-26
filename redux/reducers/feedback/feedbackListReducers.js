@@ -4,15 +4,14 @@ const initialData = {
 };
 
 export default (state = initialData, { type, payload }) => {
-
-  if (type === 'FEEDBACK_LIST_FETCH_STARTED') {
+  if (type === "FEEDBACK_LIST_FETCH_STARTED") {
     return {
       ...state,
       loading: true,
     };
   }
 
-  if (type === 'FEEDBACK_LIST_FETCH_SUCCESS') {
+  if (type === "FEEDBACK_LIST_FETCH_SUCCESS") {
     return {
       ...state,
       loading: false,
@@ -20,7 +19,7 @@ export default (state = initialData, { type, payload }) => {
     };
   }
 
-  if (type === 'FEEDBACK_LIST_FETCH_ERROR') {
+  if (type === "FEEDBACK_LIST_FETCH_ERROR") {
     return {
       ...state,
       loading: false,
@@ -28,14 +27,14 @@ export default (state = initialData, { type, payload }) => {
     };
   }
 
-  if (type === 'FEEDBACK_LIST_DELETE_STARTED') {
+  if (type === "FEEDBACK_LIST_DELETE_STARTED") {
     return {
       ...state,
       loading: true,
     };
   }
 
-  if (type === 'FEEDBACK_LIST_DELETE_SUCCESS') {
+  if (type === "FEEDBACK_LIST_DELETE_SUCCESS") {
     return {
       ...state,
       loading: false,
@@ -43,7 +42,7 @@ export default (state = initialData, { type, payload }) => {
     };
   }
 
-  if (type === 'FEEDBACK_LIST_DELETE_ERROR') {
+  if (type === "FEEDBACK_LIST_DELETE_ERROR") {
     return {
       ...state,
       loading: false,
@@ -51,16 +50,16 @@ export default (state = initialData, { type, payload }) => {
     };
   }
 
-  if (type === 'FEEDBACK_LIST_OPEN_CONFIRM') {
+  if (type === "FEEDBACK_LIST_OPEN_CONFIRM") {
     return {
       ...state,
       loading: false,
       modalOpen: true,
-      idToDelete: payload.id
+      idToDelete: payload.id,
     };
   }
 
-  if (type === 'FEEDBACK_LIST_CLOSE_CONFIRM') {
+  if (type === "FEEDBACK_LIST_CLOSE_CONFIRM") {
     return {
       ...state,
       loading: false,

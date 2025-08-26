@@ -80,7 +80,17 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
     }
   };
   const [secs, setSecs] = React.useState(23);
-  const [products, setProducts] = React.useState(serverSideProducts);
+  const dedupeProducts = (arr = []) => {
+    const map = new Map();
+    arr.forEach((p) => {
+      if (p && p.id) map.set(p.id, p);
+    });
+    return Array.from(map.values());
+  };
+
+  const [products, setProducts] = React.useState(
+    dedupeProducts(serverSideProducts)
+  );
 
   const [openState, dispatch] = React.useReducer(openReducer, {
     open0: false,
@@ -155,6 +165,16 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
     secsInterval();
   }, []);
 
+  // Dev logging: show products length whenever products state changes
+  React.useEffect(() => {
+    if (process.env.NODE_ENV !== "production") {
+      console.log(
+        "Index useEffect: products length ->",
+        products && products.length
+      );
+    }
+  }, [products]);
+
   // Client-side loading when backend is not available during SSR
   React.useEffect(() => {
     if (!backendAvailable) {
@@ -162,7 +182,7 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
         try {
           setIsLoading(true);
           const res = await axios.get("/products");
-          setProducts(res.data.rows);
+          setProducts(dedupeProducts(res.data.rows));
           setBackendStatus(true);
           setIsLoading(false);
         } catch (error) {
@@ -179,7 +199,7 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
         if (!backendStatus) {
           try {
             const res = await axios.get("/products");
-            setProducts(res.data.rows);
+            setProducts(dedupeProducts(res.data.rows));
             setBackendStatus(true);
             setIsLoading(false);
             clearInterval(retryInterval);
@@ -200,39 +220,6 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
     <>
       <Head>
         <title>Home</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-
-        <meta
-          name="description"
-          content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
-        />
-        <meta name="keywords" content="flatlogic, react templates" />
-        <meta name="author" content="Flatlogic LLC." />
-        <meta charSet="utf-8" />
-
-        <meta
-          property="og:title"
-          content="Flatlogic - React, Vue, Angular and Bootstrap Templates and Admin Dashboard Themes"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content="https://flatlogic-ecommerce.herokuapp.com/"
-        />
-        <meta
-          property="og:image"
-          content="https://flatlogic-ecommerce-backend.herokuapp.com/images/blogs/content_image_six.jpg"
-        />
-        <meta
-          property="og:description"
-          content="Beautifully designed web application template built with React and Bootstrap to create modern apps and speed up development"
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-
-        <meta property="fb:app_id" content="712557339116053" />
-
-        <meta property="og:site_name" content="Flatlogic" />
-        <meta name="twitter:site" content="@flatlogic" />
       </Head>
       <ToastContainer />
       <Carousel prevLabel="prev" nextLabel="next">
@@ -696,7 +683,7 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
           </Link>
         </Row>
       </Container>
-      <section className={s.promo}>
+      {/* <section className={s.promo}>
         <Container className={"h-100"}>
           <Row className={"h-100"}>
             <Col
@@ -731,8 +718,8 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
             </Col>
           </Row>
         </Container>
-      </section>
-      <Container style={{ marginTop: 80, marginBottom: 80 }}>
+      </section> */}
+      {/* <Container style={{ marginTop: 80, marginBottom: 80 }}>
         <h3 className={"text-center fw-bold mb-4"}>Top Selling Products</h3>
         <Row className={"justify-content-center mb-2"}>
           <Col sm={8}>
@@ -817,7 +804,7 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
             </Row>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
       <InfoBlock />
       <InstagramWidget />
     </>

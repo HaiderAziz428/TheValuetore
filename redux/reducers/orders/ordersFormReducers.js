@@ -20,7 +20,7 @@ export default (state = initialData, { type, payload }) => {
   }
 
   if (type === "ORDERS_FORM_FIND_SUCCESS") {
-    console.log('REDUCER', payload)
+    console.log("REDUCER", payload);
     return {
       ...state,
       record: payload,

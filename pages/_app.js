@@ -9,7 +9,8 @@ import { doInit } from "redux/actions/auth";
 import Header from "components/e-commerce/Header";
 import Sidebar from "components/e-commerce/Sidebar";
 import Footer from "components/e-commerce/Footer";
-import AdminLayout from 'components/admin/Layout'
+import AdminLayout from "components/admin/Layout";
+import RecentPurchasePopup from "components/e-commerce/RecentPurchasePopup";
 import "styles/theme.scss";
 import { useRouter } from "next/router";
 import { Container } from "reactstrap";
@@ -38,16 +39,18 @@ function MyApp({ Component, pageProps, sidebarStatic }) {
   return (
     <Provider store={store}>
       {router.pathname.includes("admin") ? (
-          <AdminLayout>
-              <Component {...pageProps} />
-          </AdminLayout>
-      ) : router.pathname.includes("login") || router.pathname.includes("register")? (
+        <AdminLayout>
+          <Component {...pageProps} />
+        </AdminLayout>
+      ) : router.pathname.includes("login") ||
+        router.pathname.includes("register") ? (
         <Component {...pageProps} />
       ) : router.pathname.includes("search") ? (
-          <>
-            <Header/>
-            <Component {...pageProps} />
-          </>
+        <>
+          <Header />
+          <Component {...pageProps} />
+          <RecentPurchasePopup />
+        </>
       ) : (
         <>
           <Sidebar />
@@ -55,12 +58,13 @@ function MyApp({ Component, pageProps, sidebarStatic }) {
           {router.pathname === "/" ? null : (
             <>
               <Container>
-                <BreadcrumbHistory url={router.pathname}/>
+                <BreadcrumbHistory url={router.pathname} />
               </Container>
             </>
           )}
           <Component {...pageProps} />
           <Footer />
+          <RecentPurchasePopup />
         </>
       )}
     </Provider>
