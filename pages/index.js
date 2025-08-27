@@ -5,7 +5,7 @@ import Link from "next/link";
 import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
 import Head from "next/head";
-
+import FlashSaleCountdown from "components/e-commerce/FlashSaleCountdown";
 import InfoBlock from "components/e-commerce/InfoBlock";
 import InstagramWidget from "components/e-commerce/Instagram";
 import productsListActions from "../redux/actions/products/productsListActions";
@@ -366,6 +366,20 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
         </Carousel.Item>
       </Carousel>
       <FeatureInfoBlock />
+
+      {/* Flash Sale Section */}
+      <Container
+        fluid
+        className="py-5 my-4"
+        style={{ background: "rgb(252, 231, 219)" }}
+      >
+        <Row className="justify-content-center">
+          <Col md={8} className="text-center">
+            <FlashSaleCountdown />
+          </Col>
+        </Row>
+      </Container>
+
       <Container style={{ marginTop: 80, marginBottom: 80 }}>
         <h3 className={`text-center fw-bold mb-4`}>New Arrivals</h3>
         <Row className={"justify-content-center mb-2"}>
@@ -620,16 +634,34 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                             item.categories[0].title.slice(1)}
                         </a>
                       </Link>
-                      <Link href={`/products/${item.id}`}>
-                        <a>
-                          <h6
-                            className={"fw-bold font-size-base mt-1"}
-                            style={{ fontSize: 16 }}
+                      <div className="d-flex align-items-center justify-content-between mt-1">
+                        <Link href={`/products/${item.id}`}>
+                          <a>
+                            <h6
+                              className={"fw-bold font-size-base"}
+                              style={{ fontSize: 16, marginBottom: 0 }}
+                            >
+                              {item.title}
+                            </h6>
+                          </a>
+                        </Link>
+                        {item.discount && item.discount > 0 && (
+                          <div
+                            style={{
+                              backgroundColor: "rgb(179, 211, 52)",
+                              color: "#fff",
+                              fontWeight: "bold",
+                              padding: "4px 8px",
+                              borderRadius: "4px",
+                              fontSize: "0.9rem",
+                              marginLeft: "8px",
+                              whiteSpace: "nowrap",
+                            }}
                           >
-                            {item.title}
-                          </h6>
-                        </a>
-                      </Link>
+                            -{Math.round((item.discount / item.price) * 100)}%
+                          </div>
+                        )}
+                      </div>
                       {/* Price display */}
                       {item.discount && item.discount > 0 ? (
                         <div
@@ -650,19 +682,6 @@ const Index = ({ products: serverSideProducts, backendAvailable }) => {
                           </span>
                           <span style={{ color: "#b3d334", fontWeight: 700 }}>
                             Rs {item.price - item.discount} PKR
-                          </span>
-                          <span
-                            style={{
-                              background: "#b3d334",
-                              color: "#fff",
-                              fontWeight: 700,
-                              fontSize: "0.9rem",
-                              borderRadius: 4,
-                              padding: "2px 8px",
-                              marginLeft: 6,
-                            }}
-                          >
-                            Discount
                           </span>
                         </div>
                       ) : (

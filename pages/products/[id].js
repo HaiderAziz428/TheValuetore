@@ -10,6 +10,7 @@ import {
   ModalFooter,
   Input,
 } from "reactstrap";
+import LimitedTimeOffer from "components/e-commerce/LimitedTimeOffer/LimitedTimeOffer";
 import ImagesFormItem from "components/admin/FormItems/items/ImagesFormItem";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
@@ -25,7 +26,7 @@ import Head from "next/head";
 
 import productsListActions from "redux/actions/products/productsListActions";
 import ReactImageMagnify from "react-image-magnify";
-import { Eye, ShoppingCart, Truck } from "lucide-react";
+import { AlertTriangle, Eye, ShoppingCart, Truck } from "lucide-react";
 
 import {
   CarouselProvider,
@@ -512,6 +513,10 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                     <div className={"d-flex align-items-center"}>
                       <Button
                         className={`bg-transparent border-0 p-1 fw-bold mr-3 ${s.quantityBtn}`}
+                        style={{
+                          backgroundColor: "#e4e5e9",
+                          color: "#000",
+                        }}
                         onClick={() => {
                           if (quantity === 1) return;
                           setQuantity((prevState) => prevState - 1);
@@ -528,6 +533,10 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                       <p className={"fw-bold mb-0"}>{quantity}</p>
                       <Button
                         className={`bg-transparent border-0 p-1 fw-bold ml-3 ${s.quantityBtn}`}
+                        style={{
+                          backgroundColor: "#e4e5e9",
+                          color: "#000",
+                        }}
                         onClick={() => {
                           if (quantity < 1) return;
                           setQuantity((prevState) => prevState + 1);
@@ -543,42 +552,65 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                       </Button>
                     </div>
                   </div>
-                  <div className={"d-flex flex-column justify-content-between"}>
-                    <h6 className={"fw-bold text-muted text-uppercase"}>
-                      Price
-                    </h6>
-                    {/* Price display */}
+                  <div className="d-flex flex-column justify-content-between">
+                    <h6 className="fw-bold text-muted text-uppercase">Price</h6>
+
                     {product.discount && product.discount > 0 ? (
                       <div
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          gap: 8,
+                          gap: "8px",
+                          justifyContent: "space-between",
                         }}
                       >
-                        <span
+                        {/* Price section */}
+                        <div
                           style={{
-                            color: "#888",
-                            textDecoration: "line-through",
-                            marginRight: 8,
-                            fontSize: "1rem",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
                           }}
                         >
-                          Rs {product.price} PKR
-                        </span>
-                        <span
+                          <span
+                            style={{
+                              color: "#888",
+                              textDecoration: "line-through",
+                              fontSize: "1rem",
+                            }}
+                          >
+                            Rs {product.price} PKR
+                          </span>
+                          <span
+                            style={{
+                              color: "#b3d334",
+                              fontWeight: 900,
+                              fontSize: "1.5rem",
+                              letterSpacing: "0.5px",
+                            }}
+                          >
+                            Rs {product.price - product.discount} PKR
+                          </span>
+                        </div>
+
+                        {/* Discount percentage */}
+                        <div
                           style={{
-                            color: "#b3d334",
-                            fontWeight: 900,
-                            fontSize: "1.5rem",
-                            letterSpacing: "0.5px",
+                            backgroundColor: "rgb(179, 211, 52)",
+                            color: "#fff",
+                            fontWeight: "bold",
+                            padding: "4px 8px",
+                            borderRadius: "4px",
+                            fontSize: "0.9rem",
                           }}
                         >
-                          Rs {product.price - product.discount} PKR
-                        </span>
+                          -
+                          {Math.round((product.discount / product.price) * 100)}
+                          %
+                        </div>
                       </div>
                     ) : (
-                      <h6 className={"fw-bold"}>Rs {product.price} PKR</h6>
+                      <h6 className="fw-bold">Rs {product.price} PKR</h6>
                     )}
                   </div>
                 </div>
@@ -626,6 +658,19 @@ Please let me know about delivery options and payment methods. Thank you!`
                   </Button>
                 </a>
               </div>
+              <h6 className={"text-muted mt-4"}>
+                <span className="fw-bold">
+                  {Math.floor(Math.random() * 3) + 1}K+ bought{" "}
+                </span>
+                in past month
+              </h6>
+              <h6
+                className={"fw-bold mb-1 "}
+                style={{ color: "rgb(179, 211, 52)" }}
+              >
+                Limited time deal
+              </h6>
+              <LimitedTimeOffer />
               <h4 className="fw-bold my-4">Description</h4>
               <div
                 style={{
@@ -646,7 +691,6 @@ Please let me know about delivery options and payment methods. Thank you!`
         <hr />
 
         <div className="mb-4">
-        
           <div className="card p-3 shadow-sm rounded-xl">
             {/* Top stats */}
             <div className="d-flex flex-wrap gap-2 mb-3">
@@ -698,7 +742,9 @@ Please let me know about delivery options and payment methods. Thank you!`
             {/* Stock info */}
             <div className="d-flex justify-content-between align-items-center">
               <div className="d-flex align-items-center">
-                <div className="fw-bold text-danger me-2">{leftInStock}</div>
+                <div className="fw-bold text-danger me-2 mr-2">
+                  {leftInStock}
+                </div>
                 <div className="text-uppercase small text-muted">
                   Left in Stock
                 </div>
@@ -714,7 +760,7 @@ Please let me know about delivery options and payment methods. Thank you!`
                     background:
                       leftInStock <= 3
                         ? "#ef4444"
-                        : leftInStock <= 6
+                        : leftInStock <= 10
                         ? "#f97316"
                         : "#10b981",
                     transition: "width 0.4s ease",
@@ -724,7 +770,7 @@ Please let me know about delivery options and payment methods. Thank you!`
             </div>
 
             {/* Low Stock Warning */}
-            {leftInStock <= 3 && (
+            {leftInStock <= 10 && (
               <div className="mt-2 text-danger small d-flex align-items-center gap-1">
                 <AlertTriangle size={14} className="text-danger" />
                 Low stock - order soon!
