@@ -317,43 +317,43 @@ class Header extends React.Component {
         <div className={s.runningBanner}>
           <div className={s.bannerContent}>
             <span>
-              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Free Delivery on All Orders Above Rs. 699 Across Pakistan | Mega
               Sale Up to 70% OFF – Shop Now!
             </span>
             <span>
-              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Free Delivery on All Orders Above Rs. 699 Across Pakistan | Mega
               Sale Up to 70% OFF – Shop Now!
             </span>
             <span>
-              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Free Delivery on All Orders Above Rs. 699 Across Pakistan | Mega
               Sale Up to 70% OFF – Shop Now!
             </span>
             <span>
-              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Free Delivery on All Orders Above Rs. 699 Across Pakistan | Mega
               Sale Up to 70% OFF – Shop Now!
             </span>
             <span>
-              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Free Delivery on All Orders Above Rs. 699 Across Pakistan | Mega
               Sale Up to 70% OFF – Shop Now!
             </span>
             <span>
-              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Free Delivery on All Orders Above Rs. 699 Across Pakistan | Mega
               Sale Up to 70% OFF – Shop Now!
             </span>
             <span>
-              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Free Delivery on All Orders Above Rs. 699 Across Pakistan | Mega
               Sale Up to 70% OFF – Shop Now!
             </span>
             <span>
-              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Free Delivery on All Orders Above Rs. 699 Across Pakistan | Mega
               Sale Up to 70% OFF – Shop Now!
             </span>
             <span>
-              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Free Delivery on All Orders Above Rs. 699 Across Pakistan | Mega
               Sale Up to 70% OFF – Shop Now!
             </span>
             <span>
-              Free Delivery on All Orders Above Rs. 700 Across Pakistan | Mega
+              Free Delivery on All Orders Above Rs. 699 Across Pakistan | Mega
               Sale Up to 70% OFF – Shop Now!
             </span>
           </div>

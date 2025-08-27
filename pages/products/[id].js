@@ -78,19 +78,18 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
   const [reviewText, setReviewText] = React.useState("");
   const [reviewRating, setReviewRating] = React.useState(5);
   const [reviewName, setReviewName] = React.useState("");
-  // fixed random reviews count for this page visit (calculates once)
-  const [randomReviewsCount] = React.useState(
-    () => Math.floor(Math.random() * (50 - 20 + 1)) + 20
-  );
-  const [watchingCount] = React.useState(
-    () => Math.floor(Math.random() * (80 - 50 + 1)) + 50
-  );
-  const [inCartCount] = React.useState(
-    () => Math.floor(Math.random() * (80 - 40 + 1)) + 40
-  );
-  const [leftInStock] = React.useState(
-    () => Math.floor(Math.random() * (10 - 1 + 1)) + 1
-  );
+  // Helper function for small random variation
+  function getRandomWithVariation(base, variation) {
+    const change = Math.floor(Math.random() * (variation * 2 + 1)) - variation;
+    return Math.max(0, base + change); // Ensure it doesn't go negative
+  }
+
+  const [randomReviewsCount] = React.useState(() =>
+    getRandomWithVariation(35, 2)
+  ); // base 35 ±4
+  const [watchingCount] = React.useState(() => getRandomWithVariation(35, 2)); // base 65 ±2
+  const [inCartCount] = React.useState(() => getRandomWithVariation(20, 2)); // base 60 ±2
+  const [leftInStock] = React.useState(() => getRandomWithVariation(5, 1)); // base 5 ±1
 
   const deliveryStart = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
   const deliveryEnd = new Date(Date.now() + 6 * 24 * 60 * 60 * 1000);
@@ -642,7 +641,9 @@ Please let me know about delivery options and payment methods. Thank you!`
                   rel="noopener noreferrer"
                   className={"d-inline-block"}
                 >
-                  <Button className={`${s.whatsapp} text-uppercase`}>
+                  <Button
+                    className={`${s.whatsapp} ${s.buynow} text-uppercase`}
+                  >
                     <span style={{ display: "flex", alignItems: "center" }}>
                       <svg
                         className="logo-svg"
@@ -659,9 +660,7 @@ Please let me know about delivery options and payment methods. Thank you!`
                 </a>
               </div>
               <h6 className={"text-muted mt-4"}>
-                <span className="fw-bold">
-                  {Math.floor(Math.random() * 3) + 1}K+ bought{" "}
-                </span>
+                <span className="fw-bold">900+ bought </span>
                 in past month
               </h6>
               <h6

@@ -75,12 +75,13 @@ export default function RecentPurchasePopup() {
         // Wait for fade-out animation before hiding completely
         timeout = setTimeout(() => {
           setShow(false);
-          timeout = setTimeout(loopPopup, 3000); // Gap of 3 seconds
+          timeout = setTimeout(loopPopup, 40000); // Gap before showing next popup
         }, 1000); // fade-out duration
-      }, 4000);
+      }, 8000);
     };
 
-    loopPopup();
+    // ✅ First popup after 10 seconds
+    timeout = setTimeout(loopPopup, 10000);
 
     return () => clearTimeout(timeout);
   }, [products]);
