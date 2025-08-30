@@ -444,24 +444,6 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                   </div>
                 )}
               </div>
-              {product.image.length > 1 ? (
-                <div
-                  className={`d-flex flex-column h-100 justify-content-between ${s.dMdNone}`}
-                  style={{ width: 160 }}
-                >
-                  {product.image.slice(1).map((img, index) => (
-                    <Image
-                      key={index}
-                      src={`${img.publicUrl}?t=${Date.now()}`}
-                      width={160}
-                      height={120}
-                      alt={`Product view ${index + 2}`}
-                      placeholder="blur"
-                      blurDataURL="/images/e-commerce/404/1.png"
-                    />
-                  ))}
-                </div>
-              ) : null}
             </Col>
             <Col
               xs={12}
