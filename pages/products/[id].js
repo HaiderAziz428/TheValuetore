@@ -907,12 +907,7 @@ Please let me know about delivery options and payment methods. Thank you!`
                       </div>
                       <span className="text-muted">{review.date}</span>
                     </div>
-                    {/* First line bold as pseudo-title */}
-                    {review.comment && (
-                      <div style={{ marginBottom: 6 }} className="fw-bold">
-                        {String(review.comment).split("\n")[0].slice(0, 80)}
-                      </div>
-                    )}
+
                     <p className="mb-3" style={{ whiteSpace: "pre-wrap" }}>
                       {review.comment}
                     </p>
