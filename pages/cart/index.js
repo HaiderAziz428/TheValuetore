@@ -319,7 +319,7 @@ const Index = () => {
               <h5 className={"fw-bold"}>Rs {totalPrice} PKR</h5>
             </div>
             <a
-              href={`https://wa.me/923356630319?text=${encodeURIComponent(
+              href={`https://wa.me/923318780045?text=${encodeURIComponent(
                 products.length > 0
                   ? `Hi! I would like to place an order for the following items:
 

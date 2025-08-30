@@ -626,7 +626,7 @@ const Id = ({ product: serverSideProduct, currentProductId }) => {
                 </Button>
 
                 <a
-                  href={`https://wa.me/923356630319?text=${encodeURIComponent(
+                  href={`https://wa.me/923318780045?text=${encodeURIComponent(
                     `Hi! I would like to place an order for the following item:
 
 • ${product.title} - Quantity: ${quantity} - Price: Rs ${
